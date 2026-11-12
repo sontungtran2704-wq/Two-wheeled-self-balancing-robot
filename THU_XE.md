@@ -1,7 +1,10 @@
 # Trình tự đưa xe lên bàn thử
 
-Hiện chưa nạp và chưa chạy motor. Không bỏ khóa `ROBOT_HARDWARE_CONFIRMED`
-chỉ để hết lỗi START; khóa này bảo vệ cấu hình board/dây chưa xác nhận.
+Cập nhật 12/11/2026: đã nhận telemetry và thử hiệu chuẩn qua web trên COM17,
+115200 baud; ACK nhận được, IMU chuyển đang hiệu chuẩn → đạt. Firmware đang
+báo hardware_confirmed=1, st=0, left=right=0. Chưa thử motor/cân bằng trong phiên
+này; không thay cờ phần cứng để vượt lỗi. Xem phần bàn giao mới ở cuối
+TOM_TAT_TOAN_BO_DE_TAI.md để phân biệt bằng chứng mới và lịch sử.
 
 1. **Xác nhận khi ngắt nguồn:** mã module ESP32-S3, GPIO thực tế, jumper
    MS1/MS2/MS3, mã motor và dòng pha. Đo đường kính bánh, track, cân thân và bánh.

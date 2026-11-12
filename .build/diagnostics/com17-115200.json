@@ -1,0 +1,14 @@
+{
+  "events": [
+    {
+      "event": "open",
+      "time": "2026-11-12T07:04:31.243Z",
+      "baud": 115200
+    },
+    {
+      "event": "GET",
+      "error": null
+    }
+  ],
+  "bytes": 100709
+}

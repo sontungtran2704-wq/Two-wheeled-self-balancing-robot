@@ -327,6 +327,13 @@ socket.on('lqrError',           m  => showNotification(`LQR: ${m}`, 'error'));
 socket.on('serialError',        m  => showNotification(`Lỗi: ${m}`, 'error'));
 socket.on('notice',             n  => showNotification(n.msg, n.type || 'info'));
 socket.on('serialMessage',      m  => onFirmwareMessage(m));
+socket.on('linkStatus', s => {
+    robotState.isConnected = s.connected;
+    $('status-text').textContent = !s.connected ? 'Chưa mở đường truyền' :
+        !s.fresh ? 'Đã mở cổng — chưa có telemetry mới' :
+        !s.matching ? 'Telemetry khác cấu hình' : '✓ ESP32-S3 — telemetry mới';
+    $('status-indicator').className = `status-dot ${s.connected && s.fresh && s.matching ? 'connected' : 'disconnected'}`;
+});
 
 // Thông điệp văn bản từ firmware (EVT:..., ERR:..., K UPDATED, SAVED, GYRO OK...)
 function onFirmwareMessage(line) {
@@ -388,8 +395,8 @@ function disconnectSerial() {
 function onSerialConnected() {
     robotState.isConnected = true;
     if (robotState._reconnTimer) { clearTimeout(robotState._reconnTimer); robotState._reconnTimer = null; }
-    $('status-text').textContent = '✓ ESP32-S3';
-    showNotification('ESP32-S3 đã kết nối', 'success');
+    $('status-text').textContent = 'Đã mở cổng — đang chờ telemetry';
+    showNotification('Đã mở đường truyền; đang chờ dữ liệu ESP32-S3.', 'info');
 }
 
 function onSerialDisconnected() {
@@ -409,6 +416,10 @@ function updateStatus(connected) {
    ROBOT CONTROL
    ============================================================ */
 function robotCmd(command) {
+    if (!socket.connected) {
+        showNotification('Chưa gửi lệnh: mất kết nối máy chủ web.', 'error');
+        return;
+    }
     socket.emit('robotControl', { command });
 }
 

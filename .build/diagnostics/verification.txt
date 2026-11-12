@@ -1,0 +1,10 @@
+Verification 2026-11-12 Asia/Bangkok
+node --test 4_Web/tests/api.test.js: PASS 2/2
+PLAYWRIGHT_MODULE=C:/Users/DELL/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright
+node --test tests/browser.test.js (cwd 4_Web): PASS 1/1
+Bundled Python 3.12 -X utf8 -m unittest discover -s tests -p test_configuration.py: PASS 3/3
+Full Python unittest discover: INCOMPLETE, 2 module import errors, scipy not installed; 3 configuration tests passed.
+npm: unavailable in PATH; used node test runner directly.
+Firmware build, flash, motor actuation: NOT RUN; firmware sources unchanged.
+Physical COM17 115200: PASS raw data and GET. Browser CALGYRO: ACK then diagnostics 1->0->1, calibrated 1->0->1, all 273 diagnostic samples st=0,left=right=0.
+Not qualified: pitch direction/angle accuracy, motor direction, balance, deadline timing in Run. Overruns 7->13 during physical calibration observation remain unexplained.

@@ -2,6 +2,10 @@ import hashlib,json,unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 class ConfigurationTests(unittest.TestCase):
+    def test_hashed_config_checkout_preserves_lf(self):
+        attributes=(ROOT/'.gitattributes').read_text()
+        self.assertIn('shared/robot.json text eol=lf',attributes)
+        self.assertNotIn(b'\r', (ROOT/'shared/robot.json').read_bytes())
     def test_generated_gain_matches_source_and_header(self):
         c=json.loads((ROOT/'shared/robot.json').read_text())
         d=json.loads((ROOT/'shared/design.json').read_text())

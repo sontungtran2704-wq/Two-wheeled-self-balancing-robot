@@ -27,6 +27,12 @@ function createBridge(options = {}) {
   let desired = {v: 0, w: 0}, lastDrive = 0, motionRequested = false;
   const pid = {};
   let malformed = 0, shuttingDown = false;
+  let calibrationAck = null;
+  function finishCalibrationAck(message, type = 'error') {
+    if (!calibrationAck) return;
+    calibrationAck.socket.emit('notice', {msg: message, type});
+    calibrationAck = null;
+  }
   function fresh() { return latest && Date.now() - lastTelemetry <= STALE_MS; }
   function matching() { return fresh() && latest.config === design.config_id && latest.hash === design.config_sha256; }
   function write(line) {
@@ -64,7 +70,13 @@ function createBridge(options = {}) {
     if (!line || line.length > MAX_TELEMETRY) { malformed++; return; }
     const wifi=/^EVT:WIFI,(AP|STA),([0-9.]+)$/.exec(line);
     if(wifi){io.emit('robotWifi',{mode:wifi[1],ip:wifi[2]});return;}
-    if (/^(ACK:|ERR:|EVT:)/.test(line)) { io.emit('serialMessage', line); return; }
+    if (/^(ACK:|ERR:|EVT:)/.test(line)) {
+      if (line === 'ACK:CALGYRO_PENDING')
+        finishCalibrationAck('Firmware đã nhận CALGYRO; giữ xe yên và chờ kết quả IMU. ACK chưa có nghĩa hiệu chuẩn đạt.', 'info');
+      else if (['ERR:MOTORS_ON','ERR:PINMAP_UNCONFIRMED'].includes(line))
+        finishCalibrationAck(`Firmware từ chối hiệu chuẩn: ${line}`);
+      io.emit('serialMessage', line); return;
+    }
     const pm = /^PID:([VY]),([^,]+),([^,]+),([^,]+)$/.exec(line);
     if (pm) {
       const a = pm.slice(2).map(Number);
@@ -112,6 +124,7 @@ function createBridge(options = {}) {
     });
   }
   function closeLink() {
+    finishCalibrationAck('Đường truyền đã đóng trước khi nhận ACK hiệu chuẩn; chưa biết firmware có nhận lệnh hay không.');
     const old = link; link = null;
     resetTelemetry();
     if (old) { old.open=false; return old.close(); }
@@ -157,6 +170,7 @@ function createBridge(options = {}) {
       stream.on('close',()=>{
         fail(new Error('Kết nối đã đóng.'));
         if(link!==mine)return;
+        finishCalibrationAck('Mất đường truyền trước ACK hiệu chuẩn; chưa xác nhận firmware nhận lệnh.');
         owner=null;link=null;resetTelemetry();io.emit('serialDisconnected');io.emit('controlOwner',null);emitState();reconnect();
       });
       if(!match)stream.open();
@@ -192,6 +206,16 @@ function createBridge(options = {}) {
       const cmd=({start:'START',stop:'STOP',estop:'ESTOP',reset:'RESET',get:'GET',calgyro:'CALGYRO',
         zphere:'ZPHERE','zp+':'ZP+','zp-':'ZP-',save:'SAVE'})[p.command];
       if(!cmd)return error(socket,'Lệnh không hợp lệ.');
+      if(cmd==='CALGYRO') {
+        if(owner && owner!==socket.id)return error(socket,'Dashboard khác đang điều khiển.');
+        if(fresh() && [1,2].includes(latest.st))return error(socket,'Dừng motor trước khi hiệu chuẩn.');
+        if(calibrationAck)return error(socket,'Đang chờ ACK CALGYRO; không gửi lặp.');
+        // Register before write: a fast reply must not race pending state.
+        calibrationAck={socket, deadline:Date.now()+2000};
+        if(!write(cmd))return finishCalibrationAck('Không gửi được CALGYRO: đường truyền chưa mở hoặc đang bận.');
+        socket.emit('notice',{msg:'Bridge đã gửi CALGYRO; đang chờ ACK từ firmware.',type:'info'});
+        return;
+      }
       if(['STOP','ESTOP'].includes(cmd)){write(cmd);owner=null;desired={v:0,w:0};lastDrive=0;motionRequested=false;io.emit('controlOwner',null);return;}
       if(cmd==='SAVE'){
         if(!matching() || ![0,3].includes(latest.st))return error(socket,'Dừng motor trước khi lưu PID và điểm zero.');
@@ -246,6 +270,8 @@ function createBridge(options = {}) {
     socket.on('disconnect',()=>{if(owner===socket.id)revoke();});
   });
   const watchdog=setInterval(()=>{
+    if(calibrationAck && Date.now()>=calibrationAck.deadline)
+      finishCalibrationAck('Đã gửi CALGYRO nhưng chưa nhận ACK sau 2 giây. Kiểm tra cổng, baud 115200 và firmware/USB CDC; chưa thể kết luận hiệu chuẩn thất bại.');
     if(lastDrive&&Date.now()-lastDrive>STALE_MS){desired={v:0,w:0};lastDrive=0;}
     if(owner&&!fresh()){owner=null;desired={v:0,w:0};lastDrive=0;io.emit('controlOwner',null);}
     emitState();

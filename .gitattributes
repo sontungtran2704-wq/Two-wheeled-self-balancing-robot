@@ -1,2 +1,4 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+# This file is hashed byte-for-byte by firmware generation and the web bridge.
+shared/robot.json text eol=lf

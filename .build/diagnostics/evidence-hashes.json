@@ -1,0 +1,26 @@
+[
+  {
+    "Path": "D:\\blancing\\Robot_Collab\\.build\\diagnostics\\com17-115200.bin",
+    "Hash": "C4D489E530DDDF838C80143166124A758298E108B7708733C868723036AE6B6B"
+  },
+  {
+    "Path": "D:\\blancing\\Robot_Collab\\.build\\diagnostics\\com17-115200.json",
+    "Hash": "29958C9487206B38D2874BE69FD6DF5A49138E82CEF10910BD9AEA9B8857000C"
+  },
+  {
+    "Path": "D:\\blancing\\Robot_Collab\\.build\\diagnostics\\com17-115200.txt",
+    "Hash": "C4D489E530DDDF838C80143166124A758298E108B7708733C868723036AE6B6B"
+  },
+  {
+    "Path": "D:\\blancing\\Robot_Collab\\.build\\diagnostics\\verification.txt",
+    "Hash": "53D4EE53405574068495121E5C18BD1E63109A38137731804A7772C7FB9CB37F"
+  },
+  {
+    "Path": "D:\\blancing\\Robot_Collab\\.build\\diagnostics\\web-com17-calibration.json",
+    "Hash": "9AF82F2A30465164A7C3EB81074B1BF879557D785B6E22D4F113D8F13E23C76F"
+  },
+  {
+    "Path": "D:\\blancing\\Robot_Collab\\.build\\diagnostics\\web-com17-calibration.png",
+    "Hash": "8FF37E13457DF0E5192F095DBD59FE1FF671BFF23E516871C98DF01C71D30DFC"
+  }
+]

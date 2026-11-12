@@ -7,7 +7,7 @@ Giữ bố cục giao diện bản cũ. Kế thừa cách thao tác; không nh�
 | USB | COM thực tế, 115200 baud. Web và Serial Monitor không mở cùng một cổng. Ngắt kết nối web trước khi nạp. |
 | Wi-Fi trực tiếp | Khi chưa đặt SSID trong firmware, phát `BalanceBot-Bench`, mật khẩu cố định `BalanceBot13`, TCP `192.168.4.1:8080`, kể cả bản mở khóa motor. |
 | GET | Đọc thông tin Wi-Fi và PID hiện tại; xếp sau lệnh cập nhật PID để không trả giá trị cũ. |
-| Hiệu chuẩn gyro | Giữ yên; thu 500 mẫu liên tiếp hợp lệ trong tối đa 1500 lần thử, khoảng 7,5 giây cộng chờ ban đầu. Rung nhất thời làm bắt đầu lại cửa sổ thay vì hủy ngay. Gia tốc tĩnh vẫn cần 0,95–1,05 g. |
+| Hiệu chuẩn gyro | Giữ yên; đánh giá 500 mẫu/cửa sổ, tối đa 3 cửa sổ. Trung bình gia tốc 0,90–1,10 g; kiểm tra phương sai và gyro theo mục cập nhật 12/11 bên dưới. Bridge báo đã gửi, chờ ACK tối đa 2 giây; ACK chưa chứng minh hiệu chuẩn đạt. |
 | Trạng thái IMU | Dashboard nêu đang hiệu chuẩn, lỗi I2C, sai mã, lỗi thanh ghi, gia tốc hoặc gyro không đạt. `cal_accel_mg` hỗ trợ chẩn đoán. Không giả lập góc 0 khi IMU chưa hiệu chuẩn. |
 | START | Chỉ chuyển Chờ → Arming → Run khi IMU hợp lệ và tư thế đủ điều kiện; giữ thẳng liên tục 1 giây. Không ép trạng thái Run. |
 | STOP | Tắt motor, xóa yêu cầu chuyển động. Lỗi đã chốt cần RESET có chủ đích. |

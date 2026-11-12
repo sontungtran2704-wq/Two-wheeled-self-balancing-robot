@@ -1,5 +1,66 @@
 # Tóm tắt toàn bộ đề tài và bàn giao để tiếp tục
 
+## Bàn giao mới — 12/11/2026, khoảng 14:04–14:08 Asia/Bangkok
+
+Phần này cập nhật trạng thái lịch sử bên dưới, không phải báo cáo tổng hợp.
+
+- Máy hiện tại không có D:/TLHT/Two-wheeled-self-balancing-robot. Đã làm việc
+  tại D:/blancing/Robot_Collab; Git sạch trước sửa. Không sửa 00_Nguon, gain,
+  thông số cơ khí, GeneratedConfig.h hoặc cờ phần cứng.
+- Đã đọc các tài liệu gốc, Excel Thong_so và 01_Danh_sach_can_do. Xung đột
+  W01/C07 và đơn vị vẫn tồn tại; không chuyển các giá trị này vào cấu hình.
+- Khi mới kiểm tra chưa có thiết bị USB robot. Sau khi người dùng cắm, cổng
+  là COM17, VID 1A86 PID 55D3, serial 5B8E094288; không dùng lại COM13.
+- Thu Serial thô 9 giây ở 115200: 100709 bytes, gửi GET sau 4 giây, nhận dữ
+  liệu đúng cấu trúc. Không chủ động reset hoặc nạp. Telemetry có các trường
+  cal_accel_std_mg/cal_gyro_std_mrad/imu_sample_fresh mới, WHO_AM_I=112 (0x70),
+  st=0, left=right=u=0, hardware_confirmed=1. Không xác nhận danh tính binary
+  trên flash chỉ từ telemetry. Giả thuyết sai USB CDC/UART0 không được chứng minh.
+- Nguyên nhân chặn server đã tái hiện: shared/robot.json checkout CRLF cho hash
+  35c3463892a84db68993753724b216eadc8495d32e4ca004d0ad0093a8be04d3; bản LF cho
+  a2db1c218dd854f05cae4da1791f5e7c81cd8f6645aafd693e0014859e10f9b4, đúng với
+  design/header và xe. Server từ chối khởi động bằng Design/config mismatch.
+  Đã cố định eol=lf trong .gitattributes và chuẩn hóa file về LF; không đổi giá
+  trị JSON, không sinh lại gain/hash. Thêm hồi quy trong test_configuration.py.
+- web_server.js: theo dõi gửi CALGYRO, chặn gửi lặp khi chờ ACK, báo timeout
+  2 giây, mất link và firmware từ chối. Không suy ra đạt từ ACK. Từ chối hiệu
+  chuẩn khi telemetry mới cho biết Arming/Run; firmware vẫn kiểm tra lại.
+- dashboard.js: không xếp hàng robotCmd khi socket mất kết nối; trạng thái
+  phân biệt cổng mở/chưa có telemetry/khác cấu hình/telemetry mới. Giữ bố cục.
+- Người dùng xác nhận giữ xe yên, motor tắt. Đã thử nút Hiệu chuẩn thật bằng
+  trình duyệt trên bridge kiểm thử cổng 13010, COM17: nhận ACK:CALGYRO_PENDING;
+  telemetry chuyển imu_diag 1 → 0 → 1, có 98 mẫu imu_calibrated=0 rồi trở lại
+  1. Trong 273 mẫu có IMU diagnostics, toàn bộ st=0, left=right=0. Không gửi
+  START, không bật motor. Sau đạt: cal_accel_mg=1055, accel_std=5 mg,
+  gyro_std=5 mrad/s, theta khoảng 0,0212 rad. Không coi đây là xác minh góc
+  chuẩn hoặc dấu pitch. Overruns tăng 7 → 13 trong khoảng thử, chưa xác minh
+  nguyên nhân hay timing khi Run; không đổi deadline/ngưỡng để che số đếm.
+- API/status sau sửa: connected=true, fresh=true, matching=true. malformed=1
+  không tăng trong lần thử; raw ban đầu có đoạn đầu dòng bị cắt lúc mở cổng.
+  Không suy ra parser hỏng từ một dòng ban đầu; cần theo dõi nếu tăng tiếp.
+- Kiểm thử mới: node --test 4_Web/tests/api.test.js PASS 2/2; kiểm tra gửi,
+  ACK, từ chối, timeout, mất link, không tạo telemetry từ ACK. Browser test
+  PASS 1/1 với PLAYWRIGHT_MODULE trên máy DELL. Python test_configuration
+  PASS 3/3. Toàn bộ unittest discover INCOMPLETE: thiếu scipy khiến 2 module
+  không import được. Lệnh npm không có trong PATH; đã chạy trực tiếp node.
+- Không build/nạp firmware trong phiên này vì không sửa firmware. Không gọi
+  kết quả build/host/mô phỏng lịch sử là kết quả mới. Chưa xác minh chiều bánh,
+  dấu pitch bằng thao tác có đối chiếu, độ chính xác góc, NVS, hoặc cân bằng.
+- Evidence: .build/diagnostics/com17-115200.{bin,txt,json} và
+  web-com17-calibration.{json,png}; browser regression ở 4_Web/results.
+- Server dự án hiện chạy http://127.0.0.1:3000 và nối COM17 115200; không có
+  Serial Monitor hoặc công cụ nạp cùng giữ COM. Bridge kiểm thử 13010 đã đóng.
+  Chỉ ngắt trên web trước mở monitor/nạp; không kill tất cả node.exe.
+
+Bước tiếp theo: Ctrl+F5 trang web, giữ motor tắt, kiểm tra nhãn telemetry mới.
+Giữ xe thẳng rồi nghiêng chậm về trước/sau, đối chiếu theta và omega: trước
+theo quy ước THU_XE phải theta dương, omega cùng dấu tốc độ thay đổi theta.
+Ghi góc nghiêng đối chiếu và số đo; chưa đặt zero để che sai hướng/góc. Chưa
+bấm START. Sau khi dấu IMU đã được xác nhận mới chuẩn bị phép thử riêng từng
+bánh có timeout trên giá đỡ; firmware hiện chưa có JOG tùy ý qua web.
+
+---
+
 Cập nhật: 12/11/2026 (Asia/Saigon). Đây là ghi chú kỹ thuật và trạng thái làm việc, không phải báo cáo học thuật theo form của trường.
 
 ## 1. Mục tiêu và yêu cầu đã thống nhất
