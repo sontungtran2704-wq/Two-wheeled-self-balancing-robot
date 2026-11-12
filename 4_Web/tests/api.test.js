@@ -63,3 +63,28 @@ test('web rejects live LQR mutation instead of publishing gains', async t => {
   const forbidden = await fetch('http://127.0.0.1:13007/api/lqr',{headers:{Origin:'https://evil.invalid'}});
   assert.equal(forbidden.status,403);
 });
+
+test('permission failure is reported once and does not retry', async t => {
+  const net=require('node:net');
+  const {EventEmitter}=require('node:events');
+  const {createBridge}=require('../web_server');
+  const bridge=createBridge({port:13018});
+  const socket=new EventEmitter();socket.id='permission-test';
+  bridge.io.listeners('connection')[0](socket);
+  const errors=[];socket.on('serialError',e=>errors.push(e));
+  let attempts=0;
+  t.mock.method(net,'createConnection',()=>{
+    attempts++;
+    const s=new EventEmitter();s.setNoDelay=()=>{};s.destroy=()=>s.emit('close');
+    setImmediate(()=>{const e=new Error('connect EACCES');e.code='EACCES';s.emit('error',e);s.emit('close');});
+    return s;
+  });
+  const broadcasts=[];t.mock.method(bridge.io,'emit',(name,...args)=>broadcasts.push([name,...args]));
+  t.after(()=>bridge.close());
+  socket.emit('connectSerial',{port:'tcp:192.168.4.1:8080'});
+  await delay(1200);
+  assert.equal(attempts,1);
+  assert.equal(errors.length,1);
+  assert.match(errors[0],/Mo_Web.cmd/);
+  assert.equal(broadcasts.filter(x=>x[0]==='serialError').length,0);
+});

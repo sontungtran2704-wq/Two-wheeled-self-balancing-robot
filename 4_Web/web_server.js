@@ -138,6 +138,14 @@ function createBridge(options = {}) {
       catch { reconnect(); }
     },Math.min(1000*2**retryCount++,8000));
   }
+  function connectionError(e) {
+    if (e.code === 'EACCES' || e.code === 'EPERM') {
+      // Permission failures will not improve with a reconnect loop.
+      wanted=null;clearTimeout(retry);retry=null;
+      return new Error('EACCES/EPERM: tiến trình server bị từ chối quyền mở kết nối. Đóng đúng server dự án rồi mở lại bằng 4_Web/Mo_Web.cmd từ File Explorer. Nếu dùng 192.168.4.1:8080, máy cần nối Wi-Fi BalanceBot-Bench.');
+    }
+    return e;
+  }
   async function open(address, baudRate = 115200) {
     if (typeof address !== 'string' || address.length > 128 || /[\r\n]/.test(address)) throw Error('Cổng không hợp lệ.');
     if (!Number.isInteger(baudRate) || ![115200,230400,460800,921600].includes(baudRate)) throw Error('Baud không hợp lệ.');
@@ -166,7 +174,12 @@ function createBridge(options = {}) {
         if(token!==generation){mine.close();fail(new Error('Kết nối đã hủy.'));return;}
         mine.open=true;settled=true;clearTimeout(timeout);io.emit('serialConnected',{port:address});write('GET');emitState();resolve();
       });
-      stream.on('error',e=>{fail(e);io.emit('serialError',e.message);});
+      stream.on('error',e=>{
+        const opened=mine.open, cause=connectionError(e);
+        fail(cause);
+        // Initial open failures are reported by the caller; avoid duplicate toasts.
+        if(opened)io.emit('serialError',cause.message);
+      });
       stream.on('close',()=>{
         fail(new Error('Kết nối đã đóng.'));
         if(link!==mine)return;
