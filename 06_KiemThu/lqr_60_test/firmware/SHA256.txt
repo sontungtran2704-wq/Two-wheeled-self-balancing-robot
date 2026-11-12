@@ -1,0 +1,21 @@
+
+Algorithm : SHA256
+Hash      : 40B998F027015421BF24B3C5AEC679D18F2B36EFB8A0C69CEF779282EDA71FB6
+Path      : D:\blancing\Robot_Collab\06_KiemThu\lqr_60_test\firmware\balancebot_lqr_60_test.ino.bin
+
+Algorithm : SHA256
+Hash      : 84BB365666003B051F564D04380D0CF5D9D85C420DDAFE9FC863071B49E49BFC
+Path      : D:\blancing\Robot_Collab\06_KiemThu\lqr_60_test\firmware\balancebot_lqr_60_test.ino.bootloader.bin
+
+Algorithm : SHA256
+Hash      : 559115F53C85BA4C988FAE765DD55A5DBC5EDDB1DC04FB096489FA137C03899D
+Path      : D:\blancing\Robot_Collab\06_KiemThu\lqr_60_test\firmware\balancebot_lqr_60_test.ino.merged.bin
+
+Algorithm : SHA256
+Hash      : 148B959CBFF1C38AA8E1D5C0BA9D612C54997B945E56A63F41223EEF650653A1
+Path      : D:\blancing\Robot_Collab\06_KiemThu\lqr_60_test\firmware\balancebot_lqr_60_test.ino.partitions.bin
+
+Algorithm : SHA256
+Hash      : F94C5D786A7A8FAB06AC5D10E33BF37711A6697636DC037559EA19CC410A17F0
+Path      : D:\blancing\Robot_Collab\06_KiemThu\lqr_60_test\firmware\boot_app0.bin
+

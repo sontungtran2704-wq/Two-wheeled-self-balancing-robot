@@ -14,3 +14,10 @@ Trong RUN, góc trong khoảng -9.10..14.49°, không có FALL trong log này. O
 Video dài ~123.47 s, đã trích 16 frame bằng Edge video decoder có hỗ trợ HTTP Range. Nhiều đoạn xe được giữ bằng tay/bánh lơ lửng trên cuốn sách; một số đoạn đặt xuống và giữ thân. Không đồng bộ được thời gian video với telemetry. Khung hình không đủ xác nhận dấu quay bánh so với mặt trước thân hoặc tốc độ rotor. Motor đổi chiều theo góc chưa chứng minh phản hồi đúng dấu trên sàn.
 
 Kết luận: nguyên nhân ngắt trong log này là giữ tốc độ lệnh ở rail 0.6 m/s, không phải ngã vượt góc. Nguyên nhân tích lũy tốc độ trên sàn chưa xác định. Khi bánh không bám sàn, phản hồi cơ học giữ thân của mô hình không tồn tại, LQR tích phân gia tốc có thể đưa tốc độ tới rail. LQR chỉ góc không giữ vận tốc 0. Chưa có bằng chứng chọn thay đổi gain, zero, đảo chiều hoặc giới hạn.
+
+## Cập nhật giữ log lỗi cho lần thử tiếp theo
+- Chưa xác định nguyên nhân mất cân bằng trên sàn; không thay firmware, gain, zero, dấu motor hoặc gate SPEED_RAIL.
+- Web giữ 3000 mẫu gần nhất thay vì 200; biểu đồ vẫn 200 điểm. JSON có lastFaultCapture chụp đoạn trước lỗi và mẫu lỗi đầu tiên, giữ qua RESET/Idle và khi vòng đệm chạy tiếp. Lỗi mới thay bản chụp cũ; Xóa lịch sử hoặc tải lại/đóng trang xóa bản chụp. Cần tải JSON trước khi đóng trang.
+- Hiển thị SPEED_RAIL rõ là chạm giới hạn lệnh tốc độ, không đồng nhất với FALL.
+- Vừa chạy node --test tests/api.test.js tests/browser.test.js: 3/3 PASS. Kiểm thử trình duyệt dùng dữ liệu giả lập độc lập trên TCP localhost, xác nhận bản chụp vẫn còn sau 3400 mẫu và chuyển Idle. Không gửi lệnh tới xe thật.
+- Không build/nạp firmware vì thay đổi chỉ thuộc web; chưa kiểm chứng xe cân bằng thật.

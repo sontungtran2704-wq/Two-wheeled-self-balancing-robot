@@ -39,6 +39,18 @@ test('dashboard TCP commands, telemetry, CSV, malformed and stale data',async t=
  await page.waitForTimeout(150);assert(commands.includes('ZPHERE'));
  await page.click('#btn-start');
  await page.waitForFunction(()=>document.querySelector('#state-display').textContent==='Đang cân bằng');
+ assert.equal(await page.locator('.drive-pad [data-drive-v]').count(),4);
+ await page.getByRole('button',{name:'▲ Tiến',exact:true}).hover();
+ await page.mouse.down();await page.waitForTimeout(450);
+ assert(commands.some(x=>/^CMD,1,\d+,0.050000,0.000000$/.test(x)));
+ await page.mouse.up();await page.waitForTimeout(100);
+ assert.equal(await page.locator('#speed-input').inputValue(),'0');
+ await page.getByRole('button',{name:'◀ Xoay trái',exact:true}).hover();
+ await page.mouse.down();await page.waitForTimeout(200);
+ assert(commands.some(x=>/^CMD,1,\d+,0.000000,0.349066$/.test(x)));
+ await page.evaluate(()=>window.dispatchEvent(new Event('blur')));
+ await page.mouse.up();await page.waitForTimeout(100);
+ assert.equal(await page.locator('#turn-input').inputValue(),'0');
  await page.locator('#speed-input').evaluate(el=>{el.value=15;el.dispatchEvent(new Event('input'));});
  await page.waitForTimeout(450);
  assert(commands.includes('MOTION,1'));
@@ -53,6 +65,26 @@ test('dashboard TCP commands, telemetry, CSV, malformed and stale data',async t=
  const csv=fs.readFileSync(path.join(out,'browser_telemetry.csv'),'utf8');assert(csv.includes('v_pulse_m_s'));assert(csv.includes('u_relative_m_s2'));assert(!csv.includes('F(N)'));assert(csv.split('\n').length>2);
  stream.write('t=NaN,theta=bad\n'+'X'.repeat(1100)+'\n');await page.waitForTimeout(100);const status=await (await fetch('http://127.0.0.1:13008/api/status')).json();assert(status.malformed>=2);
  pause=true;await page.waitForTimeout(450);assert.equal((await (await fetch('http://127.0.0.1:13008/api/status')).json()).fresh,false);pause=false;
+ pause=true;
+ // Host-only synthetic samples: preserve a fault even after the rolling log expires.
+ const capture=await page.evaluate(()=>{
+   clearHistory();
+   const sample=(seq,st,fault)=>({t:seq*.04,seq,theta:.01,thetaDot:0,xDot:0,left:0,right:0,u:0,st,fault});
+   for(let i=0;i<250;i++)updateRobotData(sample(i,2,'NONE'));
+   updateRobotData(sample(250,4,'SPEED_RAIL'));
+   for(let i=251;i<3400;i++)updateRobotData(sample(i,4,'SPEED_RAIL'));
+   updateRobotData(sample(3400,0,'NONE'));
+   let exported;
+   downloadBlob=content=>{exported=JSON.parse(content);};
+   downloadJSON();
+   return exported;
+ });
+ assert.equal(capture.data.length,3000);
+ assert.equal(capture.totalPoints,3000);
+ assert.equal(capture.lastFaultCapture.fault,'SPEED_RAIL');
+ assert.equal(capture.lastFaultCapture.data.length,251);
+ assert.equal(capture.lastFaultCapture.data[0].seq,0);
+ assert.equal(capture.lastFaultCapture.data.at(-1).seq,250);
  const starts=commands.filter(x=>x==='START').length;stream.destroy();await page.waitForTimeout(1500);assert.equal(commands.filter(x=>x==='START').length,starts);
  await page.screenshot({path:path.join(out,'dashboard.png'),fullPage:true});assert.deepEqual(errors,[]);
  fs.writeFileSync(path.join(out,'browser_commands.json'),JSON.stringify(commands,null,2));

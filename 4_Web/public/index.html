@@ -88,30 +88,27 @@
                 <p class="hint">Giữ xe thẳng đứng ~1 giây sau khi bấm Bắt Đầu thì xe mới chạy.</p>
                 <button id="btn-reset" class="btn btn-small" onclick="resetRobot()">↺ RESET lỗi → Chờ</button>
                 <p id="reset-status" class="hint" role="status">Sau lỗi, kê xe chắc rồi RESET. RESET không bật motor.</p>
-                <div class="slider-group">
-                    <label for="speed-input">Tiến / Lùi (cm/s)</label>
-                    <input type="range" id="speed-input" min="-40" max="40" value="0" step="5" class="slider">
-                    <div class="slider-value">
-                        <span id="speed-value" class="value-display">0</span>
-                        <span class="unit">cm/s</span>
+                <fieldset class="drive-pad">
+                    <legend>Di chuyển — nhấn giữ</legend>
+                    <input type="hidden" id="speed-input" value="0">
+                    <input type="hidden" id="turn-input" value="0">
+                    <div class="drive-pad-buttons">
+                        <button type="button" class="btn btn-outline drive-forward" data-drive-v="5" data-drive-w="0">▲ Tiến</button>
+                        <button type="button" class="btn btn-outline drive-left" data-drive-v="0" data-drive-w="20">◀ Xoay trái</button>
+                        <button type="button" class="btn btn-outline drive-right" data-drive-v="0" data-drive-w="-20">Xoay phải ▶</button>
+                        <button type="button" class="btn btn-outline drive-back" data-drive-v="-5" data-drive-w="0">▼ Lùi</button>
                     </div>
-                </div>
-                <div class="slider-group">
-                    <label for="turn-input">Quay trái / phải (độ/s)</label>
-                    <input type="range" id="turn-input" min="-90" max="90" value="0" step="10" class="slider">
-                    <div class="slider-value">
-                        <span id="turn-value" class="value-display">0</span>
-                        <span class="unit">°/s</span>
-                    </div>
-                </div>
+                    <p class="hint">Thả nút để về 0. Tiến/lùi 5 cm/s; xoay 20°/s.</p>
+                    <div class="drive-pad-values"><span>Tiến/lùi: <b id="speed-value">0</b> cm/s</span><span>Xoay: <b id="turn-value">0</b> °/s</span></div>
+                </fieldset>
             </div>
 
             <div class="sidebar-section">
                 <h3 class="section-title">🎚️ PID vị trí (vòng ngoài)</h3>
-                <p class="hint">Gửi xuống xe ngay khi đang chạy (chưa lưu). Bắt đầu nhỏ: Kp 0.3, Ki 0, Kd 0.1; mặc định 0.5 / 0 / 0.2. Bấm "Lưu vào xe" khi đã ưng.</p>
+                <p class="hint">Mặc định Kp 3 / Ki 1 / Kd 0.2. Chỉ gửi PID khi motor tắt; bấm "Lưu vào xe" để giữ bộ đã chỉnh.</p>
                 <div class="data-action-row">
-                    <input type="number" id="pid-kp" value="0.5" step="0.05" min="0" max="3" class="form-input" title="Kp (rad/m)">
-                    <input type="number" id="pid-ki" value="0" step="0.01" min="0" max="1" class="form-input" title="Ki (rad/(m.s))">
+                    <input type="number" id="pid-kp" value="3" step="0.05" min="0" max="3" class="form-input" title="Kp (rad/m)">
+                    <input type="number" id="pid-ki" value="1" step="0.01" min="0" max="1" class="form-input" title="Ki (rad/(m.s))">
                     <input type="number" id="pid-kd" value="0.2" step="0.05" min="0" max="2" class="form-input" title="Kd (rad/(m/s))">
                     <button class="btn btn-small" onclick="sendPid()">Gửi PID</button>
                 </div>
@@ -164,10 +161,10 @@
                         </div>
                         <p class="hint">Dùng số đo thực tế. K phụ thuộc trực tiếp vào các số này.</p>
                     </details>
-                    <button id="btn-lqr" class="btn btn-primary btn-full">
-                        <span class="icon">💾</span> Tính K &amp; Gửi Xe
+                    <button id="btn-lqr" disabled title="Gain được biên dịch trong firmware; web chỉ đọc" class="btn btn-primary btn-full">
+                        <span class="icon">💾</span> LQR cố định trong firmware
                     </button>
-                    <p class="hint">Chỉ gửi được khi xe chưa arm (đang ở IDLE).</p>
+                    <p class="hint">Gain LQR chỉ đọc. Muốn đổi cần tính lại, kiểm chứng và build firmware; các ô trên không thay đổi gain xe.</p>
                 </div>
             </div>
 

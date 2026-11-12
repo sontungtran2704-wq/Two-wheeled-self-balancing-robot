@@ -246,6 +246,34 @@ function attachEventListeners() {
     };
     bindSlider('speed-input', 'speed-value', 'setSpeed');
     bindSlider('turn-input',  'turn-value',  'setTurn');
+    let drivePointer = null;
+    const setButtons = (v, w) => {
+        $('speed-input').value = v; $('turn-input').value = w;
+        $('speed-value').textContent = v; $('turn-value').textContent = w;
+        if (socket.connected) { socket.emit('setSpeed', v); socket.emit('setTurn', w); }
+    };
+    const releaseButtons = () => {
+        if (drivePointer === null) return;
+        drivePointer = null;
+        setButtons(0, 0);
+        if (socket.connected) socket.emit('release');
+    };
+    document.querySelectorAll('[data-drive-v]').forEach(button => {
+        button.style.touchAction = 'none';
+        button.addEventListener('contextmenu', e => e.preventDefault());
+        button.addEventListener('pointerdown', e => {
+            if (drivePointer !== null || !socket.connected || robotState.st !== 2) return;
+            e.preventDefault(); drivePointer = e.pointerId;
+            button.setPointerCapture(e.pointerId);
+            setButtons(Number(button.dataset.driveV), Number(button.dataset.driveW));
+        });
+        for (const event of ['pointerup', 'pointercancel', 'lostpointercapture'])
+            button.addEventListener(event, e => { if (e.pointerId === drivePointer) releaseButtons(); });
+    });
+    window.addEventListener('blur', releaseButtons);
+    document.addEventListener('visibilitychange', () => { if (document.hidden) releaseButtons(); });
+    socket.on('disconnect', releaseButtons);
+
 
     // Heartbeat: firmware tự về 0 nếu quá 400 ms không nhận SPEED/TURN, nên khi đang giữ
     // tốc độ khác 0 phải gửi lại định kỳ. Đóng tab / mất kết nối server -> xe tự dừng.
@@ -497,11 +525,7 @@ function writeLQRForm(p) {
 }
 
 function updateLQRParameters() {
-    const body = readLQRForm();
-    const bad = [...body.Q, body.R, ...Object.values(body.model)].some(v => !isFinite(v));
-    if (bad) { showNotification('Có ô nhập chưa hợp lệ', 'error'); return; }
-    socket.emit('updateLQR', body);
-    try { localStorage.setItem('lqr_params_20261108', JSON.stringify(body)); } catch (_) { /* storage unavailable */ }
+    showNotification('Gain LQR cố định trong firmware; cần tính lại và build để thay đổi.', 'info');
 }
 
 function onLQRUpdated(p) {
@@ -549,6 +573,9 @@ function loadPreset(key) {
 let lastSt = -2;
 let lastImuDiagnostic;
 const firmwareSamples = [];
+const MAX_LOG_SAMPLES = 3000;
+let lastFaultCapture = null;
+let previousSampleFault = false;
 
 function updateRobotData(data) {
     robotState.fault = data.fault;
@@ -580,7 +607,17 @@ function updateRobotData(data) {
 
     const t = Number.isFinite(data.t) ? data.t : (Date.now() - startTime) / 1000;
     firmwareSamples.push(data);
-    if (firmwareSamples.length > MAX_POINTS) firmwareSamples.shift();
+    if (firmwareSamples.length > MAX_LOG_SAMPLES) firmwareSamples.shift();
+    const isFault = [3, 4].includes(robotState.st);
+    if (isFault && !previousSampleFault) {
+        // Freeze the received pre-fault samples; later Idle/fault traffic must not erase them.
+        lastFaultCapture = {
+            capturedAt: new Date().toISOString(),
+            fault: data.fault || 'UNKNOWN',
+            data: firmwareSamples.slice()
+        };
+    }
+    previousSampleFault = isFault;
     pushChartPoint(t);
 
     dataPoints++;
@@ -612,7 +649,9 @@ function flushDisplay() {
     const s = ROBOT_STATES[st];
     $('state-display').textContent = s ? s.label : '—';
     if ([3, 4].includes(st)) {
-        $('reset-status').textContent = `Lỗi đang chốt: ${robotState.fault || 'chưa có mã'}. Kê xe chắc rồi bấm RESET lỗi → Chờ.`;
+        const detail = robotState.fault === 'SPEED_RAIL'
+            ? ' Lệnh tốc độ bánh chạm giới hạn liên tục; đây không phải lỗi vượt góc ngã.' : '';
+        $('reset-status').textContent = `Lỗi đang chốt: ${robotState.fault || 'chưa có mã'}.${detail} Đã giữ đoạn dữ liệu trước lỗi: tải JSON trước khi đóng trang. Kê xe chắc rồi bấm RESET lỗi → Chờ.`;
     } else if (st === 0) {
         $('reset-status').textContent = 'Xe đang Chờ. RESET không tự bật motor; START là thao tác riêng.';
     }
@@ -678,6 +717,7 @@ function dismissNotification(el) {
    ============================================================ */
 function clearHistory() {
     firmwareSamples.length = 0;
+    lastFaultCapture = null;
     chartData.timestamps.length = 0;
     chartData.angles.length     = 0;
     chartData.speeds.length     = 0;
@@ -713,8 +753,9 @@ function downloadJSON() {
         exportedAt: new Date().toISOString(),
         lqrParams,
         robotState,
-        totalPoints: chartData.timestamps.length,
+        totalPoints: firmwareSamples.length,
         data: firmwareSamples,
+        lastFaultCapture,
         units: { t: 's', theta: 'rad', thetaDot: 'rad/s', xDot: 'm/s (STEP)', yaw: 'rad/s', relativeAcceleration: 'm/s²' }
     };
     downloadBlob(JSON.stringify(payload, null, 2), 'application/json', `robot_${Date.now()}.json`);

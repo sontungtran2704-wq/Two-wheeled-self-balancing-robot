@@ -1,6 +1,6 @@
 {
   "config_id": "nema17-relative-v1",
-  "config_sha256": "a2db1c218dd854f05cae4da1791f5e7c81cd8f6645aafd693e0014859e10f9b4",
+  "config_sha256": "b3a774dc8d5a5891cf70cace06f40e6272ab717040ef0031ed9c320f20c68872",
   "schema_version": 1,
   "physical_status": "UNVERIFIED",
   "state_order": [
@@ -108,9 +108,9 @@
   },
   "pid": {
     "velocity": {
-      "kp": 1.2,
-      "ki": 0.25,
-      "kd": 0.04
+      "kp": 3.0,
+      "ki": 1.0,
+      "kd": 0.2
     },
     "yaw": {
       "kp": 3.0,

@@ -222,8 +222,9 @@ function createBridge(options = {}) {
         if(owner&&owner!==socket.id)return error(socket,'Dashboard khác đang điều khiển.');
       }
       if(['ZPHERE','ZP+','ZP-'].includes(cmd)){
-        if(!matching() || latest.imu_calibrated!==1 || latest.st!==0)
-          return error(socket,'Đặt zero khi xe đang chờ và gyro đã hiệu chuẩn.');
+        if(!matching())return error(socket,'Chưa đặt zero: cần telemetry mới và cấu hình trùng khớp.');
+        if(latest.st!==0)return error(socket,'Chưa đặt zero: kê xe chắc, bấm RESET lỗi → Chờ trước. RESET không tự bật motor.');
+        if(latest.imu_calibrated!==1)return error(socket,'Chưa đặt zero: giữ xe đứng yên và hiệu chuẩn gyro trước.');
         if(owner&&owner!==socket.id)return error(socket,'Dashboard khác đang điều khiển.');
       }
       if(cmd==='START'){

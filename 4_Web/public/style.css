@@ -941,3 +941,14 @@ select.form-input {
 .preset-buttons { flex-wrap: wrap; gap: 8px; }
 .preset-buttons .btn { flex: 1 1 90px; }
 .preset-buttons .btn[aria-pressed="true"] { outline: 2px solid var(--primary); }
+
+/* Four hold-to-drive controls inside one frame. */
+.drive-pad { margin: 20px 0 0; padding: 16px; min-width: 0; border: 1px solid var(--gray); border-radius: 16px; }
+.drive-pad legend { padding: 0 8px; font-weight: 600; }
+.drive-pad-buttons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.drive-pad-buttons .btn { width: 100%; min-width: 0; min-height: 56px; padding: 12px 8px; white-space: normal; }
+.drive-forward { grid-column: 1 / -1; }
+.drive-back { grid-column: 1 / -1; }
+.drive-pad-values { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 0.85rem; }
+.drive-pad-buttons .btn { background: rgba(var(--primary-rgb), .1); color: var(--primary); border: 1px solid rgba(var(--primary-rgb), .4); border-radius: 12px; }
+.drive-pad-buttons .btn:hover, .drive-pad-buttons .btn:active { background: var(--primary); color: #fff; }

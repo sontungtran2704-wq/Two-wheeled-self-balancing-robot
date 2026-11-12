@@ -1,0 +1,14 @@
+{
+  "03_Firmware_ESP32S3\\balancebot\\ControlCore.h": "5f5110c3ab03eb540c5ad05683c95ae212e0a0b2660e64beb9567751c22ea3a4",
+  "03_Firmware_ESP32S3\\balancebot\\GeneratedConfig.h": "faed2d002b921a319af575fdc44a14fa50fad3d405799d14aa172322b0f4bb98",
+  "03_Firmware_ESP32S3\\balancebot\\HardwareConfig.h": "b3c88077159c7adc0c90ce7354e30323ed8e88e7312d70f789209957a19817de",
+  "03_Firmware_ESP32S3\\balancebot\\ImuCalibration.h": "1abb04fc069ee8996c4103b21907e4dfdc797c623340829c79702fb53c70fcb9",
+  "03_Firmware_ESP32S3\\balancebot\\ImuHal.h": "fde0f469e883385df906a7a6677687f1fd5cfd620a2119c6dc9e61702c5a7674",
+  "03_Firmware_ESP32S3\\balancebot\\StepNco.h": "34d4947f0b8ee8f2a46ececcbfb7bdabe7bb2a250c25610065438b2c6f884f73",
+  "03_Firmware_ESP32S3\\balancebot\\StepperHal.h": "5823bbd7e9972e41c0ac6f603150033be7b5515a0816220155fe3cfb8c8f9e0a",
+  "03_Firmware_ESP32S3\\balancebot\\ControlCore.cpp": "e9e8041d7f4a23f920c10fe4cdf20ea7aae22fd0b76b56d1c28f47aef67c5d83",
+  "03_Firmware_ESP32S3\\balancebot\\ImuHal.cpp": "28e3de9f411f6e3ca371f348c646c7d38b611e3a508a1d68f7f4538f73624dc1",
+  "03_Firmware_ESP32S3\\balancebot\\Runtime.cpp": "a8064af938a39449246a5091627da143d32901b2bafc85477f64ac39fb4fc124",
+  "03_Firmware_ESP32S3\\balancebot\\StepperHal.cpp": "e224d19567ab2933b40a7df3f0c8f32cbb1b97e39f7d886276fee3f5c862dfd8",
+  "03_Firmware_ESP32S3\\balancebot\\balancebot.ino": "d55b7e0fefc4c6cdf1eee4d3971afe54834c21e2ea5dd41126325f7671c6df37"
+}

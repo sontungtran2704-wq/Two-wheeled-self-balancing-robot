@@ -100,7 +100,11 @@ void Device::tick(uint32_t now,const Sensors& s) {
   if(state_==State::Arming) {
     if(std::abs(sensors_.theta)<cfg::arm_rad && std::abs(s.theta)<cfg::arm_rad && std::abs(s.omega)<cfg::arm_rate) {
       if(!arm_timing_) {arm_timing_=true;arm_since_=now;}
-      if(uint32_t(now-arm_since_)>=1000000) {clearMotion();state_=State::Run;}
+      if(uint32_t(now-arm_since_)>=1000000) {
+        clearMotion();
+        motion_=true; // Allow the outer PID to hold zero velocity after its stability gate.
+        state_=State::Run;
+      }
     } else arm_timing_=false;
     return;
   }

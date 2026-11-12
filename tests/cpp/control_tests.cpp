@@ -16,6 +16,8 @@ static void arm(Device& d,uint32_t& t) {
 }
 int main() {
   Device d; uint32_t t=1000; d.tick(t,good(t));
+  const auto defaults=d.tuning();
+  assert(defaults.vkp==3 && defaults.vki==1 && defaults.vkd==.2);
   assert(d.state()==State::Idle && !d.enabled());
   assert(d.command("START",t)=="ACK:START");
   advance(d,t,100); assert(!d.enabled());

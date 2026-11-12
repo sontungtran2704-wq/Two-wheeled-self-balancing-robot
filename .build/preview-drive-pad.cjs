@@ -1,0 +1,3 @@
+const {createBridge}=require('./web_server');
+const {chromium}=require('C:/Users/DELL/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+(async()=>{const b=createBridge({port:13019});await b.listen();let browser;try{browser=await chromium.launch({channel:'msedge',headless:true});const p=await browser.newPage({viewport:{width:1440,height:1000}});await p.goto('http://127.0.0.1:13019');await p.locator('.drive-pad').scrollIntoViewIfNeeded();await p.locator('.drive-pad').screenshot({path:'results/drive-pad.png'});}finally{await browser?.close();await b.close();}})();
