@@ -86,6 +86,8 @@
                     </button>
                 </div>
                 <p class="hint">Giữ xe thẳng đứng ~1 giây sau khi bấm Bắt Đầu thì xe mới chạy.</p>
+                <button id="btn-reset" class="btn btn-small" onclick="resetRobot()">↺ RESET lỗi → Chờ</button>
+                <p id="reset-status" class="hint" role="status">Sau lỗi, kê xe chắc rồi RESET. RESET không bật motor.</p>
                 <div class="slider-group">
                     <label for="speed-input">Tiến / Lùi (cm/s)</label>
                     <input type="range" id="speed-input" min="-40" max="40" value="0" step="5" class="slider">

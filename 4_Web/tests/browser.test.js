@@ -4,7 +4,7 @@ const {createBridge}=require('../web_server');
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'C:/Users/USER/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
 test('dashboard TCP commands, telemetry, CSV, malformed and stale data',async t=>{
  const bridge=createBridge({port:13008}),d=bridge.design,commands=[];let stream,state=0,seq=0,motion=0,pause=false,calibrated=1;
- const fake=net.createServer(s=>{stream=s;let b='';s.on('data',x=>{b+=x;let n;while((n=b.indexOf('\n'))>=0){const line=b.slice(0,n);b=b.slice(n+1);commands.push(line);if(line==='START')state=2;if(line==='STOP')state=0;if(line.startsWith('MOTION,'))motion=Number(line.split(',')[1]);s.write('ACK:'+line.split(',')[0]+'\n');}});});
+ const fake=net.createServer(s=>{stream=s;let b='';s.on('data',x=>{b+=x;let n;while((n=b.indexOf('\n'))>=0){const line=b.slice(0,n);b=b.slice(n+1);commands.push(line);if(line==='START')state=2;if(line==='STOP'||line==='RESET')state=0;if(line.startsWith('MOTION,'))motion=Number(line.split(',')[1]);s.write('ACK:'+line.split(',')[0]+'\n');}});});
  await new Promise(r=>fake.listen(18080,'127.0.0.1',r));await bridge.listen();
  const timer=setInterval(()=>{if(stream&&!stream.destroyed&&!pause)stream.write(`t=${seq*40},theta=0.01,omega=0,v=0.1,yaw=0.2,u=0.3,left=0.1,right=0.1,st=${state},motion=${motion},session=1,seq=${++seq},config=${d.config_id},hash=${d.config_sha256},fresh=1,sat=0,jitter_us=1,overruns=0,imu_calibrated=${calibrated},imu_sample_fresh=1\n`);},40);
  let browser;
@@ -12,6 +12,17 @@ test('dashboard TCP commands, telemetry, CSV, malformed and stale data',async t=
  browser=await chromium.launch({channel:'msedge',headless:true});const page=await browser.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
  await page.goto('http://127.0.0.1:13008');await page.fill('#wifi-host','127.0.0.1:18080');await page.click('#btn-connect');await page.waitForFunction(()=>document.querySelector('#state-display').textContent==='Chờ');
  assert.deepEqual(errors,[]);
+ // A latched fault must be recoverable from the visible button without START.
+ state=3;
+ await page.waitForFunction(()=>document.querySelector('#state-display').textContent==='LỖI');
+ const startsBeforeReset=commands.filter(x=>x==='START').length;
+ await page.click('#btn-reset');
+ await page.waitForTimeout(100);
+ assert(commands.includes('RESET'));
+ assert.equal(commands.filter(x=>x==='START').length,startsBeforeReset);
+ // The fake firmware handles RESET and publishes Idle; UI must follow telemetry.
+ await page.waitForFunction(()=>document.querySelector('#state-display').textContent==='Chờ');
+ assert.match(await page.locator('#reset-status').textContent(),/Xe đang Chờ/);
  await page.waitForFunction(()=>['angleChart','speedChart','outputChart'].every(id=>Chart.getChart(id)?.data.datasets[0].data.length>0));
  assert.deepEqual(await page.evaluate(()=>['angleChart','speedChart','outputChart'].map(id=>Chart.getChart(id).data.datasets[0].data.at(-1))),[0.01,0.1,0.3]);
  calibrated=0;

@@ -327,3 +327,9 @@ Sau sửa JS: Ctrl+F5; sửa server thì khởi động lại đúng tiến trì
 - Không đổi ngưỡng/gain chỉ để hiện PASS; ghi giả định và phép thử.
 - Skills đã áp dụng gần đây: systematic-debugging, verification-before-completion; có test host và browser cho thay đổi. Các skill/công đoạn lịch sử xem 05_BaoCao/09_Skill_va_nguon_hang.md.
 - File này là điểm bắt đầu cho phiên sau; kiểm tra trạng thái mới trước khi lặp lại thao tác hoặc kết luận.
+
+## Bổ sung nút RESET trên web — 12/11/2026
+Theo yêu cầu người dùng: thêm btn-reset cạnh phần điều khiển trong public/index.html; dashboard.js gửi RESET có chủ đích, đưa slider về 0, báo ACK và mã fault, theo telemetry trở về Chờ. Chặn thao tác khi giao diện đang báo ARM/Run; firmware vẫn giữ kiểm tra riêng. Không tự xóa lỗi hoặc tự START. Browser regression TCP giả lập kiểm tra fault → bấm RESET → ACK/telemetry Idle, không phát sinh START. Không thử RESET trên xe thật trong lần sửa này. Không sửa firmware hoặc gain. Tải lại Ctrl+F5; không cần khởi động lại server vì chỉ đổi tài nguyên tĩnh và test.
+
+## Bản thử LQR riêng — 12/11/2026
+Theo yêu cầu người dùng, chuẩn bị sketch độc lập 03_Firmware_ESP32S3/balancebot_lqr_only; giữ nguyên balancebot hiện tại. Lõi khóa motion=false mỗi tick, từ chối MOTION/SPEED/TURN/CMD/$P bằng ERR:LQR_ONLY. GET có EVT:CONTROL,LQR_ONLY,PID_DISABLED. Giữ nguyên gain, cấu hình, IMU, driver, an toàn, Wi-Fi và NVS; đọc kỹ lưu ý điểm zero dùng chung. Build target mới PASS (939743 bytes flash, 49076 bytes globals), source regression 3/3 PASS; chưa chạy C++ host hoặc thử binary trên xe. Artifact source ZIP, firmware, checksum và log tại 06_KiemThu/lqr_only; hướng dẫn nạp trong README của sketch. Không tự nạp, không gửi START hoặc bật motor. Xem 06_KiemThu/lqr_only/KET_QUA.md cho phạm vi chứng cứ và lỗi build đầu đã khắc phục.

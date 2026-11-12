@@ -337,6 +337,15 @@ socket.on('linkStatus', s => {
 
 // Thông điệp văn bản từ firmware (EVT:..., ERR:..., K UPDATED, SAVED, GYRO OK...)
 function onFirmwareMessage(line) {
+    if (line === 'ACK:RESET') {
+        $('reset-status').textContent = 'Firmware đã xác nhận RESET. Chờ telemetry trạng thái Chờ; motor không tự bật.';
+        showNotification('Đã RESET lỗi. Motor không tự bật.', 'success');
+        return;
+    }
+    if (line === 'ERR:RESET_REQUIRED') {
+        showNotification('Lỗi đang chốt. Kê xe chắc, xem nguyên nhân rồi bấm RESET lỗi → Chờ.', 'error');
+        return;
+    }
     if (line === 'ACK:START') {
         showNotification('Firmware đã nhận START. Giữ xe thẳng đứng trong lúc ARM.', 'info');
         return;
@@ -437,6 +446,22 @@ function startRobot() {
     robotCmd('start');
 }
 
+function resetRobot() {
+    if (!socket.connected || !robotState.isConnected) {
+        showNotification('Chưa gửi RESET: hãy kết nối lại với xe.', 'error');
+        return;
+    }
+    if ([1, 2].includes(robotState.st)) {
+        showNotification('Bấm Dừng trước khi RESET; xe đang ARM hoặc chạy.', 'error');
+        return;
+    }
+    ['speed-input', 'turn-input'].forEach(id => { $(id).value = 0; });
+    $('speed-value').textContent = '0';
+    $('turn-value').textContent = '0';
+    $('reset-status').textContent = 'Đã yêu cầu RESET; đang chờ ACK của firmware.';
+    robotCmd('reset');
+}
+
 function stopRobot() {
     robotCmd('stop');
     // đưa các thanh trượt về 0 để lần chạy sau không tự đi
@@ -526,6 +551,7 @@ let lastImuDiagnostic;
 const firmwareSamples = [];
 
 function updateRobotData(data) {
+    robotState.fault = data.fault;
     robotState.imuDiagnostic=data.imu_diag;
     robotState.imuCalibrated=data.imu_calibrated;
     robotState.calAccelMg=data.cal_accel_mg;
@@ -585,6 +611,11 @@ function flushDisplay() {
     $('pos-display').textContent   = position == null ? '—' : position.toFixed(4);
     const s = ROBOT_STATES[st];
     $('state-display').textContent = s ? s.label : '—';
+    if ([3, 4].includes(st)) {
+        $('reset-status').textContent = `Lỗi đang chốt: ${robotState.fault || 'chưa có mã'}. Kê xe chắc rồi bấm RESET lỗi → Chờ.`;
+    } else if (st === 0) {
+        $('reset-status').textContent = 'Xe đang Chờ. RESET không tự bật motor; START là thao tác riêng.';
+    }
     if(st===0 && robotState.imuCalibrated===0) {
         const reasons=['Đang hiệu chuẩn IMU','', 'Lỗi I²C','Sai mã IMU','Lỗi cấu hình IMU','Gia tốc chưa hợp lệ','Gyro còn rung'];
         $('state-display').textContent=reasons[robotState.imuDiagnostic] || 'Chờ IMU';

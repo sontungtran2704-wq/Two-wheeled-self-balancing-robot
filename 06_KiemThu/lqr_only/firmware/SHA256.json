@@ -1,0 +1,22 @@
+[
+  {
+    "File": "balancebot_lqr_only.ino.bin",
+    "Hash": "F680BC4FD31709DC07A750F64340B03C83DE34BBE0A51E7C6A8E97C5FEAB58D0"
+  },
+  {
+    "File": "balancebot_lqr_only.ino.bootloader.bin",
+    "Hash": "84BB365666003B051F564D04380D0CF5D9D85C420DDAFE9FC863071B49E49BFC"
+  },
+  {
+    "File": "balancebot_lqr_only.ino.merged.bin",
+    "Hash": "B806D0B03DC4E92CC8BB5B8F8384804B36DFD6B03DCA0D3D878AD05AD7A18EAE"
+  },
+  {
+    "File": "balancebot_lqr_only.ino.partitions.bin",
+    "Hash": "148B959CBFF1C38AA8E1D5C0BA9D612C54997B945E56A63F41223EEF650653A1"
+  },
+  {
+    "File": "boot_app0.bin",
+    "Hash": "F94C5D786A7A8FAB06AC5D10E33BF37711A6697636DC037559EA19CC410A17F0"
+  }
+]

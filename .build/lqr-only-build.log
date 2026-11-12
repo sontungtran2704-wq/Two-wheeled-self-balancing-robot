@@ -1,0 +1,11 @@
+C:/Users/DELL/AppData/Local/Arduino15/packages/esp32/tools/esp-x32/2601/bin/../lib/gcc/xtensa-esp-elf/14.2.0/../../../../xtensa-esp-elf/bin/ar.exe: unable to copy file 'D:\blancing\Robot_Collab\.build\lqr-only\core\core.a'; reason: Invalid argument
+Error during build: exit status 1
+
+Used library Version Path
+Wire         3.3.12  C:\Users\DELL\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.12\libraries\Wire
+WiFi         3.3.12  C:\Users\DELL\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.12\libraries\WiFi
+Networking   3.3.12  C:\Users\DELL\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.12\libraries\Network
+Preferences  3.3.12  C:\Users\DELL\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.12\libraries\Preferences
+
+Used platform Version Path
+esp32:esp32   3.3.12  C:\Users\DELL\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.12

@@ -1,0 +1,12 @@
+#include <Arduino.h>
+#line 1 "D:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot_lqr_only\\balancebot_lqr_only.ino"
+void setupRobot();
+void loopRobot();
+#line 3 "D:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot_lqr_only\\balancebot_lqr_only.ino"
+void setup();
+#line 4 "D:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot_lqr_only\\balancebot_lqr_only.ino"
+void loop();
+#line 3 "D:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot_lqr_only\\balancebot_lqr_only.ino"
+void setup() { setupRobot(); }
+void loop() { loopRobot(); }
+
