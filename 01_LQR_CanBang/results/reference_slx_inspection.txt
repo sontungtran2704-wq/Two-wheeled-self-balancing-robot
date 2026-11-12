@@ -1,0 +1,19 @@
+  <a href="matlab:helpPopup('Simulink.MDLInfo')" style="font-weight:bold">MDLInfo</a> with properties:
+
+          BlockDiagramName: 'Mophong'
+                  FileName: 'D:\TLHT\Two-wheeled-self-balancing-robot\00_Nguon\lqr_reference\LQR\matlab\Mophong.slx'
+          BlockDiagramType: 'Model'
+                 IsLibrary: 0
+           SimulinkVersion: '24.1'
+               ReleaseName: 'R2024a'
+        ReleaseUpdateLevel: 4
+              ModelVersion: '1.23'
+            LastModifiedBy: 'HP'
+               Description: ''
+    SavedCharacterEncoding: ''
+     LastSavedArchitecture: 'win64'
+                  Metadata: []
+                 Interface: [1x1 struct]
+
+
+No original files changed; callbacks not executed.

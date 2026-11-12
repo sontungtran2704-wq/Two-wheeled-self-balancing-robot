@@ -1,0 +1,95 @@
+{
+  "config_id": "nema17-relative-v1",
+  "config_sha256": "a2db1c218dd854f05cae4da1791f5e7c81cd8f6645aafd693e0014859e10f9b4",
+  "MATLAB": "24.2.0.2712019 (R2024b)",
+  "pid": {
+    "velocity": {
+      "kp": 1.2,
+      "ki": 0.25,
+      "kd": 0.04
+    },
+    "yaw": {
+      "kp": 3,
+      "ki": 0.8,
+      "kd": 0.02
+    },
+    "derivative_tau_s": 0.08,
+    "accel_filter_s": 0.12,
+    "accel_max": 0.35,
+    "yaw_accel_max": 2,
+    "velocity_max": 0.2,
+    "yaw_rate_max": 0.8,
+    "velocity_slew": 0.12,
+    "yaw_slew": 0.6
+  },
+  "motion": {
+    "scenario": "motion_52s",
+    "max_pitch_deg": 1.624440390723384,
+    "final_pitch_deg": 0.050420137463418738,
+    "final_velocity": 0.0092940305330605662,
+    "final_position": 0.43705306761384893,
+    "max_u": 0.14746913971999953,
+    "max_wheel_speed": 0.22085784658620716,
+    "saturated_fraction": 0,
+    "max_total_torque_Nm": 0.0057331618759294215,
+    "simulink_state_error": 0,
+    "simulink_controller_error": 0,
+    "fell": false,
+    "settling_s": 50.765,
+    "saturation_s": 0,
+    "control_rms": 0.045991747647081249,
+    "config_id": "nema17-relative-v1",
+    "config_sha256": "a2db1c218dd854f05cae4da1791f5e7c81cd8f6645aafd693e0014859e10f9b4",
+    "plateau_errors": [
+      [
+        8.9,
+        0.013320491133287371,
+        0,
+        -0.039081714789146571
+      ],
+      [
+        14.9,
+        -0.028217757992707843,
+        0,
+        0.06958459785312951
+      ],
+      [
+        20.900000000000002,
+        0.0072724832714106489,
+        0.015161917063226116,
+        -0.020112816006892034
+      ],
+      [
+        26.9,
+        0.0015275223017783863,
+        -0.032956334093829587,
+        -0.0047912859496883863
+      ],
+      [
+        32.9,
+        0.013633215397293869,
+        0.022466807105164022,
+        -0.040062719038379109
+      ],
+      [
+        38.9,
+        -0.010490737698017024,
+        -0.0057872588749569819,
+        0.030205380307557032
+      ],
+      [
+        48.9,
+        -0.0077104450170037,
+        0.00011813904102134831,
+        0.02300350611377059
+      ]
+    ]
+  },
+  "vectors": {
+    "rows": 2400,
+    "matlab_python_max_abs_error": 8.64801563693618E-11,
+    "simulink_python_max_abs_error": 8.64801563693618E-11,
+    "tolerance": 1E-8,
+    "scope": "numerical controller only; not sensor HAL, task timing or hardware"
+  }
+}

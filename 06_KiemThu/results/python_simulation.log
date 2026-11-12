@@ -1,0 +1,50 @@
+[
+  {
+    "scenario": "baseline_5deg",
+    "fell": false,
+    "theta_peak_deg": 5.0,
+    "settling_s": 0.52,
+    "drift_m": 1.3020316371208678,
+    "saturation_s": 0.0
+  },
+  {
+    "scenario": "tuned_5deg",
+    "fell": false,
+    "theta_peak_deg": 5.0,
+    "settling_s": 0.34,
+    "drift_m": 0.7180219293152946,
+    "saturation_s": 0.0
+  },
+  {
+    "scenario": "tuned_10deg",
+    "fell": false,
+    "theta_peak_deg": 10.0,
+    "settling_s": 0.41500000000000004,
+    "drift_m": 1.4791862965539984,
+    "saturation_s": 0.02
+  },
+  {
+    "scenario": "tuned_15deg",
+    "fell": false,
+    "theta_peak_deg": 14.999999999999998,
+    "settling_s": 0.47000000000000003,
+    "drift_m": 2.455424313431134,
+    "saturation_s": 0.05
+  },
+  {
+    "scenario": "push",
+    "fell": false,
+    "theta_peak_deg": 0.45165405282031185,
+    "settling_s": 3.11,
+    "drift_m": 0.3450112428392667,
+    "saturation_s": 0.0
+  },
+  {
+    "scenario": "motion",
+    "fell": false,
+    "theta_peak_deg": 1.6244403900888638,
+    "settling_s": 50.765,
+    "drift_m": 0.43700664646165627,
+    "saturation_s": 0.0
+  }
+]

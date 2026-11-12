@@ -1,0 +1,3 @@
+Used platform Version Path
+esp32:esp32   3.3.12  C:\Users\USER\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.12
+Error during build: cleaning build path: unlinkat D:\TLHT\Two-wheeled-self-balancing-robot\.build\esp32s3\compile.log: Access is denied.

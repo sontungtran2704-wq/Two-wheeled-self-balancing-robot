@@ -1,0 +1,4 @@
+MATLAB 24.2.0.2712019 (R2024b), run 2026-11-11 07:22:41
+motion_52s: pitch_max=1.6244 deg, final_v=0.009294 m/s, final_x=0.437053 m, simulation error=0
+Controller vectors (2400): MATLAB 8.65e-11; Simulink 8.65e-11 max absolute error.
+PID MATLAB/Simulink and controller vector assertions passed. Hardware unverified.

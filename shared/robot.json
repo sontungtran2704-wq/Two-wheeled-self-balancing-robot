@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "config_id": "nema17-relative-v1",
+  "hardware_confirmed": false,
+  "model": {"mb": 1.141, "mw": 0.033, "r": 0.033, "l": 0.035, "h": 0.14, "W": 0.228, "Ir": 0.0000036, "g": 9.81},
+  "drive": {"full_steps": 200, "microstep": 16, "max_relative_speed": 0.6, "max_relative_accel": 3.0, "max_step_hz": 15000, "assumed_torque_per_motor": 0.08},
+  "timing": {"lqr_s": 0.005, "pid_s": 0.02, "telemetry_s": 0.04, "lease_s": 0.4, "imu_max_age_s": 0.015, "stable_s": 1.0},
+  "lqr": {"state_order": ["theta_rad", "omega_rad_s"], "input": "relative_tangential_acceleration_m_s2", "baseline_Q": [25, 1], "baseline_R": 2, "Q": [400, 4], "R": 1},
+  "pid": {"velocity": {"kp": 1.2, "ki": 0.25, "kd": 0.04}, "yaw": {"kp": 3.0, "ki": 0.8, "kd": 0.02}, "derivative_tau_s": 0.08, "accel_filter_s": 0.12, "accel_max": 0.35, "yaw_accel_max": 2.0, "velocity_max": 0.2, "yaw_rate_max": 0.8, "velocity_slew": 0.12, "yaw_slew": 0.6},
+  "safety": {"arm_rad": 0.06981317007977318, "fall_rad": 0.3839724354387525, "stable_rad": 0.05235987755982989, "stable_rate": 0.15, "arm_rate": 0.3, "arm_s": 1.0, "deadline_fault_s": 0.015, "saturation_fault_s": 0.3},
+  "provisional_ranges": {"mb": [0.9, 1.4], "mw": [0.0165, 0.033], "r": [0.033, 0.04], "l": [0.025, 0.06], "Jc_scale": [0.6, 1.5], "W": [0.16, 0.228], "actuator_delay_s": [0, 0.005, 0.01], "tracking_gain": [0.8, 1.0, 1.2]}
+}

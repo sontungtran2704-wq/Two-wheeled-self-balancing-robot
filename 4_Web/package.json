@@ -1,0 +1,36 @@
+{
+  "name": "xe-can-bang-buoc-esp32s3-lqr",
+  "version": "3.0.0",
+  "description": "Self-balancing two-wheeled stepper robot (ESP32-S3, LQR) - Web Dashboard",
+  "main": "web_server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node web_server.js",
+    "dev": "nodemon web_server.js",
+    "test": "node --test tests/api.test.js",
+    "test:browser": "node --test tests/browser.test.js"
+  },
+  "keywords": [
+    "robot",
+    "balancing",
+    "LQR",
+    "control",
+    "ESP32-S3",
+    "stepper"
+  ],
+  "author": "HCMUTE - Control Engineering",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.5.4",
+    "serialport": "^11.0.0",
+    "@serialport/parser-readline": "^11.0.0",
+    "chart.js": "3.9.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

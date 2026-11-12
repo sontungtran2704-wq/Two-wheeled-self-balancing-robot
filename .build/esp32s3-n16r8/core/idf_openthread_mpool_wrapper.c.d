@@ -1,0 +1,4 @@
+D:\TLHT\Two-wheeled-self-balancing-robot\.build\esp32s3-n16r8\core\idf_openthread_mpool_wrapper.c.o: \
+ C:\Users\USER\AppData\Local\Arduino15\packages\esp32\hardware\esp32\3.3.12\cores\esp32\idf_openthread_mpool_wrapper.c \
+ C:\Users\USER\AppData\Local\Arduino15\packages\esp32\tools\esp32s3-libs\3.3.12/include/soc/esp32s3/include/soc/soc_caps.h \
+ C:\Users\USER\AppData\Local\Arduino15\packages\esp32\tools\esp32s3-libs\3.3.12/qio_opi/include/sdkconfig.h

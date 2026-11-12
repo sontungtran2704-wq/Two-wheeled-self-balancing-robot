@@ -1,0 +1,7 @@
+{
+  "rows": 2400,
+  "matlab_python_max_abs_error": 8.64801563693618E-11,
+  "simulink_python_max_abs_error": 8.64801563693618E-11,
+  "tolerance": 1E-8,
+  "scope": "numerical controller only; not sensor HAL, task timing or hardware"
+}

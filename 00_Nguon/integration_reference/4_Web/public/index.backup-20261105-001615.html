@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1a202c">
+    <title>Xe Cân Bằng - LQR / Động cơ bước</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/vendor/chart/chart.min.js"></script>
+    <script>window.Chart || document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"><\/script>');</script>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-left">
+                <h1 class="logo">XE CÂN BẰNG</h1>
+                <p class="subtitle">LQR · Động cơ bước · ESP32-S3</p>
+            </div>
+            <div class="header-right">
+                <div class="connection-badge">
+                    <span id="status-indicator" class="status-dot disconnected"></span>
+                    <span id="status-text">Chưa kết nối</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN LAYOUT -->
+    <div class="container">
+
+        <!-- LEFT SIDEBAR — CONTROLS -->
+        <aside class="sidebar left-sidebar" id="panel-controls">
+
+            <div class="sidebar-section">
+                <h3 class="section-title">🔌 Kết Nối ESP32-S3</h3>
+                <div class="form-group">
+                    <label for="port-select">Cổng Serial</label>
+                    <div class="inline-row">
+                        <select id="port-select" class="form-input"></select>
+                        <button id="btn-refresh-ports" class="btn btn-small" title="Quét lại cổng">🔄</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="wifi-host">Hoặc nhập IP/tên của xe (WiFi)</label>
+                    <input id="wifi-host" class="form-input" type="text" placeholder="vd 192.168.1.50 hoặc balancebot.local" autocomplete="off">
+                </div>
+                <div class="button-group">
+                    <button id="btn-connect" class="btn btn-primary btn-full">
+                        <span class="icon">⚡</span> Kết Nối
+                    </button>
+                    <button id="btn-disconnect" class="btn btn-secondary btn-full">
+                        <span class="icon">🔌</span> Ngắt Kết Nối
+                    </button>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <details>
+                    <summary class="section-title">📶 WiFi của xe</summary>
+                    <p class="hint">Xe tự phát WiFi <b>BalanceBot</b> (mật khẩu <code>balance123</code>, IP 192.168.4.1) khi chưa có WiFi nhà. Nhập WiFi nhà để xe tự nối vào, rồi bấm Lưu và khởi động lại xe (đang chạy thì không lưu được).</p>
+                    <div class="form-group">
+                        <label for="wifi-ssid">Tên WiFi nhà (SSID)</label>
+                        <input id="wifi-ssid" class="form-input" type="text" maxlength="32" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label for="wifi-pass">Mật khẩu (trống hoặc ≥ 8 ký tự)</label>
+                        <input id="wifi-pass" class="form-input" type="password" maxlength="64" autocomplete="off">
+                    </div>
+                    <button id="btn-wifi-save" class="btn btn-secondary btn-full">Lưu WiFi và khởi động lại xe</button>
+                </details>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="section-title">⚙️ Điều Khiển Xe</h3>
+                <div class="button-group">
+                    <button id="btn-start" class="btn btn-success btn-full">
+                        <span class="icon">▶️</span> Arm / Bắt Đầu
+                    </button>
+                    <button id="btn-stop" class="btn btn-danger btn-full">
+                        <span class="icon">⏹️</span> Dừng
+                    </button>
+                </div>
+                <p class="hint">Giữ xe thẳng đứng ~1 giây sau khi bấm Bắt Đầu thì xe mới chạy.</p>
+                <div class="slider-group">
+                    <label for="speed-input">Tiến / Lùi (cm/s)</label>
+                    <input type="range" id="speed-input" min="-40" max="40" value="0" step="5" class="slider">
+                    <div class="slider-value">
+                        <span id="speed-value" class="value-display">0</span>
+                        <span class="unit">cm/s</span>
+                    </div>
+                </div>
+                <div class="slider-group">
+                    <label for="turn-input">Quay trái / phải (độ/s)</label>
+                    <input type="range" id="turn-input" min="-90" max="90" value="0" step="10" class="slider">
+                    <div class="slider-value">
+                        <span id="turn-value" class="value-display">0</span>
+                        <span class="unit">°/s</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="section-title">🎚️ PID vị trí (vòng ngoài)</h3>
+                <p class="hint">Gửi xuống xe ngay khi đang chạy (chưa lưu). Bắt đầu nhỏ: Kp 0.3, Ki 0, Kd 0.1; mặc định 0.5 / 0 / 0.2. Bấm "Lưu vào xe" khi đã ưng.</p>
+                <div class="data-action-row">
+                    <input type="number" id="pid-kp" value="0.5" step="0.05" min="0" max="3" class="form-input" title="Kp (rad/m)">
+                    <input type="number" id="pid-ki" value="0" step="0.01" min="0" max="1" class="form-input" title="Ki (rad/(m.s))">
+                    <input type="number" id="pid-kd" value="0.2" step="0.05" min="0" max="2" class="form-input" title="Kd (rad/(m/s))">
+                    <button class="btn btn-small" onclick="sendPid()">Gửi PID</button>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="section-title">🎯 Zeropoint &amp; Cảm Biến</h3>
+                <p class="hint">Xe trôi ra trước → bấm ZP−. Trôi lùi → bấm ZP+. Hoặc giữ xe đúng điểm cân bằng rồi bấm "Lấy góc".</p>
+                <div class="data-action-row">
+                    <button class="btn btn-small" onclick="robotCmd('zp-')">ZP −</button>
+                    <button class="btn btn-small" onclick="robotCmd('zphere')">Lấy góc</button>
+                    <button class="btn btn-small" onclick="robotCmd('zp+')">ZP +</button>
+                </div>
+                <div class="data-action-row">
+                    <button class="btn btn-small" onclick="robotCmd('calgyro')">Hiệu chuẩn gyro</button>
+                    <button class="btn btn-small" onclick="robotCmd('save')">💾 Lưu vào xe</button>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="section-title">📊 Thông Số LQR Vòng Trong</h3>
+                <div class="lqr-form">
+                    <div class="form-grid q-grid">
+                        <div class="form-group"><label for="q0-input">Q sai lệch góc θ-θref</label>
+                            <input type="number" id="q0-input" value="100" step="any" min="0" max="10000" class="form-input"></div>
+                        <div class="form-group"><label for="q1-input">Q tốc độ góc θ̇</label>
+                            <input type="number" id="q1-input" value="1" step="any" min="0" max="10000" class="form-input"></div>
+                        <div class="form-group"><label for="q2-input">Q vận tốc xe v</label>
+                            <input type="number" id="q2-input" value="10" step="any" min="0" max="10000" class="form-input"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="r-input">R — trọng số lực điều khiển</label>
+                        <input type="number" id="r-input" value="1" step="any" min="0.01" max="1000" class="form-input">
+                    </div>
+                    <details class="model-box">
+                        <summary>🔧 Thông số cơ khí của xe</summary>
+                        <div class="form-grid">
+                            <div class="form-group"><label for="mb-input">Khối lượng thân (kg)</label>
+                                <input type="number" id="mb-input" value="1.2" step="any" class="form-input"></div>
+                            <div class="form-group"><label for="mw-input">Khối lượng 1 bánh (kg)</label>
+                                <input type="number" id="mw-input" value="0.08" step="any" class="form-input"></div>
+                            <div class="form-group"><label for="rw-input">Bán kính bánh (m)</label>
+                                <input type="number" id="rw-input" value="0.045" step="any" class="form-input"></div>
+                            <div class="form-group"><label for="l-input">Trọng tâm cao l (m)</label>
+                                <input type="number" id="l-input" value="0.10" step="any" class="form-input"></div>
+                            <div class="form-group"><label for="h-input">Chiều cao thân h (m)</label>
+                                <input type="number" id="h-input" value="0.20" step="any" class="form-input"></div>
+                        </div>
+                        <p class="hint">Dùng số đo thực tế. K phụ thuộc trực tiếp vào các số này.</p>
+                    </details>
+                    <button id="btn-lqr" class="btn btn-primary btn-full">
+                        <span class="icon">💾</span> Tính K &amp; Gửi Xe
+                    </button>
+                    <p class="hint">Chỉ gửi được khi xe chưa arm (đang ở IDLE).</p>
+                </div>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="section-title">📋 Cấu Hình Sẵn</h3>
+                <p class="hint">Chọn để hiện bộ số trên web. Dùng nút gửi LQR/PID khi muốn áp dụng xuống xe.</p>
+                <div class="preset-buttons">
+                    <button class="btn btn-small" onclick="loadPreset('sim0')">Mô phỏng 0°</button>
+                    <button class="btn btn-small" onclick="loadPreset('sim6')">Mô phỏng 6°</button>
+                    <button class="btn btn-small" onclick="loadPreset('sim10')">Mô phỏng 10°</button>
+                    <button class="btn btn-small" onclick="loadPreset('stable')">Ổn Định</button>
+                    <button class="btn btn-small" onclick="loadPreset('fast')">Nhanh</button>
+                    <button class="btn btn-small" onclick="loadPreset('smooth')">Mượt</button>
+                </div>
+                <p class="hint" id="preset-description" aria-live="polite"></p>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 class="section-title">💾 Xuất Dữ Liệu</h3>
+                <div class="data-action-row">
+                    <button class="btn btn-small" onclick="clearHistory()">🗑️ Xóa</button>
+                    <button class="btn btn-small" onclick="exportCSV()">📥 CSV</button>
+                    <button class="btn btn-small" onclick="downloadJSON()">📄 JSON</button>
+                </div>
+            </div>
+
+        </aside>
+
+        <!-- CENTER — CHARTS -->
+        <main class="main-content" id="panel-charts">
+            <div class="charts-container">
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>📐 Góc Nghiêng</h3>
+                        <span class="chart-value" id="angle-value">0.000 <small>rad</small></span>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="angleChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>🏃 Vận Tốc Xe</h3>
+                        <span class="chart-value" id="speed-display">0.000 <small>m/s</small></span>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="speedChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>⚡ Lực Điều Khiển F</h3>
+                        <span class="chart-value" id="output-display">0.00 <small>N</small></span>
+                    </div>
+                    <div class="chart-wrapper">
+                        <canvas id="outputChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- RIGHT SIDEBAR — DATA -->
+        <aside class="sidebar right-sidebar" id="panel-data">
+            <div class="data-card">
+
+                <h3 class="section-title">📊 Dữ Liệu Thời Gian Thực</h3>
+                <div class="data-grid">
+                    <div class="data-item">
+                        <span class="data-label">Góc</span>
+                        <span class="data-value" id="angle-display">0.0000</span>
+                        <span class="data-unit">rad</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Góc/s</span>
+                        <span class="data-value" id="angular-vel">0.0000</span>
+                        <span class="data-unit">rad/s</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Vị trí x</span>
+                        <span class="data-value" id="pos-display">0.0000</span>
+                        <span class="data-unit">m</span>
+                    </div>
+                    <div class="data-item">
+                        <span class="data-label">Trạng thái</span>
+                        <span class="data-value" id="state-display">—</span>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <h3 class="section-title">🎛️ Theo Dõi LQR &amp; PID Hiện Tại</h3>
+                <div class="data-grid">
+                    <div class="data-item"><span class="data-label">K[θ]</span><span class="data-value" id="current-k0">—</span></div>
+                    <div class="data-item"><span class="data-label">K[θ̇]</span><span class="data-value" id="current-k1">—</span></div>
+                    <div class="data-item"><span class="data-label">K[v]</span><span class="data-value" id="current-k2">—</span></div>
+                    <div class="data-item"><span class="data-label">A41</span><span class="data-value" id="current-a41">—</span></div>
+                    <div class="data-item"><span class="data-label">B4</span><span class="data-value" id="current-b4">—</span></div>
+                </div>
+                <h4>PID vị trí vòng ngoài</h4>
+                <div class="data-grid">
+                    <div class="data-item"><span class="data-label">Kp</span><span class="data-value" id="current-kp">—</span></div>
+                    <div class="data-item"><span class="data-label">Ki</span><span class="data-value" id="current-ki">—</span></div>
+                    <div class="data-item"><span class="data-label">Kd</span><span class="data-value" id="current-kd">—</span></div>
+                </div>
+                <p class="hint" id="pid-status">Chưa đọc PID từ xe.</p>
+                <div class="metrics-list">
+                    <div class="metric-row"><span>Cực không ổn định (hở)</span><span id="current-pole" class="metric-value">—</span></div>
+                    <div class="metric-row"><span>Đã gửi xuống xe</span><span id="current-sent" class="metric-value">—</span></div>
+                </div>
+
+                <div class="divider"></div>
+
+                <h3 class="section-title">📈 Chỉ Số</h3>
+                <div class="metrics-list">
+                    <div class="metric-row">
+                        <span>Điểm dữ liệu</span>
+                        <span id="data-points" class="metric-value">0</span>
+                    </div>
+                    <div class="metric-row">
+                        <span>Thời gian</span>
+                        <span id="uptime" class="metric-value">00:00:00</span>
+                    </div>
+                    <div class="metric-row">
+                        <span>Góc Min / Max</span>
+                        <span id="angle-range" class="metric-value">0 / 0</span>
+                    </div>
+                </div>
+
+            </div>
+        </aside>
+
+    </div><!-- /.container -->
+
+    <!-- NOTIFICATION STACK -->
+    <div id="notification-container" class="notification-container"></div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>Xe Tự Cân Bằng — Hệ Thống Điều Khiển Tự Động &nbsp;|&nbsp; © 2025-2026 HCMUTE</p>
+    </footer>
+
+    <!-- MOBILE BOTTOM NAVIGATION -->
+    <nav class="mobile-nav">
+        <button class="mobile-nav-btn active" data-panel="controls">
+            <span class="nav-icon">⚙️</span>
+            <span class="nav-label">Điều Khiển</span>
+        </button>
+        <button class="mobile-nav-btn" data-panel="charts">
+            <span class="nav-icon">📊</span>
+            <span class="nav-label">Biểu Đồ</span>
+        </button>
+        <button class="mobile-nav-btn" data-panel="data">
+            <span class="nav-icon">📡</span>
+            <span class="nav-label">Dữ Liệu</span>
+        </button>
+    </nav>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>

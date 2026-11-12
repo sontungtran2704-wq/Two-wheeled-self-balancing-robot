@@ -1,0 +1,25 @@
+MATLAB 24.2.0.2712019 (R2024b), run 2026-11-11 01:10:20
+MATLAB 24.2.0.2712019 (R2024b), run 2026-11-11 01:13:15
+[Warning: The model name 'LQR_CanBang' is shadowing another name in the MATLAB workspace or path. Type "which -all LQR_CanBang" at the command line to find the other uses of this
+name. You should change the name of the model to avoid problems.] 
+[> In build_robot_model (line 4)
+In run_lqr (line 11)
+In run_all (line 3)
+In run (line 112)] 
+baseline_5deg: pitch_max=5.0000 deg, final_v=0.110002 m/s, final_x=1.302582 m, simulation error=0
+MATLAB 24.2.0.2712019 (R2024b), run 2026-11-11 07:18:56
+[Warning: The model name 'LQR_CanBang' is shadowing another name in the MATLAB workspace or path. Type "which -all LQR_CanBang" at the command line to find the other uses of this
+name. You should change the name of the model to avoid problems.] 
+[> In build_robot_model (line 4)
+In run_lqr (line 11)
+In run_all (line 3)
+In run (line 112)] 
+baseline_5deg: pitch_max=5.0000 deg, final_v=0.110002 m/s, final_x=1.302582 m, simulation error=0
+tuned_5deg: pitch_max=5.0000 deg, final_v=0.060007 m/s, final_x=0.718322 m, simulation error=0
+tuned_10deg: pitch_max=10.0000 deg, final_v=0.123654 m/s, final_x=1.479805 m, simulation error=0
+push: pitch_max=0.4517 deg, final_v=0.038695 m/s, final_x=0.345205 m, simulation error=0
+sensitivity_mb_1: pitch_max=5.0000 deg, final_v=0.059152 m/s, final_x=0.708100 m, simulation error=0
+sensitivity_mb_2: pitch_max=5.0000 deg, final_v=0.060613 m/s, final_x=0.725558 m, simulation error=0
+sensitivity_l_1: pitch_max=5.0000 deg, final_v=0.047814 m/s, final_x=0.573010 m, simulation error=0
+sensitivity_l_2: pitch_max=5.0000 deg, final_v=0.081722 m/s, final_x=0.977816 m, simulation error=0
+LQR MATLAB/Simulink assertions passed. Hardware unverified.
