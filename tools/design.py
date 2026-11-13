@@ -55,5 +55,7 @@ def export():
     lines+=['constexpr unsigned lease_us=400000, imu_max_age_us=15000, stable_us=1000000;','}']
     dest=ROOT/'03_Firmware_ESP32S3/balancebot/GeneratedConfig.h';dest.parent.mkdir(parents=True,exist_ok=True)
     dest.write_text('\n'.join(lines)+'\n',encoding='utf-8')
+    from generate_lqr_protocol import export_protocol_model
+    export_protocol_model()
     print(json.dumps(dict(K=o['K'],poles=o['poles'],A=o['A'],B=o['B'],sha256=cfg_hash)))
 if __name__=='__main__': export()

@@ -3,8 +3,8 @@ $webUrl = 'http://127.0.0.1:3000'
 
 function Test-RobotWeb {
     try {
-        $status = Invoke-RestMethod "$webUrl/api/status" -TimeoutSec 1
-        return ($null -ne $status.connected -and $null -ne $status.matching)
+        $status = Invoke-RestMethod "$webUrl/api/health" -TimeoutSec 1
+        return ($status.service -eq 'balancebot-web')
     } catch { return $false }
 }
 

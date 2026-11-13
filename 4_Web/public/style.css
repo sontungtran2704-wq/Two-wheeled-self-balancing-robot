@@ -952,3 +952,17 @@ select.form-input {
 .drive-pad-values { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 0.85rem; }
 .drive-pad-buttons .btn { background: rgba(var(--primary-rgb), .1); color: var(--primary); border: 1px solid rgba(var(--primary-rgb), .4); border-radius: 12px; }
 .drive-pad-buttons .btn:hover, .drive-pad-buttons .btn:active { background: var(--primary); color: #fff; }
+
+/* Account action matches the outline of the connection status. */
+.header-right { display:flex; align-items:center; gap:12px; flex-shrink:0; }
+.logout-button { cursor:pointer; font-family:inherit; line-height:inherit; }
+.logout-button:hover { background:rgba(var(--primary-rgb),.2); border-color:var(--primary); }
+.logout-button:focus-visible { outline:2px solid var(--primary); outline-offset:3px; }
+@media(max-width:640px) {
+    :root { --header-h:110px; }
+    .header-content { flex-wrap:wrap; gap:10px; }
+    .header-left { flex-basis:100%; }
+    .header-right { width:100%; justify-content:space-between; gap:8px; }
+    .connection-badge { min-width:0; }
+    #status-text { overflow:hidden; text-overflow:ellipsis; }
+}

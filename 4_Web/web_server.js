@@ -7,7 +7,8 @@ const net = require('node:net');
 const path = require('node:path');
 const {Server} = require('socket.io');
 const {SerialPort} = require('serialport');
-const {loadDesign} = require('./lqr');
+const {loadDesign,calculate} = require('./lqr');
+const {createAuth} = require('./auth');
 const TCP_RE = /^tcp:([A-Za-z0-9][A-Za-z0-9.-]{0,62}):(\d{1,5})$/;
 const MAX_COMMAND = 160, MAX_TELEMETRY = 1024, STALE_MS = 250;
 const finite = (n, max) => typeof n === 'number' && Number.isFinite(n) && Math.abs(n) <= max;
@@ -21,13 +22,25 @@ function createBridge(options = {}) {
   const allowed = req => hosts.has(req.headers.host) && (!req.headers.origin || origins.has(req.headers.origin));
   const app = express(), server = http.createServer(app);
   const io = new Server(server, {allowRequest: (req, cb) => cb(null, allowed(req)), maxHttpBufferSize: 2048});
+  const auth=createAuth(options.authFile || process.env.ROBOT_AUTH_FILE || path.join(__dirname,'data','users.json'));
+  io.use((socket,next)=>{const session=auth.session(socket.request);if(!session)return next(new Error('AUTH_REQUIRED'));socket.authToken=session.token;next();});
   const design = loadDesign();
   let link = null, wanted = null, retry = null, retryCount = 0, generation = 0;
   let latest = null, lastTelemetry = 0, owner = null, sequence = 0;
   let desired = {v: 0, w: 0}, lastDrive = 0, motionRequested = false;
   const pid = {};
   let malformed = 0, shuttingDown = false;
-  let calibrationAck = null;
+  let calibrationAck = null, pendingLqr=null, activeLqr=null, pendingWifi=null;
+  function finishWifi(message,type='error') {
+    if(!pendingWifi)return;
+    pendingWifi.socket.emit('notice',{msg:message,type});pendingWifi=null;
+  }
+  function sendWifiStep() {
+    if(!pendingWifi)return;
+    if(!matching()||latest.st!==0)return finishWifi('Đã hủy lưu Wi-Fi: cần xe Chờ và telemetry mới.');
+    pendingWifi.deadline=Date.now()+2000;
+    if(!write(pendingWifi.lines[pendingWifi.index]))finishWifi('Không gửi được cấu hình Wi-Fi; kiểm tra đường truyền.');
+  }
   function finishCalibrationAck(message, type = 'error') {
     if (!calibrationAck) return;
     calibrationAck.socket.emit('notice', {msg: message, type});
@@ -45,7 +58,7 @@ function createBridge(options = {}) {
     desired = {v: 0, w: 0}; lastDrive = 0;
   }
   function revoke() { zero(); owner = null; motionRequested = false; io.emit('controlOwner', null); }
-  function resetTelemetry() { latest = null; lastTelemetry = 0; sequence = 0; desired = {v:0,w:0}; lastDrive=0; motionRequested=false; }
+  function resetTelemetry() { activeLqr=null; latest = null; lastTelemetry = 0; sequence = 0; desired = {v:0,w:0}; lastDrive=0; motionRequested=false; }
   function dashboardData(d) {
     return {...d, t:d.t/1000, thetaDot:d.omega, xDot:d.v, x:null,
       u:d.u??null, relativeAcceleration:d.u, st:d.st===3?(d.fault==='FALL'?3:4):d.st};
@@ -68,8 +81,24 @@ function createBridge(options = {}) {
   function emitState() { io.emit('linkStatus', {connected: !!link?.open, fresh: !!fresh(), matching: !!matching(), malformed, port: link?.name || null}); }
   function processLine(line) {
     if (!line || line.length > MAX_TELEMETRY) { malformed++; return; }
+    const wifi2=/^EVT:WIFI2,([0-9.]+),([0-9.]+),(\d+),(CONFIGURED|EMPTY)$/.exec(line);
+    if(wifi2){io.emit('robotWifi',{mode:'AP_STA',apIp:wifi2[1],staIp:wifi2[2],status:Number(wifi2[3]),configured:wifi2[4]==='CONFIGURED'});return;}
+    if(pendingWifi && (line.startsWith('ACK:WIFI_')||line.startsWith('ERR:'))) {
+      const expected=['ACK:WIFI_SSID','ACK:WIFI_PASS','ACK:WIFI_SAVED'][pendingWifi.index];
+      if(line!==expected)finishWifi('Firmware chưa lưu Wi-Fi: '+line);
+      else if(pendingWifi.index===2)finishWifi('Firmware đã lưu Wi-Fi. Xe đang khởi động lại; chờ nối lại rồi bấm Kiểm tra WiFi xe để xem IP mạng nhà.','success');
+      else {pendingWifi.index++;sendWifiStep();}
+    }
     const wifi=/^EVT:WIFI,(AP|STA),([0-9.]+)$/.exec(line);
     if(wifi){io.emit('robotWifi',{mode:wifi[1],ip:wifi[2]});return;}
+    const lqrAck=/^ACK:LQR2,([^,]+),([^,]+)$/.exec(line);
+    if(pendingLqr && (lqrAck || line.startsWith('ERR:'))) {
+      const p=pendingLqr;pendingLqr=null;
+      const applied=lqrAck?.slice(1).map(Number);
+      if(applied && applied.every((k,i)=>Number.isFinite(k)&&Math.abs(k-p.design.K[i])<1e-7)) {
+        activeLqr={...p.design,K:applied,sentToRobot:true};io.emit('lqrUpdated',activeLqr);
+      }else p.socket.emit('lqrError','Chưa xác nhận áp dụng K: '+line);
+    }
     if (/^(ACK:|ERR:|EVT:)/.test(line)) {
       if (line === 'ACK:CALGYRO_PENDING')
         finishCalibrationAck('Firmware đã nhận CALGYRO; giữ xe yên và chờ kết quả IMU. ACK chưa có nghĩa hiệu chuẩn đạt.', 'info');
@@ -77,6 +106,10 @@ function createBridge(options = {}) {
         finishCalibrationAck(`Firmware từ chối hiệu chuẩn: ${line}`);
       io.emit('serialMessage', line); return;
     }
+    const km=/^LQR:([^,]+),([^,]+)$/.exec(line);
+    if(km){const K=km.slice(1).map(Number);if(K.every(Number.isFinite)){
+      activeLqr={...(activeLqr||design),K,sentToRobot:true,fromFirmware:true};io.emit('lqrUpdated',activeLqr);
+    }else malformed++;return;}
     const pm = /^PID:([VY]),([^,]+),([^,]+),([^,]+)$/.exec(line);
     if (pm) {
       const a = pm.slice(2).map(Number);
@@ -124,6 +157,8 @@ function createBridge(options = {}) {
     });
   }
   function closeLink() {
+    finishWifi('Đường truyền đóng trước khi xác nhận lưu Wi-Fi. Kết nối lại và kiểm tra trạng thái.');
+    if(pendingLqr){pendingLqr.socket.emit('lqrError','Đường truyền đóng trước ACK LQR; chưa xác nhận áp dụng.');pendingLqr=null;}
     finishCalibrationAck('Đường truyền đã đóng trước khi nhận ACK hiệu chuẩn; chưa biết firmware có nhận lệnh hay không.');
     const old = link; link = null;
     resetTelemetry();
@@ -196,10 +231,19 @@ function createBridge(options = {}) {
   function disconnect(){wanted=null;clearTimeout(retry);retry=null;generation++;revoke();closeLink();io.emit('serialDisconnected');emitState();}
   app.use((req,res,next)=>allowed(req)?next():res.status(403).json({error:'Forbidden origin/host'}));
   app.use(express.json({limit:'2kb'}));
+  app.get('/api/health',(req,res)=>res.json({service:'balancebot-web',auth:true}));
+  auth.mount(app,token=>{for(const socket of io.sockets.sockets.values())if(socket.authToken===token)socket.disconnect(true);});
+  app.get('/welcome',(req,res)=>res.sendFile(path.join(__dirname,'public','welcome.html')));
+  app.use((req,res,next)=>{
+    if(['/welcome.css','/welcome.js'].includes(req.path))return next();
+    if(auth.session(req)){res.set('Cache-Control','no-store');return next();}
+    if(req.path.startsWith('/api/'))return res.status(401).json({error:'AUTH_REQUIRED'});
+    res.redirect('/welcome');
+  });
   app.use(express.static(path.join(__dirname,'public')));
   app.use('/vendor/chart',express.static(path.dirname(require.resolve('chart.js'))));
   app.get('/api/lqr',(req,res)=>res.json(design));
-  app.post('/api/lqr',(req,res)=>res.status(409).json({error:'READ_ONLY_GAIN',message:'Tính và kiểm chứng lại gain bằng MATLAB; web chỉ đọc cấu hình đã xuất.'}));
+  app.post('/api/lqr',(req,res)=>{try{if(req.body?.send)return res.status(400).json({error:'Dùng nút Tính K & gửi xe trên dashboard.'});res.json(calculate(req.body?.Q,req.body?.R));}catch(e){res.status(400).json({error:e.message});}});
   app.get('/api/status',(req,res)=>res.json({connected:!!link?.open,fresh:!!fresh(),matching:!!matching(),malformed,telemetry:latest,owner}));
   app.get('/api/ports',async(req,res)=>{
     try {res.json([{path:'tcp:192.168.4.1:8080',manufacturer:'Wi-Fi BalanceBot-Bench'},...(await SerialPort.list()).map(p=>({path:p.path,manufacturer:p.manufacturer||''}))]);}
@@ -211,7 +255,8 @@ function createBridge(options = {}) {
   });
   app.post('/api/disconnect',(req,res)=>{disconnect();res.json({success:true});});
   io.on('connection',socket=>{
-    socket.emit('lqrUpdated',design);if(pid.V)socket.emit('pidUpdated',pid.V);
+    if(socket.request)socket.use((packet,next)=>{if(!auth.session(socket.request)){socket.disconnect(true);return;}next();});
+    socket.emit('lqrUpdated',activeLqr||design);if(pid.V)socket.emit('pidUpdated',pid.V);
     if(latest)socket.emit('serialData',dashboardData(latest));emitState();socket.emit('controlOwner',owner);
     socket.on('connectSerial',async(p={})=>{try{await connectUser(p.port,p.baudRate??115200);}catch(e){error(socket,e.message);}});
     socket.on('disconnectSerial',disconnect);
@@ -219,6 +264,7 @@ function createBridge(options = {}) {
       const cmd=({start:'START',stop:'STOP',estop:'ESTOP',reset:'RESET',get:'GET',calgyro:'CALGYRO',
         zphere:'ZPHERE','zp+':'ZP+','zp-':'ZP-',save:'SAVE'})[p.command];
       if(!cmd)return error(socket,'Lệnh không hợp lệ.');
+      if((pendingLqr||pendingWifi)&&!['STOP','ESTOP','GET'].includes(cmd))return error(socket,'Đang chờ phản hồi cấu hình; đợi trước khi gửi lệnh khác.');
       if(cmd==='CALGYRO') {
         if(owner && owner!==socket.id)return error(socket,'Dashboard khác đang điều khiển.');
         if(fresh() && [1,2].includes(latest.st))return error(socket,'Dừng motor trước khi hiệu chuẩn.');
@@ -273,17 +319,45 @@ function createBridge(options = {}) {
       });
     }
     socket.on('setPid',(p={})=>{
+      if(pendingWifi)return error(socket,'Đang lưu Wi-Fi.');
       const axis=p.axis??'V';
       if(!['V','Y'].includes(axis)||![p.kp,p.ki,p.kd].every((v,i)=>finite(v,[5,2,.2][i])&&v>=0))return error(socket,'PID: axis V/Y, Kp 0..5, Ki 0..2, Kd 0..0.2.');
       if(!matching()||![0,3].includes(latest.st))return error(socket,'Chỉ đổi PID khi động cơ tắt và telemetry mới.');
       if(owner&&owner!==socket.id)return error(socket,'Dashboard khác đang điều khiển.');
       write(`$P,${axis},${p.kp},${p.ki},${p.kd}`);write('GET');
     });
-    socket.on('setWifi',()=>error(socket,'Wi-Fi được cấu hình trong firmware hiện tại.'));
-    for(const event of ['sendK','updateLQR'])socket.on(event,()=>socket.emit('lqrError','READ_ONLY_GAIN: không gửi $K của mô hình cũ.'));
+    socket.on('setWifi',(p={})=>{
+      if(typeof p.ssid!=='string'||typeof p.pass!=='string'||/[\x00-\x1f]/.test(p.ssid+p.pass))return error(socket,'Tên/mật khẩu Wi-Fi không hợp lệ.');
+      const ssid=Buffer.from(p.ssid,'utf8'),pass=Buffer.from(p.pass,'utf8');
+      if(ssid.length<1||ssid.length>32||(pass.length!==0&&(pass.length<8||pass.length>63)))return error(socket,'SSID 1–32 byte; mật khẩu trống hoặc 8–63 byte. Dùng mạng 2,4 GHz.');
+      if(!matching()||latest.st!==0)return error(socket,'Dừng motor, RESET về Chờ trước khi lưu Wi-Fi.');
+      if(latest.wifi_cfg!==1)return error(socket,'Firmware chưa hỗ trợ lưu Wi-Fi; cần nạp bản balancebot mới.');
+      if(owner&&owner!==socket.id)return error(socket,'Dashboard khác đang điều khiển.');
+      if(pendingWifi||pendingLqr||calibrationAck)return error(socket,'Đang chờ phản hồi cấu hình trước.');
+      pendingWifi={socket,index:0,deadline:0,lines:[`WIFI_SSID,${ssid.toString('hex')}`,`WIFI_PASS,${pass.toString('hex')}`,'WIFI_SAVE']};
+      socket.emit('notice',{msg:'Đang gửi Wi-Fi; chỉ báo đã lưu khi firmware xác nhận.',type:'info'});sendWifiStep();
+    });
+    socket.on('sendK',()=>socket.emit('lqrError','Dùng Q/R của mô hình LQR hai trạng thái.'));
+    socket.on('updateLQR',(p={})=>{
+      try {
+        if(pendingWifi)throw Error('Đang lưu Wi-Fi.');
+        const result=calculate(p.Q,p.R);
+        if(!p.send)return socket.emit('lqrUpdated',result);
+        if(!matching()||latest.st!==0)throw Error('Chỉ gửi LQR khi xe đang Chờ, telemetry mới và cấu hình khớp.');
+        if(owner&&owner!==socket.id)throw Error('Dashboard khác đang điều khiển.');
+        if(latest.lqr2!==1)throw Error('Firmware hiện tại chưa hỗ trợ chỉnh LQR2; cần nạp bản balancebot mới.');
+        if(pendingLqr)throw Error('Đang chờ phản hồi LQR trước.');
+        pendingLqr={socket,design:result,deadline:Date.now()+2000};
+        if(!write(`LQR2,${design.config_sha256},${result.K[0]},${result.K[1]}`)){pendingLqr=null;throw Error('Đường truyền đang bận.');}
+        socket.emit('notice',{msg:'Đã gửi LQR; chờ firmware xác nhận. Gain có hiệu lực đến khi khởi động lại xe.',type:'info'});
+      }catch(e){socket.emit('lqrError',e.message);}
+    });
     socket.on('disconnect',()=>{if(owner===socket.id)revoke();});
   });
   const watchdog=setInterval(()=>{
+    if(pendingWifi&&Date.now()>=pendingWifi.deadline)finishWifi('Không nhận ACK lưu Wi-Fi sau 2 giây; chưa xác nhận đã lưu.');
+    if(pendingLqr&&Date.now()>=pendingLqr.deadline){pendingLqr.socket.emit('lqrError','Chưa nhận ACK LQR sau 2 giây; chưa xác nhận áp dụng.');pendingLqr=null;}
+    for(const socket of io.sockets.sockets.values())if(!auth.session(socket.request))socket.disconnect(true);
     if(calibrationAck && Date.now()>=calibrationAck.deadline)
       finishCalibrationAck('Đã gửi CALGYRO nhưng chưa nhận ACK sau 2 giây. Kiểm tra cổng, baud 115200 và firmware/USB CDC; chưa thể kết luận hiệu chuẩn thất bại.');
     if(lastDrive&&Date.now()-lastDrive>STALE_MS){desired={v:0,w:0};lastDrive=0;}

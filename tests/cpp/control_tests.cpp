@@ -1,4 +1,5 @@
 #include "ControlCore.h"
+#include "WifiSettings.h"
 #include "StepNco.h"
 #ifdef NDEBUG
 #undef NDEBUG
@@ -82,6 +83,32 @@ int main() {
     assert(std::abs(o.left)<=.600000000001 && std::abs(o.right)<=.600000000001);
     previousL=o.left;previousR=o.right;
   }
+  Device gains;Sensors gs;gs.valid=true;gains.tick(1000,gs);
+  const std::string prefix=std::string("LQR2,")+cfg::sha256+",";
+  assert(gains.command((prefix+"-23.793396834761598,-2.7542335398052704").c_str(),1000).find("ACK:LQR2,")==0);
+  assert(gains.command((prefix+"23,2").c_str(),1000)=="ERR:UNSTABLE_GAIN");
+  assert(gains.command((prefix+"-23,-1000").c_str(),1000)=="ERR:UNSTABLE_GAIN");
+  assert(gains.command((prefix+"nan,-2").c_str(),1000)=="ERR:GAIN_RANGE");
+  assert(gains.command("LQR2,bad,-23,-2",1000)=="ERR:CONFIG");
+  assert(gains.command("GET",1000).find("LQR:-23.7933968348,-2.75423353981")!=std::string::npos);
+  assert(gains.telemetry(1000).find("lqr2=1")!=std::string::npos);
+  gains.command("START",1000);assert(gains.command((prefix+"-23,-2").c_str(),1000)=="ERR:STATE");
+  gains.fault("ESTOP");assert(gains.command((prefix+"-23,-2").c_str(),1000)=="ERR:STATE");
+  wifi_settings::Staging wifi;bool commit=false;
+  assert(!std::strcmp(wifi.command("WIFI_SAVE",1,0,true,commit),"ERR:WIFI_SEQUENCE")&&!commit);
+  assert(!std::strcmp(wifi.command("WIFI_SSID,486f6d65",1,10,true,commit),"ACK:WIFI_SSID"));
+  assert(!std::strcmp(wifi.command("WIFI_PASS,70617373776f7264313233",2,20,true,commit),"ERR:OWNER"));
+  assert(!std::strcmp(wifi.command("WIFI_PASS,70617373776f7264313233",1,30,true,commit),"ACK:WIFI_PASS"));
+  assert(!std::strcmp(wifi.command("WIFI_SAVE",1,40,true,commit),"ACK:WIFI_SAVED")&&commit);
+  assert(wifi.value().valid()&&!std::strcmp(wifi.value().ssid,"Home"));
+  assert(!std::strcmp(wifi.command("WIFI_SAVE",1,50,false,commit),"ERR:STATE")&&!commit);
+  wifi.command("WIFI_SSID,486f6d65",1,60,true,commit);
+  assert(!std::strcmp(wifi.command("WIFI_PASS,00",1,70,true,commit),"ERR:WIFI_PASSWORD"));
+  wifi.command("WIFI_SSID,486f6d65",1,100,true,commit);
+  assert(!std::strcmp(wifi.command("WIFI_PASS,",1,10000101,true,commit),"ERR:WIFI_SEQUENCE"));
+  wifi.command("WIFI_SSID,486f6d65",1,200,true,commit);
+  assert(!std::strcmp(wifi.command("WIFI_PASS,",1,210,true,commit),"ACK:WIFI_PASS"));
+  assert(wifi.value().valid());
   StepNco nco; nco.setRate(15000); int rises=0,last=-100;
   for(int i=0;i<40000;++i) {auto e=nco.tick(); if(e.rise){++rises;assert(i-last>=2);last=i;}assert(!(e.rise&&e.fall));}
   assert(rises==15000);

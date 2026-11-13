@@ -1,4 +1,4 @@
-#line 1 "D:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot\\ControlCore.cpp"
+#line 1 "D:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot\\ControlCore.cpp"
 #include "ControlCore.h"
 #include <cmath>
 #include <cstring>
@@ -53,7 +53,7 @@ Output NumericController::tick(double theta,double omega,double v,double yr,doub
     }
   }
   const double tr=std::atan2(aref_,cfg::g)+std::asin(clip(cfg::r*cfg::M*aref_/(cfg::mb*cfg::l*std::hypot(cfg::g,aref_)),-1,1));
-  const double ub=-cfg::k0*theta-cfg::k1*omega,um=cfg::k0*tr+aref_;
+  const double ub=-k0*theta-k1*omega,um=k0*tr+aref_;
   const double bal=clip(ub,-cfg::amax,cfg::amax),u=bal+clip(um,-cfg::amax-bal,cfg::amax-bal);
   const double L=q_-d_,R=q_+d_,step=cfg::amax*cfg::dt;
   const double Llo=std::max(-cfg::vmax,L-step),Lhi=std::min(cfg::vmax,L+step);
@@ -101,7 +101,11 @@ void Device::tick(uint32_t now,const Sensors& s) {
   if(state_==State::Arming) {
     if(std::abs(sensors_.theta)<cfg::arm_rad && std::abs(s.theta)<cfg::arm_rad && std::abs(s.omega)<cfg::arm_rate) {
       if(!arm_timing_) {arm_timing_=true;arm_since_=now;}
-      if(uint32_t(now-arm_since_)>=1000000) {clearMotion();state_=State::Run;}
+      if(uint32_t(now-arm_since_)>=1000000) {
+        clearMotion();
+        motion_=true; // Allow the outer PID to hold zero velocity after its stability gate.
+        state_=State::Run;
+      }
     } else arm_timing_=false;
     return;
   }
@@ -138,10 +142,21 @@ void Device::commandTo(const char* line,uint32_t now,char* out,size_t capacity) 
     std::snprintf(out,capacity,"ACK:%s,zero_rad=%.6f",line,pitchZero_);
     return;
   }
+  if(!std::strcmp(tok[0],"LQR2") && count==4) {
+    if(state_!=State::Idle){reply("ERR:STATE");return;}
+    if(std::strcmp(tok[1],cfg::sha256)){reply("ERR:CONFIG");return;}
+    double k0,k1;
+    const double threshold=-cfg::g*cfg::mb*cfg::l/(cfg::mb*cfg::l+cfg::r*cfg::M);
+    if(!number(tok[2],k0)||!number(tok[3],k1)||k0>=threshold||k1>=0||
+       std::abs(k0)>4*std::abs(cfg::k0)||std::abs(k1)>4*std::abs(cfg::k1)) {
+      reply("ERR:GAIN_RANGE");return;
+    }
+    control_.k0=k0;control_.k1=k1;clearMotion();reply("ACK:LQR2");return;
+  }
   if(!std::strcmp(tok[0],"$K")) {reply("ERR:READ_ONLY_GAIN");return;}
   if(!std::strcmp(tok[0],"GET") && count==1) {
     char status[900];telemetryTo(now,status,sizeof status);
-    std::snprintf(out,capacity,"%s\nPID:V,%.9g,%.9g,%.9g\nPID:Y,%.9g,%.9g,%.9g",status,control_.velocity.kp,control_.velocity.ki,control_.velocity.kd,control_.yaw.kp,control_.yaw.ki,control_.yaw.kd);return;
+    std::snprintf(out,capacity,"%s\nPID:V,%.9g,%.9g,%.9g\nPID:Y,%.9g,%.9g,%.9g\nLQR:%.12g,%.12g",status,control_.velocity.kp,control_.velocity.ki,control_.velocity.kd,control_.yaw.kp,control_.yaw.ki,control_.yaw.kd,control_.k0,control_.k1);return;
   }
   if(count==1 && !std::strcmp(tok[0],"ESTOP")) {fault("ESTOP");reply("ACK:ESTOP");return;}
   if(count==1 && !std::strcmp(tok[0],"STOP")) {if(state_!=State::Fault)state_=State::Idle;clearMotion();reply("ACK:STOP");return;}
@@ -190,7 +205,7 @@ void Device::commandTo(const char* line,uint32_t now,char* out,size_t capacity) 
 }
 std::string Device::command(const char* line,uint32_t now) {char out[1200];commandTo(line,now,out,sizeof out);return out;}
 void Device::telemetryTo(uint32_t now,char* out,size_t capacity) const {
-  std::snprintf(out,capacity,"t=%lu,theta=%.9g,omega=%.9g,v=%.9g,yaw=%.9g,left=%.9g,right=%.9g,u=%.9g,st=%u,motion=%u,session=%lu,seq=%lu,config=%s,hash=%s,fresh=%u,sat=%u,jitter_us=%ld,overruns=%lu,fault=%s",
+  std::snprintf(out,capacity,"t=%lu,theta=%.9g,omega=%.9g,v=%.9g,yaw=%.9g,left=%.9g,right=%.9g,u=%.9g,st=%u,motion=%u,session=%lu,seq=%lu,config=%s,hash=%s,fresh=%u,sat=%u,jitter_us=%ld,overruns=%lu,fault=%s,lqr2=1",
     static_cast<unsigned long>(now/1000),sensors_.theta,sensors_.omega,sensors_.v,sensors_.yaw,output_.left,output_.right,output_.u,unsigned(state_),unsigned(output_.motion_active),static_cast<unsigned long>(session_),static_cast<unsigned long>(last_tick_/5000),cfg::id,cfg::sha256,unsigned(commandFresh(now)),unsigned(output_.saturated),static_cast<long>(jitter_us_),static_cast<unsigned long>(overruns_),fault_);
 }
 std::string Device::telemetry(uint32_t now) const {char out[900];telemetryTo(now,out,sizeof out);return out;}

@@ -15,6 +15,13 @@ class ConfigurationTests(unittest.TestCase):
         header=(ROOT/'03_Firmware_ESP32S3/balancebot/GeneratedConfig.h').read_text()
         self.assertIn(digest,header)
         for i,k in enumerate(d['K']):self.assertIn(f'k{i}={k:.17g}',header)
+    def test_runtime_gain_validation_uses_exported_discrete_model(self):
+        d=json.loads((ROOT/'shared/design.json').read_text())
+        header=(ROOT/'03_Firmware_ESP32S3/balancebot/GeneratedLqrModel.h').read_text()
+        self.assertIn(d['config_sha256'],header)
+        for i in range(2):
+            for j in range(2):self.assertIn(f'a{i}{j}={d["Ad"][i][j]:.17g}',header)
+            self.assertIn(f'b{i}={d["Bd"][i][0]:.17g}',header)
     def test_motor_build_uses_configured_pinmap(self):
         text=(ROOT/'03_Firmware_ESP32S3/balancebot/HardwareConfig.h').read_text()
         self.assertIn('#define ROBOT_HARDWARE_CONFIRMED 1',text)

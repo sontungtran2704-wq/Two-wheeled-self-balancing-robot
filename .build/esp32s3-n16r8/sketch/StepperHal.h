@@ -1,4 +1,4 @@
-#line 1 "D:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot\\StepperHal.h"
+#line 1 "D:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot\\StepperHal.h"
 #pragma once
 #include <Arduino.h>
 #include "StepNco.h"

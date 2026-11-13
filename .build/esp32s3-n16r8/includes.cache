@@ -1,20 +1,20 @@
 [
   {
-    "added_include_path": "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32"
+    "added_include_path": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32"
   },
   {
-    "added_include_path": "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3"
+    "added_include_path": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3"
   },
   {
     "compile": {
-      "source_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\balancebot.ino.cpp.merged",
-      "depfile_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\balancebot.ino.cpp.merged.libsdetect.d"
+      "source_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\balancebot.ino.cpp.merged",
+      "depfile_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\balancebot.ino.cpp.merged.libsdetect.d"
     },
     "compile_task": {
       "args": [
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
         "-c",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
         "-w",
         "-Os",
         "-Werror=return-type",
@@ -41,22 +41,22 @@
         "-DARDUINO_USB_CDC_ON_BOOT=1",
         "-DARDUINO_USB_MSC_ON_BOOT=0",
         "-DARDUINO_USB_DFU_ON_BOOT=0",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
-        "-ID:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
+        "-ID:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot",
         "-iprefix",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/build_opt.h",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/file_opts",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\balancebot.ino.cpp.merged",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/build_opt.h",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/file_opts",
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\balancebot.ino.cpp.merged",
         "-o",
         "nul",
         "-MMD",
         "-MF",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\balancebot.ino.cpp.merged.libsdetect.d"
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\balancebot.ino.cpp.merged.libsdetect.d"
       ]
     }
   },
@@ -65,14 +65,14 @@
   },
   {
     "compile": {
-      "source_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\ControlCore.cpp",
-      "depfile_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\ControlCore.cpp.libsdetect.d"
+      "source_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\ControlCore.cpp",
+      "depfile_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\ControlCore.cpp.libsdetect.d"
     },
     "compile_task": {
       "args": [
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
         "-c",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
         "-w",
         "-Os",
         "-Werror=return-type",
@@ -99,22 +99,22 @@
         "-DARDUINO_USB_CDC_ON_BOOT=1",
         "-DARDUINO_USB_MSC_ON_BOOT=0",
         "-DARDUINO_USB_DFU_ON_BOOT=0",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
-        "-ID:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
+        "-ID:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot",
         "-iprefix",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/build_opt.h",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/file_opts",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\ControlCore.cpp",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/build_opt.h",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/file_opts",
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\ControlCore.cpp",
         "-o",
         "nul",
         "-MMD",
         "-MF",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\ControlCore.cpp.libsdetect.d"
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\ControlCore.cpp.libsdetect.d"
       ]
     }
   },
@@ -123,14 +123,14 @@
   },
   {
     "compile": {
-      "source_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\ImuHal.cpp",
-      "depfile_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\ImuHal.cpp.libsdetect.d"
+      "source_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\ImuHal.cpp",
+      "depfile_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\ImuHal.cpp.libsdetect.d"
     },
     "compile_task": {
       "args": [
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
         "-c",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
         "-w",
         "-Os",
         "-Werror=return-type",
@@ -157,22 +157,22 @@
         "-DARDUINO_USB_CDC_ON_BOOT=1",
         "-DARDUINO_USB_MSC_ON_BOOT=0",
         "-DARDUINO_USB_DFU_ON_BOOT=0",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
-        "-ID:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
+        "-ID:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot",
         "-iprefix",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/build_opt.h",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/file_opts",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\ImuHal.cpp",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/build_opt.h",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/file_opts",
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\ImuHal.cpp",
         "-o",
         "nul",
         "-MMD",
         "-MF",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\ImuHal.cpp.libsdetect.d"
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\ImuHal.cpp.libsdetect.d"
       ]
     }
   },
@@ -180,18 +180,18 @@
     "missing_include_h": "Wire.h"
   },
   {
-    "added_include_path": "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src"
+    "added_include_path": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src"
   },
   {
     "compile": {
-      "source_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\ImuHal.cpp",
-      "depfile_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\ImuHal.cpp.libsdetect.d"
+      "source_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\ImuHal.cpp",
+      "depfile_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\ImuHal.cpp.libsdetect.d"
     },
     "compile_task": {
       "args": [
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
         "-c",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
         "-w",
         "-Os",
         "-Werror=return-type",
@@ -218,23 +218,23 @@
         "-DARDUINO_USB_CDC_ON_BOOT=1",
         "-DARDUINO_USB_MSC_ON_BOOT=0",
         "-DARDUINO_USB_DFU_ON_BOOT=0",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
-        "-ID:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
+        "-ID:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot",
         "-iprefix",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/build_opt.h",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/file_opts",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\ImuHal.cpp",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/build_opt.h",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/file_opts",
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\ImuHal.cpp",
         "-o",
         "nul",
         "-MMD",
         "-MF",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\ImuHal.cpp.libsdetect.d"
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\ImuHal.cpp.libsdetect.d"
       ]
     }
   },
@@ -243,14 +243,14 @@
   },
   {
     "compile": {
-      "source_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp",
-      "depfile_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp.libsdetect.d"
+      "source_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp",
+      "depfile_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp.libsdetect.d"
     },
     "compile_task": {
       "args": [
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
         "-c",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
         "-w",
         "-Os",
         "-Werror=return-type",
@@ -277,23 +277,23 @@
         "-DARDUINO_USB_CDC_ON_BOOT=1",
         "-DARDUINO_USB_MSC_ON_BOOT=0",
         "-DARDUINO_USB_DFU_ON_BOOT=0",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
-        "-ID:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
+        "-ID:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot",
         "-iprefix",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/build_opt.h",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/file_opts",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/build_opt.h",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/file_opts",
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp",
         "-o",
         "nul",
         "-MMD",
         "-MF",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp.libsdetect.d"
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp.libsdetect.d"
       ]
     }
   },
@@ -301,18 +301,18 @@
     "missing_include_h": "WiFi.h"
   },
   {
-    "added_include_path": "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src"
+    "added_include_path": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src"
   },
   {
     "compile": {
-      "source_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp",
-      "depfile_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp.libsdetect.d"
+      "source_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp",
+      "depfile_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp.libsdetect.d"
     },
     "compile_task": {
       "args": [
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
         "-c",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
         "-w",
         "-Os",
         "-Werror=return-type",
@@ -339,24 +339,24 @@
         "-DARDUINO_USB_CDC_ON_BOOT=1",
         "-DARDUINO_USB_MSC_ON_BOOT=0",
         "-DARDUINO_USB_DFU_ON_BOOT=0",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
-        "-ID:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
+        "-ID:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot",
         "-iprefix",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/build_opt.h",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/file_opts",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/build_opt.h",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/file_opts",
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp",
         "-o",
         "nul",
         "-MMD",
         "-MF",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp.libsdetect.d"
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp.libsdetect.d"
       ]
     }
   },
@@ -364,18 +364,18 @@
     "missing_include_h": "Network.h"
   },
   {
-    "added_include_path": "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src"
+    "added_include_path": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src"
   },
   {
     "compile": {
-      "source_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp",
-      "depfile_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp.libsdetect.d"
+      "source_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp",
+      "depfile_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp.libsdetect.d"
     },
     "compile_task": {
       "args": [
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
         "-c",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
         "-w",
         "-Os",
         "-Werror=return-type",
@@ -402,25 +402,25 @@
         "-DARDUINO_USB_CDC_ON_BOOT=1",
         "-DARDUINO_USB_MSC_ON_BOOT=0",
         "-DARDUINO_USB_DFU_ON_BOOT=0",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
-        "-ID:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
+        "-ID:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot",
         "-iprefix",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/build_opt.h",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/file_opts",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/build_opt.h",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/file_opts",
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp",
         "-o",
         "nul",
         "-MMD",
         "-MF",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp.libsdetect.d"
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp.libsdetect.d"
       ]
     }
   },
@@ -428,18 +428,18 @@
     "missing_include_h": "Preferences.h"
   },
   {
-    "added_include_path": "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src"
+    "added_include_path": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src"
   },
   {
     "compile": {
-      "source_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp",
-      "depfile_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp.libsdetect.d"
+      "source_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp",
+      "depfile_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp.libsdetect.d"
     },
     "compile_task": {
       "args": [
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
         "-c",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
         "-w",
         "-Os",
         "-Werror=return-type",
@@ -466,26 +466,26 @@
         "-DARDUINO_USB_CDC_ON_BOOT=1",
         "-DARDUINO_USB_MSC_ON_BOOT=0",
         "-DARDUINO_USB_DFU_ON_BOOT=0",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
-        "-ID:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
+        "-ID:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot",
         "-iprefix",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/build_opt.h",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/file_opts",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/build_opt.h",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/file_opts",
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp",
         "-o",
         "nul",
         "-MMD",
         "-MF",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp.libsdetect.d"
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\Runtime.cpp.libsdetect.d"
       ]
     }
   },
@@ -494,14 +494,14 @@
   },
   {
     "compile": {
-      "source_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\StepperHal.cpp",
-      "depfile_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\StepperHal.cpp.libsdetect.d"
+      "source_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\StepperHal.cpp",
+      "depfile_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\StepperHal.cpp.libsdetect.d"
     },
     "compile_task": {
       "args": [
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
         "-c",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
         "-w",
         "-Os",
         "-Werror=return-type",
@@ -528,26 +528,26 @@
         "-DARDUINO_USB_CDC_ON_BOOT=1",
         "-DARDUINO_USB_MSC_ON_BOOT=0",
         "-DARDUINO_USB_DFU_ON_BOOT=0",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
-        "-ID:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
+        "-ID:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot",
         "-iprefix",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/build_opt.h",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/file_opts",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\StepperHal.cpp",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/build_opt.h",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/file_opts",
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\StepperHal.cpp",
         "-o",
         "nul",
         "-MMD",
         "-MF",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\sketch\\StepperHal.cpp.libsdetect.d"
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\sketch\\StepperHal.cpp.libsdetect.d"
       ]
     }
   },
@@ -556,14 +556,14 @@
   },
   {
     "compile": {
-      "source_path": "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src\\Wire.cpp",
-      "depfile_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\Wire\\Wire.cpp.libsdetect.d"
+      "source_path": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src\\Wire.cpp",
+      "depfile_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\Wire\\Wire.cpp.libsdetect.d"
     },
     "compile_task": {
       "args": [
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
         "-c",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
         "-w",
         "-Os",
         "-Werror=return-type",
@@ -590,26 +590,26 @@
         "-DARDUINO_USB_CDC_ON_BOOT=1",
         "-DARDUINO_USB_MSC_ON_BOOT=0",
         "-DARDUINO_USB_DFU_ON_BOOT=0",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
-        "-ID:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
+        "-ID:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot",
         "-iprefix",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/build_opt.h",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/file_opts",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src\\Wire.cpp",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/build_opt.h",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/file_opts",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src\\Wire.cpp",
         "-o",
         "nul",
         "-MMD",
         "-MF",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\Wire\\Wire.cpp.libsdetect.d"
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\Wire\\Wire.cpp.libsdetect.d"
       ]
     }
   },
@@ -618,14 +618,14 @@
   },
   {
     "compile": {
-      "source_path": "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\AP.cpp",
-      "depfile_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\WiFi\\AP.cpp.libsdetect.d"
+      "source_path": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\AP.cpp",
+      "depfile_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\WiFi\\AP.cpp.libsdetect.d"
     },
     "compile_task": {
       "args": [
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
         "-c",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
         "-w",
         "-Os",
         "-Werror=return-type",
@@ -652,26 +652,26 @@
         "-DARDUINO_USB_CDC_ON_BOOT=1",
         "-DARDUINO_USB_MSC_ON_BOOT=0",
         "-DARDUINO_USB_DFU_ON_BOOT=0",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
-        "-ID:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
+        "-ID:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot",
         "-iprefix",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/build_opt.h",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/file_opts",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\AP.cpp",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/build_opt.h",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/file_opts",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\AP.cpp",
         "-o",
         "nul",
         "-MMD",
         "-MF",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\WiFi\\AP.cpp.libsdetect.d"
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\WiFi\\AP.cpp.libsdetect.d"
       ]
     }
   },
@@ -680,14 +680,14 @@
   },
   {
     "compile": {
-      "source_path": "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\STA.cpp",
-      "depfile_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\WiFi\\STA.cpp.libsdetect.d"
+      "source_path": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\STA.cpp",
+      "depfile_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\WiFi\\STA.cpp.libsdetect.d"
     },
     "compile_task": {
       "args": [
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
         "-c",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
         "-w",
         "-Os",
         "-Werror=return-type",
@@ -714,26 +714,26 @@
         "-DARDUINO_USB_CDC_ON_BOOT=1",
         "-DARDUINO_USB_MSC_ON_BOOT=0",
         "-DARDUINO_USB_DFU_ON_BOOT=0",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
-        "-ID:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
+        "-ID:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot",
         "-iprefix",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/build_opt.h",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/file_opts",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\STA.cpp",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/build_opt.h",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/file_opts",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\STA.cpp",
         "-o",
         "nul",
         "-MMD",
         "-MF",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\WiFi\\STA.cpp.libsdetect.d"
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\WiFi\\STA.cpp.libsdetect.d"
       ]
     }
   },
@@ -742,14 +742,14 @@
   },
   {
     "compile": {
-      "source_path": "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFi.cpp",
-      "depfile_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\WiFi\\WiFi.cpp.libsdetect.d"
+      "source_path": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFi.cpp",
+      "depfile_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\WiFi\\WiFi.cpp.libsdetect.d"
     },
     "compile_task": {
       "args": [
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
         "-c",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
         "-w",
         "-Os",
         "-Werror=return-type",
@@ -776,26 +776,26 @@
         "-DARDUINO_USB_CDC_ON_BOOT=1",
         "-DARDUINO_USB_MSC_ON_BOOT=0",
         "-DARDUINO_USB_DFU_ON_BOOT=0",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
-        "-ID:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
+        "-ID:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot",
         "-iprefix",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/build_opt.h",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/file_opts",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFi.cpp",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/build_opt.h",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/file_opts",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFi.cpp",
         "-o",
         "nul",
         "-MMD",
         "-MF",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\WiFi\\WiFi.cpp.libsdetect.d"
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\WiFi\\WiFi.cpp.libsdetect.d"
       ]
     }
   },
@@ -804,14 +804,14 @@
   },
   {
     "compile": {
-      "source_path": "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiAP.cpp",
-      "depfile_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\WiFi\\WiFiAP.cpp.libsdetect.d"
+      "source_path": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiAP.cpp",
+      "depfile_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\WiFi\\WiFiAP.cpp.libsdetect.d"
     },
     "compile_task": {
       "args": [
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
         "-c",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
         "-w",
         "-Os",
         "-Werror=return-type",
@@ -838,26 +838,26 @@
         "-DARDUINO_USB_CDC_ON_BOOT=1",
         "-DARDUINO_USB_MSC_ON_BOOT=0",
         "-DARDUINO_USB_DFU_ON_BOOT=0",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
-        "-ID:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
+        "-ID:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot",
         "-iprefix",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/build_opt.h",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/file_opts",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiAP.cpp",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/build_opt.h",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/file_opts",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiAP.cpp",
         "-o",
         "nul",
         "-MMD",
         "-MF",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\WiFi\\WiFiAP.cpp.libsdetect.d"
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\WiFi\\WiFiAP.cpp.libsdetect.d"
       ]
     }
   },
@@ -866,14 +866,14 @@
   },
   {
     "compile": {
-      "source_path": "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiGeneric.cpp",
-      "depfile_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\WiFi\\WiFiGeneric.cpp.libsdetect.d"
+      "source_path": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiGeneric.cpp",
+      "depfile_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\WiFi\\WiFiGeneric.cpp.libsdetect.d"
     },
     "compile_task": {
       "args": [
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
         "-c",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
         "-w",
         "-Os",
         "-Werror=return-type",
@@ -900,26 +900,26 @@
         "-DARDUINO_USB_CDC_ON_BOOT=1",
         "-DARDUINO_USB_MSC_ON_BOOT=0",
         "-DARDUINO_USB_DFU_ON_BOOT=0",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
-        "-ID:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
+        "-ID:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot",
         "-iprefix",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/build_opt.h",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/file_opts",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiGeneric.cpp",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/build_opt.h",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/file_opts",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiGeneric.cpp",
         "-o",
         "nul",
         "-MMD",
         "-MF",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\WiFi\\WiFiGeneric.cpp.libsdetect.d"
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\WiFi\\WiFiGeneric.cpp.libsdetect.d"
       ]
     }
   },
@@ -928,14 +928,14 @@
   },
   {
     "compile": {
-      "source_path": "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiMulti.cpp",
-      "depfile_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\WiFi\\WiFiMulti.cpp.libsdetect.d"
+      "source_path": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiMulti.cpp",
+      "depfile_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\WiFi\\WiFiMulti.cpp.libsdetect.d"
     },
     "compile_task": {
       "args": [
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
         "-c",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
         "-w",
         "-Os",
         "-Werror=return-type",
@@ -962,26 +962,26 @@
         "-DARDUINO_USB_CDC_ON_BOOT=1",
         "-DARDUINO_USB_MSC_ON_BOOT=0",
         "-DARDUINO_USB_DFU_ON_BOOT=0",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
-        "-ID:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
+        "-ID:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot",
         "-iprefix",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/build_opt.h",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/file_opts",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiMulti.cpp",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/build_opt.h",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/file_opts",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiMulti.cpp",
         "-o",
         "nul",
         "-MMD",
         "-MF",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\WiFi\\WiFiMulti.cpp.libsdetect.d"
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\WiFi\\WiFiMulti.cpp.libsdetect.d"
       ]
     }
   },
@@ -990,14 +990,14 @@
   },
   {
     "compile": {
-      "source_path": "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiSTA.cpp",
-      "depfile_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\WiFi\\WiFiSTA.cpp.libsdetect.d"
+      "source_path": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiSTA.cpp",
+      "depfile_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\WiFi\\WiFiSTA.cpp.libsdetect.d"
     },
     "compile_task": {
       "args": [
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
         "-c",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
         "-w",
         "-Os",
         "-Werror=return-type",
@@ -1024,26 +1024,26 @@
         "-DARDUINO_USB_CDC_ON_BOOT=1",
         "-DARDUINO_USB_MSC_ON_BOOT=0",
         "-DARDUINO_USB_DFU_ON_BOOT=0",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
-        "-ID:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
+        "-ID:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot",
         "-iprefix",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/build_opt.h",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/file_opts",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiSTA.cpp",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/build_opt.h",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/file_opts",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiSTA.cpp",
         "-o",
         "nul",
         "-MMD",
         "-MF",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\WiFi\\WiFiSTA.cpp.libsdetect.d"
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\WiFi\\WiFiSTA.cpp.libsdetect.d"
       ]
     }
   },
@@ -1052,14 +1052,14 @@
   },
   {
     "compile": {
-      "source_path": "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiScan.cpp",
-      "depfile_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\WiFi\\WiFiScan.cpp.libsdetect.d"
+      "source_path": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiScan.cpp",
+      "depfile_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\WiFi\\WiFiScan.cpp.libsdetect.d"
     },
     "compile_task": {
       "args": [
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
         "-c",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
         "-w",
         "-Os",
         "-Werror=return-type",
@@ -1086,26 +1086,26 @@
         "-DARDUINO_USB_CDC_ON_BOOT=1",
         "-DARDUINO_USB_MSC_ON_BOOT=0",
         "-DARDUINO_USB_DFU_ON_BOOT=0",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
-        "-ID:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
+        "-ID:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot",
         "-iprefix",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/build_opt.h",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/file_opts",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiScan.cpp",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/build_opt.h",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/file_opts",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiScan.cpp",
         "-o",
         "nul",
         "-MMD",
         "-MF",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\WiFi\\WiFiScan.cpp.libsdetect.d"
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\WiFi\\WiFiScan.cpp.libsdetect.d"
       ]
     }
   },
@@ -1114,14 +1114,14 @@
   },
   {
     "compile": {
-      "source_path": "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src\\NetworkClient.cpp",
-      "depfile_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\Network\\NetworkClient.cpp.libsdetect.d"
+      "source_path": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src\\NetworkClient.cpp",
+      "depfile_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\Network\\NetworkClient.cpp.libsdetect.d"
     },
     "compile_task": {
       "args": [
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
         "-c",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
         "-w",
         "-Os",
         "-Werror=return-type",
@@ -1148,26 +1148,26 @@
         "-DARDUINO_USB_CDC_ON_BOOT=1",
         "-DARDUINO_USB_MSC_ON_BOOT=0",
         "-DARDUINO_USB_DFU_ON_BOOT=0",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
-        "-ID:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
+        "-ID:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot",
         "-iprefix",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/build_opt.h",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/file_opts",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src\\NetworkClient.cpp",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/build_opt.h",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/file_opts",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src\\NetworkClient.cpp",
         "-o",
         "nul",
         "-MMD",
         "-MF",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\Network\\NetworkClient.cpp.libsdetect.d"
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\Network\\NetworkClient.cpp.libsdetect.d"
       ]
     }
   },
@@ -1176,14 +1176,14 @@
   },
   {
     "compile": {
-      "source_path": "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src\\NetworkEvents.cpp",
-      "depfile_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\Network\\NetworkEvents.cpp.libsdetect.d"
+      "source_path": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src\\NetworkEvents.cpp",
+      "depfile_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\Network\\NetworkEvents.cpp.libsdetect.d"
     },
     "compile_task": {
       "args": [
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
         "-c",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
         "-w",
         "-Os",
         "-Werror=return-type",
@@ -1210,26 +1210,26 @@
         "-DARDUINO_USB_CDC_ON_BOOT=1",
         "-DARDUINO_USB_MSC_ON_BOOT=0",
         "-DARDUINO_USB_DFU_ON_BOOT=0",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
-        "-ID:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
+        "-ID:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot",
         "-iprefix",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/build_opt.h",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/file_opts",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src\\NetworkEvents.cpp",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/build_opt.h",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/file_opts",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src\\NetworkEvents.cpp",
         "-o",
         "nul",
         "-MMD",
         "-MF",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\Network\\NetworkEvents.cpp.libsdetect.d"
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\Network\\NetworkEvents.cpp.libsdetect.d"
       ]
     }
   },
@@ -1238,14 +1238,14 @@
   },
   {
     "compile": {
-      "source_path": "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src\\NetworkInterface.cpp",
-      "depfile_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\Network\\NetworkInterface.cpp.libsdetect.d"
+      "source_path": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src\\NetworkInterface.cpp",
+      "depfile_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\Network\\NetworkInterface.cpp.libsdetect.d"
     },
     "compile_task": {
       "args": [
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
         "-c",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
         "-w",
         "-Os",
         "-Werror=return-type",
@@ -1272,26 +1272,26 @@
         "-DARDUINO_USB_CDC_ON_BOOT=1",
         "-DARDUINO_USB_MSC_ON_BOOT=0",
         "-DARDUINO_USB_DFU_ON_BOOT=0",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
-        "-ID:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
+        "-ID:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot",
         "-iprefix",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/build_opt.h",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/file_opts",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src\\NetworkInterface.cpp",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/build_opt.h",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/file_opts",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src\\NetworkInterface.cpp",
         "-o",
         "nul",
         "-MMD",
         "-MF",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\Network\\NetworkInterface.cpp.libsdetect.d"
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\Network\\NetworkInterface.cpp.libsdetect.d"
       ]
     }
   },
@@ -1300,14 +1300,14 @@
   },
   {
     "compile": {
-      "source_path": "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src\\NetworkManager.cpp",
-      "depfile_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\Network\\NetworkManager.cpp.libsdetect.d"
+      "source_path": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src\\NetworkManager.cpp",
+      "depfile_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\Network\\NetworkManager.cpp.libsdetect.d"
     },
     "compile_task": {
       "args": [
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
         "-c",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
         "-w",
         "-Os",
         "-Werror=return-type",
@@ -1334,26 +1334,26 @@
         "-DARDUINO_USB_CDC_ON_BOOT=1",
         "-DARDUINO_USB_MSC_ON_BOOT=0",
         "-DARDUINO_USB_DFU_ON_BOOT=0",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
-        "-ID:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
+        "-ID:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot",
         "-iprefix",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/build_opt.h",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/file_opts",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src\\NetworkManager.cpp",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/build_opt.h",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/file_opts",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src\\NetworkManager.cpp",
         "-o",
         "nul",
         "-MMD",
         "-MF",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\Network\\NetworkManager.cpp.libsdetect.d"
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\Network\\NetworkManager.cpp.libsdetect.d"
       ]
     }
   },
@@ -1362,14 +1362,14 @@
   },
   {
     "compile": {
-      "source_path": "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src\\NetworkServer.cpp",
-      "depfile_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\Network\\NetworkServer.cpp.libsdetect.d"
+      "source_path": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src\\NetworkServer.cpp",
+      "depfile_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\Network\\NetworkServer.cpp.libsdetect.d"
     },
     "compile_task": {
       "args": [
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
         "-c",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
         "-w",
         "-Os",
         "-Werror=return-type",
@@ -1396,26 +1396,26 @@
         "-DARDUINO_USB_CDC_ON_BOOT=1",
         "-DARDUINO_USB_MSC_ON_BOOT=0",
         "-DARDUINO_USB_DFU_ON_BOOT=0",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
-        "-ID:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
+        "-ID:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot",
         "-iprefix",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/build_opt.h",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/file_opts",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src\\NetworkServer.cpp",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/build_opt.h",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/file_opts",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src\\NetworkServer.cpp",
         "-o",
         "nul",
         "-MMD",
         "-MF",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\Network\\NetworkServer.cpp.libsdetect.d"
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\Network\\NetworkServer.cpp.libsdetect.d"
       ]
     }
   },
@@ -1424,14 +1424,14 @@
   },
   {
     "compile": {
-      "source_path": "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src\\NetworkUdp.cpp",
-      "depfile_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\Network\\NetworkUdp.cpp.libsdetect.d"
+      "source_path": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src\\NetworkUdp.cpp",
+      "depfile_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\Network\\NetworkUdp.cpp.libsdetect.d"
     },
     "compile_task": {
       "args": [
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
         "-c",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
         "-w",
         "-Os",
         "-Werror=return-type",
@@ -1458,26 +1458,26 @@
         "-DARDUINO_USB_CDC_ON_BOOT=1",
         "-DARDUINO_USB_MSC_ON_BOOT=0",
         "-DARDUINO_USB_DFU_ON_BOOT=0",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
-        "-ID:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
+        "-ID:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot",
         "-iprefix",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/build_opt.h",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/file_opts",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src\\NetworkUdp.cpp",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/build_opt.h",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/file_opts",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src\\NetworkUdp.cpp",
         "-o",
         "nul",
         "-MMD",
         "-MF",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\Network\\NetworkUdp.cpp.libsdetect.d"
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\Network\\NetworkUdp.cpp.libsdetect.d"
       ]
     }
   },
@@ -1486,14 +1486,14 @@
   },
   {
     "compile": {
-      "source_path": "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src\\Preferences.cpp",
-      "depfile_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\Preferences\\Preferences.cpp.libsdetect.d"
+      "source_path": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src\\Preferences.cpp",
+      "depfile_path": "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\Preferences\\Preferences.cpp.libsdetect.d"
     },
     "compile_task": {
       "args": [
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp-x32\\2601/bin/xtensa-esp32s3-elf-g++",
         "-c",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/cpp_flags",
         "-w",
         "-Os",
         "-Werror=return-type",
@@ -1520,26 +1520,26 @@
         "-DARDUINO_USB_CDC_ON_BOOT=1",
         "-DARDUINO_USB_MSC_ON_BOOT=0",
         "-DARDUINO_USB_DFU_ON_BOOT=0",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
-        "-ID:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/defines",
+        "-ID:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot",
         "-iprefix",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
-        "@C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
-        "-IC:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/build_opt.h",
-        "@D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8/file_opts",
-        "C:\\Users\\USER\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src\\Preferences.cpp",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/include/",
+        "@C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/flags/includes",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\esp32s3-libs\\3.3.12/qio_opi/include",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\cores\\esp32",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\variants\\esp32s3",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Wire\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
+        "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/build_opt.h",
+        "@D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8/file_opts",
+        "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Preferences\\src\\Preferences.cpp",
         "-o",
         "nul",
         "-MMD",
         "-MF",
-        "D:\\TLHT\\Two-wheeled-self-balancing-robot\\.build\\esp32s3-n16r8\\libraries\\Preferences\\Preferences.cpp.libsdetect.d"
+        "D:\\blancing\\Robot_Collab\\.build\\esp32s3-n16r8\\libraries\\Preferences\\Preferences.cpp.libsdetect.d"
       ]
     }
   },

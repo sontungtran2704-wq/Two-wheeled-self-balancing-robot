@@ -1,4 +1,4 @@
-#line 1 "D:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot\\ControlCore.h"
+#line 1 "D:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot\\ControlCore.h"
 #pragma once
 #include <cstdint>
 #include <cstddef>
@@ -15,6 +15,7 @@ class NumericController {
   PID velocity{cfg::velocity_kp,cfg::velocity_ki,cfg::velocity_kd},yaw{cfg::yaw_kp,cfg::yaw_ki,cfg::yaw_kd};
   Output tick(double theta,double omega,double v,double yaw_rate,double vtarget,double wtarget,bool motion,bool fresh);
   void reset();
+  double k0=cfg::k0,k1=cfg::k1;
  private:
   double q_=0,d_=0,vref_=0,wref_=0,aref_=0,yacc_=0,stable_=0;
   uint32_t n_=0; bool sat_=false,active_=false,stopping_=false;

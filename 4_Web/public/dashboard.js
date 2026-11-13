@@ -340,7 +340,12 @@ socket.on('pidUpdated', p => {
 socket.on('robotWifi', w => {
     const why = { 1: 'không thấy tên WiFi này (sai tên, hoặc router chỉ phát 5 GHz)', 4: 'sai mật khẩu hoặc router không chấp nhận (WPA3-only?)', 6: 'router từ chối/ngắt kết nối' };
     let t;
-    if (w.mode === 'STA') {
+    if(w.mode==='AP_STA') {
+        const home=w.staIp!=='0.0.0.0';
+        t=home ? `Xe đã nối mạng nhà. IP: ${w.staIp}:8080. Máy tính nối cùng mạng rồi dùng IP này để điều khiển. `
+            : w.configured ? 'Đã có cấu hình mạng nhà nhưng chưa kết nối được. Kiểm tra tên/mật khẩu và mạng 2,4 GHz. ' : 'Chưa cấu hình Wi-Fi nhà. ';
+        t+=`Wi-Fi riêng vẫn bật: BalanceBot-Bench, mật khẩu BalanceBot13, IP ${w.apIp}:8080.`;
+    } else if (w.mode === 'STA') {
         t = `Xe đang nối WiFi nhà "${w.ssid}", IP ${w.ip}, sóng ${w.rssi} dBm. Máy tính phải cùng WiFi này. Nhập "${w.ip}" vào ô IP/tên xe rồi bấm Kết nối.`;
         const h = $('wifi-host');
         if (!h.value.trim() || h.value.trim() === $('wifi-ssid').value.trim()) h.value = w.ip;
@@ -507,7 +512,7 @@ function stopRobot() {
 function readLQRForm() {
     const num = id => parseFloat($(id).value);
     return {
-        Q: [num('q0-input'), num('q1-input'), num('q2-input')],
+        Q: [num('q0-input'), num('q1-input')],
         R: num('r-input'),
         model: { mb: num('mb-input'), mw: num('mw-input'), r: num('rw-input'), l: num('l-input'), h: num('h-input'), Ir: num('ir-input') }
     };
@@ -525,7 +530,7 @@ function writeLQRForm(p) {
 }
 
 function updateLQRParameters() {
-    showNotification('Gain LQR cố định trong firmware; cần tính lại và build để thay đổi.', 'info');
+    socket.emit('updateLQR', {...readLQRForm(), send: true});
 }
 
 function onLQRUpdated(p) {
@@ -537,14 +542,14 @@ function onLQRUpdated(p) {
     $('current-pole').textContent = p.unstablePole == null ? '—' : `+${f(p.unstablePole, 2)} rad/s`;
     $('current-sent').textContent = p.sentToRobot ? 'Có' : 'Chưa';
     writeLQRForm(p);
-    showNotification(p.sentToRobot ? 'Đã tính K và gửi xuống xe' : 'Đã tính K (chưa gửi xuống xe)',
+    showNotification(p.fromFirmware ? 'Đã đọc K hiện tại từ firmware' : p.sentToRobot ? 'Firmware đã xác nhận áp dụng K (đến khi khởi động lại xe)' : 'Đã tính K (chưa gửi xuống xe)',
                      p.sentToRobot ? 'success' : 'info');
 }
 
 function loadSavedLQR() {
     try {
         const saved = JSON.parse(localStorage.getItem('lqr_params_20261108'));
-        if (saved && Array.isArray(saved.Q) && saved.Q.length === 3) writeLQRForm(saved);
+        if (saved && Array.isArray(saved.Q) && saved.Q.length === 2) writeLQRForm(saved);
     } catch (_) { /* ignore */ }
 }
 
@@ -552,18 +557,7 @@ function loadSavedLQR() {
    PRESET BUTTONS
    ============================================================ */
 function loadPreset(key) {
-    const p = PRESETS[key];
-    if (!p) return;
-    writeLQRForm({ Q: p.Q, R: p.R, model: SIM_MODEL });
-    Object.entries(SIM_PID).forEach(([k,v]) => { $(`pid-${k}`).value = v; });
-    socket.emit('updateLQR', { ...readLQRForm(), send: false });
-    document.querySelectorAll('.preset-buttons button').forEach(b => {
-        b.setAttribute('aria-pressed', String(b.getAttribute('onclick') === `loadPreset('${key}')`));
-    });
-    $('preset-description').textContent = p.angle == null
-        ? `${p.label}: Q=[${p.Q.join(", ")}], R=${p.R}; PID 0.5 / 0 / 0.2. Đã kiểm tra mô phỏng cơ khí 08/11/2026; preset Nhanh tăng phản ứng góc, không bảo đảm về vị trí nhanh hơn bộ mặc định.`
-        : `${p.label}: Q=[100, 1, 10], R=1; PID=0.5 / 0 / 0.2; xref=0.20 m tại t=1 s, T=8 s, Ts=0.005 s. Các ca dùng chung bộ điều khiển, khác góc ban đầu. Nguồn: bb_pid_lqr_check.py.`;
-    showNotification(`Đã tải ${p.label} lên web`, 'info');
+    showNotification('Preset mô hình cũ chưa áp dụng cho xe hiện tại. Chỉnh Q góc, Q tốc độ góc và R trong khung LQR.', 'info');
 }
 
 /* ============================================================

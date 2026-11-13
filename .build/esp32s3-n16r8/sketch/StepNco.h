@@ -1,4 +1,4 @@
-#line 1 "D:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot\\StepNco.h"
+#line 1 "D:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot\\StepNco.h"
 #pragma once
 #include <cstdint>
 #include <cmath>

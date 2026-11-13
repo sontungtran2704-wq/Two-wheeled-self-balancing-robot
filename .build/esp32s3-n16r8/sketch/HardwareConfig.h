@@ -1,4 +1,4 @@
-#line 1 "D:\\TLHT\\Two-wheeled-self-balancing-robot\\03_Firmware_ESP32S3\\balancebot\\HardwareConfig.h"
+#line 1 "D:\\blancing\\Robot_Collab\\03_Firmware_ESP32S3\\balancebot\\HardwareConfig.h"
 #pragma once
 // User identified: ESP32-S3 44-pin, MPU6050, A4988, 12 V motor supply,
 // regulated 5 V board supply, no encoder. Wiring confirmed by user 2026-11-11.

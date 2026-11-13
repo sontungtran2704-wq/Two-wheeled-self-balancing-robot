@@ -3,15 +3,32 @@ const test=require('node:test'),assert=require('node:assert/strict'),net=require
 const {createBridge}=require('../web_server');
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'C:/Users/USER/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
 test('dashboard TCP commands, telemetry, CSV, malformed and stale data',async t=>{
- const bridge=createBridge({port:13008}),d=bridge.design,commands=[];let stream,state=0,seq=0,motion=0,pause=false,calibrated=1;
- const fake=net.createServer(s=>{stream=s;let b='';s.on('data',x=>{b+=x;let n;while((n=b.indexOf('\n'))>=0){const line=b.slice(0,n);b=b.slice(n+1);commands.push(line);if(line==='START')state=2;if(line==='STOP'||line==='RESET')state=0;if(line.startsWith('MOTION,'))motion=Number(line.split(',')[1]);s.write('ACK:'+line.split(',')[0]+'\n');}});});
+ const bridge=createBridge({port:13008,authFile:path.join(fs.mkdtempSync(path.join(require('node:os').tmpdir(),'robot-browser-')),'users.json')}),d=bridge.design,commands=[];let stream,state=0,seq=0,motion=0,pause=false,calibrated=1,lqrCap=0,holdLqrAck=false,wifiCap=1;
+ const fake=net.createServer(s=>{stream=s;let b='';s.on('data',x=>{b+=x;let n;while((n=b.indexOf('\n'))>=0){const line=b.slice(0,n);b=b.slice(n+1);commands.push(line);if(line==='START')state=2;if(line==='STOP'||line==='RESET')state=0;if(line.startsWith('MOTION,'))motion=Number(line.split(',')[1]);if(!(holdLqrAck&&line.startsWith('LQR2,')))s.write(line==='WIFI_SAVE'?'ACK:WIFI_SAVED\n':line.startsWith('WIFI_')?'ACK:'+line.split(',')[0]+'\n':line.startsWith('LQR2,')?'ACK:LQR2,'+line.split(',').slice(2).join(',')+'\n':'ACK:'+line.split(',')[0]+'\n');}});});
  await new Promise(r=>fake.listen(18080,'127.0.0.1',r));await bridge.listen();
- const timer=setInterval(()=>{if(stream&&!stream.destroyed&&!pause)stream.write(`t=${seq*40},theta=0.01,omega=0,v=0.1,yaw=0.2,u=0.3,left=0.1,right=0.1,st=${state},motion=${motion},session=1,seq=${++seq},config=${d.config_id},hash=${d.config_sha256},fresh=1,sat=0,jitter_us=1,overruns=0,imu_calibrated=${calibrated},imu_sample_fresh=1\n`);},40);
+ const timer=setInterval(()=>{if(stream&&!stream.destroyed&&!pause)stream.write(`t=${seq*40},theta=0.01,omega=0,v=0.1,yaw=0.2,u=0.3,left=0.1,right=0.1,st=${state},motion=${motion},session=1,seq=${++seq},config=${d.config_id},hash=${d.config_sha256},fresh=1,sat=0,jitter_us=1,overruns=0,imu_calibrated=${calibrated},imu_sample_fresh=1,lqr2=${lqrCap},wifi_cfg=${wifiCap}\n`);},40);
  let browser;
  t.after(async()=>{clearInterval(timer);await browser?.close();stream?.destroy();await bridge.close();await new Promise(r=>fake.close(r));});
  browser=await chromium.launch({channel:'msedge',headless:true});const page=await browser.newPage();const errors=[];page.on('pageerror',e=>errors.push(e.message));
- await page.goto('http://127.0.0.1:13008');await page.fill('#wifi-host','127.0.0.1:18080');await page.click('#btn-connect');await page.waitForFunction(()=>document.querySelector('#state-display').textContent==='Chờ');
+ await page.goto('http://127.0.0.1:13008');
+ await page.click('#toggle');await page.fill('#username','browseruser');await page.fill('#password','testpass123');await page.fill('#confirm','testpass123');await page.click('#submit');await page.waitForFunction(()=>document.querySelector('#message').textContent.includes('Đăng ký thành công'));
+ assert.equal(await page.locator('#form-title').textContent(),'Đăng nhập');assert.equal((await page.request.get('http://127.0.0.1:13008/api/status')).status(),401);
+ await page.fill('#username','browseruser');await page.fill('#password','testpass123');await page.click('#submit');await page.waitForURL('http://127.0.0.1:13008/');
+ await page.setViewportSize({width:1440,height:900});
+ const outAuth=path.join(__dirname,'../results');await page.screenshot({path:path.join(outAuth,'account-header.png'),fullPage:false});
+ await page.fill('#wifi-host','127.0.0.1:18080');await page.click('#btn-connect');await page.waitForFunction(()=>document.querySelector('#state-display').textContent==='Chờ');
  assert.deepEqual(errors,[]);
+ await page.click('#btn-lqr');await page.waitForTimeout(120);assert(!commands.some(c=>c.startsWith('LQR2,')),'old firmware must not receive gains');
+ lqrCap=1;await page.waitForTimeout(120);holdLqrAck=true;await page.click('#btn-lqr');await page.waitForTimeout(100);
+ assert.equal(await page.locator('#current-sent').textContent(),'Chưa','writing bytes must not claim applied gains');
+ stream.write('ACK:LQR2,-1,-1\n');await page.waitForTimeout(100);assert.equal(await page.locator('#current-sent').textContent(),'Chưa');
+ await page.click('#btn-lqr');await page.waitForTimeout(2200);assert.equal(await page.locator('#current-sent').textContent(),'Chưa','timeout must not claim success');
+ holdLqrAck=false;await page.click('#btn-lqr');await page.waitForTimeout(150);assert(commands.some(c=>c.startsWith('LQR2,')));assert.equal(await page.locator('#current-sent').textContent(),'Có');
+ await page.locator('details').filter({has:page.locator('#wifi-ssid')}).locator('summary').click();
+ await page.fill('#wifi-ssid','Home 2.4G');await page.fill('#wifi-pass','password123');await page.click('#btn-wifi-save');await page.waitForTimeout(200);
+ assert(commands.includes('WIFI_SSID,486f6d6520322e3447'));assert(commands.includes('WIFI_PASS,70617373776f7264313233'));assert(commands.includes('WIFI_SAVE'));
+ stream.write('EVT:WIFI2,192.168.4.1,192.168.1.25,3,CONFIGURED\n');await page.waitForTimeout(100);
+ assert.match(await page.locator('#wifi-status').textContent(),/192.168.1.25:8080/);assert.match(await page.locator('#wifi-status').textContent(),/Wi-Fi riêng vẫn bật/);
  // A latched fault must be recoverable from the visible button without START.
  state=3;
  await page.waitForFunction(()=>document.querySelector('#state-display').textContent==='LỖI');
@@ -39,6 +56,8 @@ test('dashboard TCP commands, telemetry, CSV, malformed and stale data',async t=
  await page.waitForTimeout(150);assert(commands.includes('ZPHERE'));
  await page.click('#btn-start');
  await page.waitForFunction(()=>document.querySelector('#state-display').textContent==='Đang cân bằng');
+ const wifiBeforeRun=commands.filter(c=>c==='WIFI_SAVE').length;await page.click('#btn-wifi-save');await page.waitForTimeout(100);assert.equal(commands.filter(c=>c==='WIFI_SAVE').length,wifiBeforeRun);
+ const gainsBeforeRun=commands.filter(c=>c.startsWith('LQR2,')).length;await page.click('#btn-lqr');await page.waitForTimeout(120);assert.equal(commands.filter(c=>c.startsWith('LQR2,')).length,gainsBeforeRun);
  assert.equal(await page.locator('.drive-pad [data-drive-v]').count(),4);
  await page.getByRole('button',{name:'▲ Tiến',exact:true}).hover();
  await page.mouse.down();await page.waitForTimeout(450);
@@ -63,8 +82,8 @@ test('dashboard TCP commands, telemetry, CSV, malformed and stale data',async t=
  await page.fill('#pid-kp','1');await page.fill('#pid-ki','0.2');await page.fill('#pid-kd','0.02');await page.getByRole('button',{name:'Gửi PID'}).click();await page.waitForTimeout(150);assert(commands.includes('$P,V,1,0.2,0.02'));
  const downloadPromise=page.waitForEvent('download');await page.getByRole('button',{name:/CSV/}).click();const download=await downloadPromise;const out=path.join(__dirname,'../results');fs.mkdirSync(out,{recursive:true});await download.saveAs(path.join(out,'browser_telemetry.csv'));
  const csv=fs.readFileSync(path.join(out,'browser_telemetry.csv'),'utf8');assert(csv.includes('v_pulse_m_s'));assert(csv.includes('u_relative_m_s2'));assert(!csv.includes('F(N)'));assert(csv.split('\n').length>2);
- stream.write('t=NaN,theta=bad\n'+'X'.repeat(1100)+'\n');await page.waitForTimeout(100);const status=await (await fetch('http://127.0.0.1:13008/api/status')).json();assert(status.malformed>=2);
- pause=true;await page.waitForTimeout(450);assert.equal((await (await fetch('http://127.0.0.1:13008/api/status')).json()).fresh,false);pause=false;
+ stream.write('t=NaN,theta=bad\n'+'X'.repeat(1100)+'\n');await page.waitForTimeout(100);const status=await (await page.request.get('http://127.0.0.1:13008/api/status')).json();assert(status.malformed>=2);
+ pause=true;await page.waitForTimeout(450);assert.equal((await (await page.request.get('http://127.0.0.1:13008/api/status')).json()).fresh,false);pause=false;
  pause=true;
  // Host-only synthetic samples: preserve a fault even after the rolling log expires.
  const capture=await page.evaluate(()=>{
@@ -88,5 +107,21 @@ test('dashboard TCP commands, telemetry, CSV, malformed and stale data',async t=
  const starts=commands.filter(x=>x==='START').length;stream.destroy();await page.waitForTimeout(1500);assert.equal(commands.filter(x=>x==='START').length,starts);
  await page.screenshot({path:path.join(out,'dashboard.png'),fullPage:true});assert.deepEqual(errors,[]);
  fs.writeFileSync(path.join(out,'browser_commands.json'),JSON.stringify(commands,null,2));
+ await page.click('#logout');await page.waitForURL('**/welcome');
+ assert.equal(await page.locator('#username').inputValue(),'');assert.equal(await page.locator('#password').inputValue(),'');
+ assert.equal(await page.locator('#username').getAttribute('autocomplete'),'off');assert.equal(await page.locator('#password').getAttribute('autocomplete'),'new-password');
+ assert.equal((await page.request.get('http://127.0.0.1:13008/api/status')).status(),401);
+ const guest=await browser.newContext();const guestPage=await guest.newPage();await guestPage.goto('http://127.0.0.1:13008/');
+ await guestPage.addScriptTag({url:'http://127.0.0.1:13008/socket.io/socket.io.js'});
+ const denied=await guestPage.evaluate(()=>new Promise(resolve=>{const client=io({reconnection:false});client.on('connect_error',e=>{client.close();resolve(e.message);});}));assert.equal(denied,'AUTH_REQUIRED');await guest.close();
+ await page.setViewportSize({width:1440,height:1000});await page.screenshot({path:path.join(out,'welcome.png'),fullPage:true});
+ await page.setViewportSize({width:390,height:844});await page.screenshot({path:path.join(out,'welcome-mobile.png'),fullPage:true});
+ assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+ await page.fill('#username','browseruser');await page.fill('#password','wrongpass123');await page.click('#submit');await page.waitForTimeout(200);assert.match(await page.locator('#message').textContent(),/Sai tài khoản/);
+ await page.fill('#password','testpass123');await page.click('#submit');await page.waitForURL('http://127.0.0.1:13008/');
+ const boxes=await page.locator('.header-right').boundingBox();assert(boxes.x>=0&&boxes.x+boxes.width<=390);
+ await page.screenshot({path:path.join(out,'account-header-mobile.png'),fullPage:false});
+
+
 });
 

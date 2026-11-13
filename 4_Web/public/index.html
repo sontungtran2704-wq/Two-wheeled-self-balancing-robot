@@ -24,6 +24,7 @@
                     <span id="status-indicator" class="status-dot disconnected"></span>
                     <span id="status-text">Chưa kết nối</span>
                 </div>
+                <button id="logout" type="button" class="connection-badge logout-button"><span aria-hidden="true">↪</span> Đăng xuất</button>
             </div>
         </div>
     </header>
@@ -60,14 +61,14 @@
             <div class="sidebar-section">
                 <details>
                     <summary class="section-title">📶 WiFi của xe</summary>
-                    <p class="hint">Xe tự phát WiFi <b>BalanceBot</b> (mật khẩu <code>balance123</code>, IP 192.168.4.1) khi chưa có WiFi nhà. Nhập WiFi nhà để xe tự nối vào, rồi bấm Lưu và khởi động lại xe (đang chạy thì không lưu được).</p>
+                    <p class="hint">Xe luôn phát WiFi <b>BalanceBot-Bench</b> (mật khẩu <code>BalanceBot13</code>, IP <code>192.168.4.1:8080</code>). Có thể lưu thêm Wi-Fi nhà <b>2,4 GHz</b> để máy tính vừa có Internet vừa điều khiển xe trên cùng mạng. Chỉ lưu khi xe Chờ; xe sẽ khởi động lại.</p>
                     <div class="form-group">
                         <label for="wifi-ssid">Tên WiFi nhà (SSID)</label>
                         <input id="wifi-ssid" name="bb-home-ssid" class="form-input" type="text" maxlength="32" autocomplete="off" data-lpignore="true">
                     </div>
                     <div class="form-group">
                         <label for="wifi-pass">Mật khẩu (trống hoặc ≥ 8 ký tự)</label>
-                        <input id="wifi-pass" name="bb-home-pass" class="form-input" type="password" maxlength="64" autocomplete="new-password" data-lpignore="true">
+                        <input id="wifi-pass" name="bb-home-pass" class="form-input" type="password" maxlength="63" autocomplete="new-password" data-lpignore="true">
                     </div>
                     <button id="btn-wifi-save" class="btn btn-secondary btn-full">Lưu WiFi và khởi động lại xe</button>
                     <button id="btn-wifi-check" class="btn btn-secondary btn-full" style="margin-top:8px">Kiểm tra WiFi xe (xem IP)</button>
@@ -136,8 +137,8 @@
                             <input type="number" id="q0-input" value="100" step="any" min="0" max="10000" class="form-input"></div>
                         <div class="form-group"><label for="q1-input">Q tốc độ góc θ̇</label>
                             <input type="number" id="q1-input" value="1" step="any" min="0" max="10000" class="form-input"></div>
-                        <div class="form-group"><label for="q2-input">Q vận tốc xe v</label>
-                            <input type="number" id="q2-input" value="10" step="any" min="0" max="10000" class="form-input"></div>
+                        <div class="form-group"><label for="q2-input">Q vận tốc — vòng PID xử lý</label>
+                            <input type="number" disabled id="q2-input" value="10" step="any" min="0" max="10000" class="form-input"></div>
                     </div>
                     <div class="form-group">
                         <label for="r-input">R — trọng số lực điều khiển</label>
@@ -147,24 +148,24 @@
                         <summary>🔧 Thông số cơ khí của xe</summary>
                         <div class="form-grid">
                             <div class="form-group"><label for="mb-input">Khối lượng thân (kg)</label>
-                                <input type="number" id="mb-input" value="1.141" step="any" class="form-input"></div>
+                                <input type="number" readonly id="mb-input" value="1.141" step="any" class="form-input"></div>
                             <div class="form-group"><label for="mw-input">Khối lượng 1 bánh (kg)</label>
-                                <input type="number" id="mw-input" value="0.033" step="any" class="form-input"></div>
+                                <input type="number" readonly id="mw-input" value="0.033" step="any" class="form-input"></div>
                             <div class="form-group"><label for="rw-input">Bán kính bánh (m)</label>
-                                <input type="number" id="rw-input" value="0.033" step="any" class="form-input"></div>
+                                <input type="number" readonly id="rw-input" value="0.033" step="any" class="form-input"></div>
                             <div class="form-group"><label for="l-input">Trọng tâm cao l (m)</label>
-                                <input type="number" id="l-input" value="0.035" step="any" class="form-input"></div>
+                                <input type="number" readonly id="l-input" value="0.035" step="any" class="form-input"></div>
                             <div class="form-group"><label for="h-input">Chiều cao thân h (m)</label>
-                                <input type="number" id="h-input" value="0.14" step="any" class="form-input"></div>
+                                <input type="number" readonly id="h-input" value="0.14" step="any" class="form-input"></div>
                             <div class="form-group"><label for="ir-input">Quán tính rotor mỗi motor Ir (kg·m²)</label>
-                                <input type="number" id="ir-input" value="0.0000036" step="any" class="form-input"></div>
+                                <input type="number" readonly id="ir-input" value="0.0000036" step="any" class="form-input"></div>
                         </div>
-                        <p class="hint">Dùng số đo thực tế. K phụ thuộc trực tiếp vào các số này.</p>
+                        <p class="hint">Cơ khí theo cấu hình nguồn hiện tại. Cần cập nhật và kiểm chứng mô hình trong nguồn trước khi đổi số đo.</p>
                     </details>
-                    <button id="btn-lqr" disabled title="Gain được biên dịch trong firmware; web chỉ đọc" class="btn btn-primary btn-full">
-                        <span class="icon">💾</span> LQR cố định trong firmware
+                    <button id="btn-lqr" class="btn btn-primary btn-full">
+                        <span class="icon">💾</span> TÍNH K & GỬI XE
                     </button>
-                    <p class="hint">Gain LQR chỉ đọc. Muốn đổi cần tính lại, kiểm chứng và build firmware; các ô trên không thay đổi gain xe.</p>
+                    <p class="hint">Chỉnh Q góc, Q tốc độ góc và R để tính LQR pitch hai trạng thái. Chỉ gửi khi xe Chờ và firmware hỗ trợ LQR2; đợi xác nhận mới thử xe. Gain có hiệu lực đến khi khởi động lại, chưa lưu bằng nút Lưu vào xe.</p>
                 </div>
             </div>
 
@@ -327,5 +328,6 @@
     </nav>
 
     <script src="dashboard.js"></script>
+    <script src="/session.js"></script>
 </body>
 </html>
