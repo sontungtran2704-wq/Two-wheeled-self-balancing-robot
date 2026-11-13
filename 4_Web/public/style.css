@@ -966,3 +966,9 @@ select.form-input {
     .connection-badge { min-width:0; }
     #status-text { overflow:hidden; text-overflow:ellipsis; }
 }
+
+.drive-speed-setting { margin-bottom:16px; }
+.drive-speed-setting label { display:block; color:var(--text); font-size:13px; font-weight:600; margin-bottom:12px; }
+.drive-speed-setting output { color:var(--primary); font-variant-numeric:tabular-nums; }
+.drive-speed-setting input[type="range"] { display:block; width:100%; accent-color:var(--primary); cursor:pointer; }
+.drive-speed-scale { display:flex; justify-content:space-between; color:var(--gray); font-size:11px; margin-top:8px; }

@@ -246,6 +246,11 @@ function attachEventListeners() {
     };
     bindSlider('speed-input', 'speed-value', 'setSpeed');
     bindSlider('turn-input',  'turn-value',  'setTurn');
+    // Selecting a speed never sends a movement command by itself.
+    const driveSpeed = () => Math.max(1, Math.min(20, Number($('drive-speed-limit').value) || 5));
+    $('drive-speed-limit').addEventListener('input', () => {
+        $('drive-speed-selected').textContent = driveSpeed();
+    });
     let drivePointer = null;
     const setButtons = (v, w) => {
         $('speed-input').value = v; $('turn-input').value = w;
@@ -265,7 +270,7 @@ function attachEventListeners() {
             if (drivePointer !== null || !socket.connected || robotState.st !== 2) return;
             e.preventDefault(); drivePointer = e.pointerId;
             button.setPointerCapture(e.pointerId);
-            setButtons(Number(button.dataset.driveV), Number(button.dataset.driveW));
+            setButtons(Math.sign(Number(button.dataset.driveV)) * driveSpeed(), Number(button.dataset.driveW));
         });
         for (const event of ['pointerup', 'pointercancel', 'lostpointercapture'])
             button.addEventListener(event, e => { if (e.pointerId === drivePointer) releaseButtons(); });

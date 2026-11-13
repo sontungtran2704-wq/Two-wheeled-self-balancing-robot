@@ -93,13 +93,18 @@
                     <legend>Di chuyển — nhấn giữ</legend>
                     <input type="hidden" id="speed-input" value="0">
                     <input type="hidden" id="turn-input" value="0">
+                    <div class="drive-speed-setting">
+                        <label for="drive-speed-limit">Tốc độ mục tiêu tiến/lùi: <output id="drive-speed-selected" for="drive-speed-limit">5</output> cm/s</label>
+                        <input id="drive-speed-limit" type="range" min="1" max="20" step="1" value="5" aria-describedby="drive-speed-hint">
+                        <div class="drive-speed-scale"><span>1 cm/s</span><span>20 cm/s</span></div>
+                    </div>
                     <div class="drive-pad-buttons">
                         <button type="button" class="btn btn-outline drive-forward" data-drive-v="5" data-drive-w="0">▲ Tiến</button>
                         <button type="button" class="btn btn-outline drive-left" data-drive-v="0" data-drive-w="20">◀ Xoay trái</button>
                         <button type="button" class="btn btn-outline drive-right" data-drive-v="0" data-drive-w="-20">Xoay phải ▶</button>
                         <button type="button" class="btn btn-outline drive-back" data-drive-v="-5" data-drive-w="0">▼ Lùi</button>
                     </div>
-                    <p class="hint">Thả nút để về 0. Tiến/lùi 5 cm/s; xoay 20°/s.</p>
+                    <p id="drive-speed-hint" class="hint">Kéo thanh để chọn tốc độ cho lần nhấn Tiến/Lùi tiếp theo. Nhấn giữ để chạy, thả nút về 0. Xoay giữ nguyên 20°/s.</p>
                     <div class="drive-pad-values"><span>Tiến/lùi: <b id="speed-value">0</b> cm/s</span><span>Xoay: <b id="turn-value">0</b> °/s</span></div>
                 </fieldset>
             </div>

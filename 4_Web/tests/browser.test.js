@@ -64,6 +64,19 @@ test('dashboard TCP commands, telemetry, CSV, malformed and stale data',async t=
  assert(commands.some(x=>/^CMD,1,\d+,0.050000,0.000000$/.test(x)));
  await page.mouse.up();await page.waitForTimeout(100);
  assert.equal(await page.locator('#speed-input').inputValue(),'0');
+ const beforeSpeedSelection=commands.filter(x=>x.startsWith('CMD,')).length;
+ await page.locator('#drive-speed-limit').evaluate(el=>{el.value=12;el.dispatchEvent(new Event('input',{bubbles:true}));});
+ await page.waitForTimeout(180);
+ assert.equal(await page.locator('#drive-speed-selected').textContent(),'12');
+ assert.equal(commands.filter(x=>x.startsWith('CMD,')).length,beforeSpeedSelection,'selecting speed alone must not move robot');
+ assert.equal(await page.locator('#drive-speed-limit').getAttribute('max'),'20');
+ await page.getByRole('button',{name:'▲ Tiến',exact:true}).hover();await page.mouse.down();await page.waitForTimeout(200);
+ assert(commands.some(x=>/^CMD,1,\d+,0.120000,0.000000$/.test(x)));await page.mouse.up();await page.waitForTimeout(100);
+ await page.getByRole('button',{name:'▼ Lùi',exact:true}).hover();await page.mouse.down();await page.waitForTimeout(200);
+ assert(commands.some(x=>/^CMD,1,\d+,-0.120000,0.000000$/.test(x)));await page.mouse.up();await page.waitForTimeout(100);
+ assert.equal(await page.locator('#speed-input').inputValue(),'0');
+ await page.screenshot({path:path.join(__dirname,'../results/drive-speed-slider.png'),fullPage:false});
+
  await page.getByRole('button',{name:'◀ Xoay trái',exact:true}).hover();
  await page.mouse.down();await page.waitForTimeout(200);
  assert(commands.some(x=>/^CMD,1,\d+,0.000000,0.349066$/.test(x)));
