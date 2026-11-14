@@ -7,7 +7,7 @@
     let token = '', wanted = true, busy = false, linkUp = false, latest = null, seen = 0;
     let sequence = 0, replyId = -1, pending = null, lastStatus = 0, lastDrive = 0;
     let v = 0, w = 0, motion = false, zeroPending = false, owner = false;
-    let lastInput = 0, appliedK = false, disconnecting = false, reportedK=null;
+    let lastInput = 0, appliedK = false, disconnecting = false, reportedK=null,controlEpoch=0;
     const event = (name, value) => { for (const fn of handlers.get(name) || []) fn(value); };
     const notice = (msg, type = 'info') => event('notice', {msg, type});
     const fresh = () => latest && performance.now() - seen <= 250;
@@ -38,8 +38,8 @@
         } finally { clearTimeout(timeout); }
     }
     function enqueue(line, done) {
-        if (line === 'STOP' || line === 'ESTOP') {
-            release(); queue.length = 0; pending = null; owner = false; motion = false;permission(false);
+        if (line === 'STOP' || line === 'ESTOP' || line==='CONTROL_STOP') {
+            ++controlEpoch;release(); queue.length = 0; pending = null; owner = false; motion = false;permission(false);
             queue.push({line,done}); return true;
         }
         if (!wanted || !socket.connected) { notice('Chưa gửi lệnh: hãy kết nối với xe.', 'error'); return false; }
@@ -129,7 +129,7 @@
             const now = performance.now();
             if (now-lastStatus>=80 || pending) { await status();lastStatus=performance.now(); }
             if (!wanted) return;
-            if (queue[0]?.line === 'STOP' || queue[0]?.line === 'ESTOP') { await send(queue.shift());return; }
+            if (['STOP','ESTOP','CONTROL_STOP'].includes(queue[0]?.line)) { await send(queue.shift());return; }
             if (!pending && queue.length) { await send(queue.shift()); return; }
             if (pending) return;
             if (!matching() || latest.st!==2 || !owner) { release(false);return; }
@@ -158,6 +158,7 @@
             if(name==='connectSerial'){wanted=true;cycle();return;}
             if(name==='disconnectSerial'){disconnect();return;}
             if(name==='release'){release();return;}
+            if(name==='pauseControl'){enqueue('CONTROL_STOP',r=>{if(r==='ACK:CONTROL_STOP')notice(latest?.st===2?'Đã dừng điều khiển web. Xe vẫn cân bằng.':'Đã khóa điều khiển web.');});return;}
             if(name==='drive'){
                 if(!matching()||latest.st!==2||!owner)return false;
                 if(!p||!Number.isFinite(p.v)||!Number.isFinite(p.w)||Math.abs(p.v)>.2||Math.abs(p.w)>.8)return false;
@@ -172,7 +173,8 @@
                     if(socket.controlStarted||socket.controlPending)return;
                     if(!matching()||latest.imu_calibrated!==1)return notice('Cần telemetry mới, đúng cấu hình và hiệu chuẩn đạt trước START.','error');
                     permission(false,true);
-                    if(!enqueue(cmd,r=>{owner=r.startsWith('ACK:START')||r==='ACK:CONTROL_GRANTED';permission(owner);})){permission(false);}return;
+                    const epoch=controlEpoch;
+                    if(!enqueue(cmd,r=>{if(epoch!==controlEpoch)return;owner=r.startsWith('ACK:START')||r==='ACK:CONTROL_GRANTED';permission(owner);})){permission(false);}return;
                 }
                 enqueue(cmd);return;
             }

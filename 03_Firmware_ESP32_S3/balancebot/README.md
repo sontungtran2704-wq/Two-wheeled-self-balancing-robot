@@ -4,6 +4,8 @@ Mở `balancebot.ino` trong thư mục này; cần giữ tất cả file cùng t
 
 ## Cập nhật giao diện điện thoại trực tiếp — 14/11/2026
 
+Mới nhất: Dừng điều khiển trong màn hình lái/ngoài dashboard chỉ khóa web và đưa mục tiêu về0, xe vẫn cân bằng; Dừng khẩn cấp chỉ ở bên ngoài gửi ESTOP tắt motor, phải Reset rồi Bắt đầu. FALL/SPEED_RAIL đổi nhãn thành Xe đã đổ/Quá tốc, raw fault và các ngưỡng không đổi. Footer 2026–2027.
+
 Cập nhật mới nhất: bản điện thoại có Đăng ký/Đăng nhập dùng NVS riêng trên xe (tối đa 8 tài khoản, mật khẩu băm), không QR. Phải bấm Bắt đầu sau khi kết nối mới được di chuyển; thanh trạng thái giữa màn hình lái xanh/đỏ theo telemetry và mã lỗi, Bắt đầu giữ tối đến khi Dừng. Xem `PHONE_WEB.md` cho phạm vi hiện tại; các đoạn phía dưới nói chưa đưa tài khoản lên ESP32 là lịch sử trước cập nhật này. Không đổi điều kiện hiệu chuẩn, tự cân bằng hoặc phục hồi lỗi.
 
 Nối BalanceBot-Bench / BalanceBot13, mở **http://192.168.4.1/**; không cần máy tính bật trước hoặc chạy trung gian. Giao diện dùng chính HTML/CSS/dashboard/Chart.js của `4_Web`, có hiệu ứng nút, ba thẻ trên điện thoại, biểu đồ, CSV/JSON và chỉnh PID/zero/gyro/LQR. Xem `PHONE_WEB.md`. Mỗi firmware mới vẫn bắt buộc hiệu chuẩn thật đạt và lưu thành công trước khi chạy.

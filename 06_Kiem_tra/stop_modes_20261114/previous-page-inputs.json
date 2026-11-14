@@ -1,0 +1,27 @@
+{
+  "inputs": {
+    "4_Web/public/index.html": "8275d9459a9eb28ecf8f88c36d9c36d018c151e79d766001713fa115a6991548",
+    "4_Web/public/style.css": "24efb9a55f9619bc641f607b3904a3b26849ce4736f9f1a2a8a1e687071f889c",
+    "4_Web/public/dashboard.js": "8f834ebffc9b71f84983a3fe4893a9bd686a43bd68ac5d80cd02886a669c0000",
+    "4_Web/public/button-feedback.js": "b4cf136e73053a1e4f5c88bb57d77b42feee68fc16ef6919424cf35829e6c4d3",
+    "4_Web/phone-adapter.js": "97ea9f691d16472fcc84461d381cc1a7bd1b6425cf11969de36af48604d0bd02",
+    "4_Web/node_modules/chart.js/dist/chart.min.js": "82548102b21d9dd6f0dccd758979d1c3d75c116a9a446d89719980efd9516608",
+    "4_Web/node_modules/chart.js/LICENSE.md": "3e2070709eed5d4ed99b3ef7864e55db94cbadce5402f94ae9e21cdb85abaad0",
+    "4_Web/phone-drive.html": "5d41f1382b38d1165886ca7f995cc4f3cb76448f0b42df5bfef1886ef8ef180e",
+    "4_Web/phone-drive.css": "477cf4a0f92b0940faff704e488aab1061ca7a41a343d87fc981a967656c02ec",
+    "4_Web/phone-drive.js": "98fcf55a87f57a24d939aabc32c2c78b1eda151e4a4976e2ea8000f566680d22",
+    "4_Web/public/welcome.html": "244da2aa470d11dec363ce7b00824fe34a9ba6d7b109afa94627d25d16b0d8ba",
+    "4_Web/public/welcome.css": "9210b2f484d049a1a863d44e7e4beb86c7156bf610e2210c4dd51455fe798476",
+    "4_Web/public/welcome.js": "99332d746252cf1ef3a76b02c3f3b31ebdb7b984a3c26072af3e3104cda25647",
+    "shared/design.json": "890dfab36dd145ff5d082498ca5abf1b91ee715b3aa2317a3d736dade263eeab",
+    "shared/robot.json": "f713711d2dd1267aa36c0c2f214783cd0f568f78af534471ced4ef95d0ea5654",
+    "4_Web/lqr.js": "d996cb8964d22fa1155f9c4c3afa9c08c045493c7c1b9ee1adf479738768d8ca",
+    "4_Web/public/icons/icon.svg": "7b4b37cca6deea2a9439fb6914b1f7c95bfcb9bc63a7a77cb93fb9b1b75e0bf4",
+    "4_Web/public/manifest.json": "5f6812ebc82608e65a13d689a72e534e550e62c29fa47dfe7544ab7c8d80dfd1"
+  },
+  "uncompressed_bytes": 323663,
+  "gzip_bytes": 100377,
+  "page_sha256": "42e3854b471dfe3aca36d507965ca33a8a62f31775c2027acd6cd640ed5c13fe",
+  "welcome_gzip_bytes": 2851,
+  "welcome_sha256": "90eba049e9f0212902329d7b20739d420a63776edfa819fa47ca836b1b9188e6"
+}

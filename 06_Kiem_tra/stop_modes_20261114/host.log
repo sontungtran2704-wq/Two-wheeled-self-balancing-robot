@@ -1,0 +1,14 @@
+PASS: PBKDF2 SHA256 matches Python golden vector; multiple hashed accounts/readback, duplicate/range/capacity rejection, reboot reuse without writes, write failure and corrupt NVS fail closed
+PASS: phone_auth_tests
+PASS: bounded phone HTTP, exact offline page, token/Host/Origin checks, malformed/oversize rejection, command routing, truthful status, partial/EAGAIN TX, fatal/timeout/wrap recovery
+PASS: phone_web_tests
+PASS: speed/yaw zero preserves Run and balancing; ESTOP disables motor/latches fault and requires RESET before START
+PASS: phone_stop_tests
+PASS: explicit LQR2 requires Idle/fresh calibrated IMU/exact config, rejects invalid/unstable K, confirms/readbacks applied K, default K unchanged and reboot restores defaults
+PASS: phone_lqr_tests
+PASS: r4 immediately opposes +/-0.45 m/s drift before drive/yaw gate; no-link zero target; disabled state unchanged
+PASS: no-web boot/FALL/SPEED_RAIL recovery 5s, +/-10 boundary, 40 FALL, configuration dwell restart, STOP/RESET latch, other faults, stale/NaN/motion/gaps/wrap, zero targets/session, saved calibration CRC/context/ranges
+PASS: standalone_tests
+PASS: imu_calibration_tests
+PASS: new firmware rejects previous calibration and blocks manual/auto START; explicit calibration binds image; same-image power cycles reuse without writes; corrupt/moving/I2C/write failures block readiness
+PASS: imu_storage_tests

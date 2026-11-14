@@ -4,7 +4,7 @@ const {createBridge}=require('../web_server');
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'C:/Users/USER/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
 test('dashboard TCP commands, telemetry, CSV, malformed and stale data',async t=>{
  const bridge=createBridge({port:13008,authFile:path.join(fs.mkdtempSync(path.join(require('node:os').tmpdir(),'robot-browser-')),'users.json')}),d=bridge.design,commands=[];let stream,state=0,seq=0,motion=0,pause=false,calibrated=1,lqrCap=0,holdLqrAck=false,wifiCap=1;
- const fake=net.createServer(s=>{stream=s;let b='';s.on('data',x=>{b+=x;let n;while((n=b.indexOf('\n'))>=0){const line=b.slice(0,n);b=b.slice(n+1);commands.push(line);if(line==='START')state=2;if(line==='STOP'||line==='RESET')state=0;if(line.startsWith('MOTION,'))motion=Number(line.split(',')[1]);if(!(holdLqrAck&&line.startsWith('LQR2,')))s.write(line==='WIFI_SAVE'?'ACK:WIFI_SAVED\n':line.startsWith('WIFI_')?'ACK:'+line.split(',')[0]+'\n':line.startsWith('LQR2,')?'ACK:LQR2,'+line.split(',').slice(2).join(',')+'\n':'ACK:'+line.split(',')[0]+'\n');}});});
+ const fake=net.createServer(s=>{stream=s;let b='';s.on('data',x=>{b+=x;let n;while((n=b.indexOf('\n'))>=0){const line=b.slice(0,n);b=b.slice(n+1);commands.push(line);if(line==='START')state=2;if(line==='STOP'||line==='RESET')state=0;if(line==='ESTOP')state=3;if(line.startsWith('MOTION,'))motion=Number(line.split(',')[1]);if(!(holdLqrAck&&line.startsWith('LQR2,')))s.write(line==='WIFI_SAVE'?'ACK:WIFI_SAVED\n':line.startsWith('WIFI_')?'ACK:'+line.split(',')[0]+'\n':line.startsWith('LQR2,')?'ACK:LQR2,'+line.split(',').slice(2).join(',')+'\n':'ACK:'+line.split(',')[0]+'\n');}});});
  await new Promise(r=>fake.listen(18080,'127.0.0.1',r));await bridge.listen();
  const timer=setInterval(()=>{if(stream&&!stream.destroyed&&!pause)stream.write(`t=${seq*40},theta=0.01,omega=0,v=0.1,yaw=0.2,u=0.3,left=0.1,right=0.1,st=${state},motion=${motion},session=1,seq=${++seq},config=${d.config_id},hash=${d.config_sha256},fresh=1,sat=0,jitter_us=1,overruns=0,imu_calibrated=${calibrated},imu_sample_fresh=1,lqr2=${lqrCap},wifi_cfg=${wifiCap}\n`);},40);
  let browser;
@@ -103,6 +103,8 @@ test('dashboard TCP commands, telemetry, CSV, malformed and stale data',async t=
  await page.waitForTimeout(250);
  assert(commands.some(x=>/^CMD,1,\d+,0.000000,0.000000$/.test(x)));
  await page.click('#btn-stop');
+ await page.waitForFunction(()=>document.querySelector('#state-display').textContent==='LỖI');
+ assert(commands.includes('ESTOP'));await page.click('#btn-reset');
  await page.waitForFunction(()=>document.querySelector('#state-display').textContent==='Chờ');
  await page.fill('#pid-kp','1');await page.fill('#pid-ki','0.2');await page.fill('#pid-kd','0.02');await page.getByRole('button',{name:'Gửi PID'}).click();await page.waitForTimeout(150);assert(commands.includes('$P,V,1,0.2,0.02'));
  const downloadPromise=page.waitForEvent('download');await page.getByRole('button',{name:/CSV/}).click();const download=await downloadPromise;const out=path.join(__dirname,'../results');fs.mkdirSync(out,{recursive:true});await download.saveAs(path.join(out,'browser_telemetry.csv'));

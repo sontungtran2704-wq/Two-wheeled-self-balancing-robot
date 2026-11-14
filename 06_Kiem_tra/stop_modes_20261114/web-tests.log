@@ -1,0 +1,16 @@
+✔ dashboard claims a robot already balancing autonomously without another START (828.9921ms)
+✔ CALGYRO distinguishes no link, sent, ACK, rejection and silence (2547.0258ms)
+✔ web authenticates and calculates the current two-state LQR (600.2419ms)
+✔ permission failure is reported once and does not retry (1203.2883ms)
+✔ accounts hash passwords, reject duplicates and invalidate logout sessions (266.5365ms)
+✔ LAN mode permits only actual local network origins and keeps login required (15.0903ms)
+✔ dashboard TCP commands, telemetry, CSV, malformed and stale data (16098.7836ms)
+✔ phone cockpit: two-finger combined driving, landscape, return, charts/exports/settings and lost Wi-Fi (20015.4083ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 20487.1415

@@ -232,6 +232,7 @@ function attachEventListeners() {
     $('btn-refresh-ports').addEventListener('click', refreshPorts);
     $('btn-start').addEventListener('click', startRobot);
     $('btn-stop').addEventListener('click', stopRobot);
+    $('btn-control-stop').addEventListener('click', stopWebControl);
     $('btn-lqr').addEventListener('click', updateLQRParameters);
     $('btn-wifi-check').addEventListener('click', () => socket.emit('robotControl', { command: 'get' }));
     $('btn-wifi-save').addEventListener('click', () => {
@@ -535,7 +536,7 @@ function resetRobot() {
         return;
     }
     if ([1, 2].includes(robotState.st)) {
-        showNotification('Bấm Dừng trước khi RESET; xe đang ARM hoặc chạy.', 'error');
+        showNotification('Bấm Dừng khẩn cấp trước khi RESET; xe đang ARM hoặc chạy.', 'error');
         return;
     }
     ['speed-input', 'turn-input'].forEach(id => { $(id).value = 0; });
@@ -547,14 +548,21 @@ function resetRobot() {
 
 function stopRobot() {
     if (navigator.vibrate) navigator.vibrate([40, 30, 40]);
-    robotCmd('stop');
+    robotCmd('estop');
     // đưa các thanh trượt về 0 để lần chạy sau không tự đi
     ['speed-input', 'turn-input'].forEach(id => { $(id).value = 0; });
     $('speed-value').textContent = '0';
     $('turn-value').textContent  = '0';
     socket.emit('setSpeed', 0);
     socket.emit('setTurn', 0);
-    showNotification('Đã dừng xe', 'warning');
+    showNotification('Đã gửi dừng khẩn cấp; chờ xác nhận từ xe.', 'warning');
+}
+
+function stopWebControl() {
+    ['speed-input','turn-input'].forEach(id=>{$(id).value=0;});
+    $('speed-value').textContent=$('turn-value').textContent='0';
+    document.dispatchEvent(new Event('balancebot:release'));
+    socket.emit('pauseControl');
 }
 
 /* ============================================================
@@ -701,7 +709,8 @@ function flushDisplay() {
     $('angular-vel').textContent   = angularVel?.toFixed(4) ?? '—';
     $('pos-display').textContent   = position == null ? '—' : position.toFixed(4);
     const s = ROBOT_STATES[st];
-    $('state-display').textContent = s ? s.label : '—';
+    const label=[3,4].includes(st)&&robotState.fault==='FALL'?'Xe đã đổ':[3,4].includes(st)&&robotState.fault==='SPEED_RAIL'?'Quá tốc':s?.label||'—';
+    $('state-display').textContent = label;
 
     const qAngle = $('quick-angle');
     if (qAngle) qAngle.textContent = angle == null ? '—' : `${(angle * 180 / Math.PI).toFixed(1)}°`;
@@ -709,7 +718,7 @@ function flushDisplay() {
     if (qSpeed) qSpeed.textContent = `${(velocity * 100).toFixed(0)} cm/s`;
     const qState = $('quick-state');
     if (qState) {
-        qState.textContent = s ? s.label : '—';
+        qState.textContent = label;
         qState.className = `qm-badge ${s ? s.name.toLowerCase() : ''}`;
     }
     if ([3, 4].includes(st)) {
@@ -722,7 +731,7 @@ function flushDisplay() {
     if(robotState.autoWait && [0,3,4].includes(st) && robotState.imuCalibrated===1) {
         const remaining=Math.max(0,5-robotState.autoMs/1000).toFixed(1);
         $('reset-status').textContent=`Tự cân bằng: giữ xe trong ±10° và ổn định liên tục 5 giây (còn ${remaining} s). Ra ngoài vùng hoặc rung sẽ đếm lại. Bấm DỪNG để hủy tự chạy lại.`;
-    } else if(st===2) $('reset-status').textContent='Xe đang cân bằng. DỪNG sẽ tắt motor và hủy tự chạy lại; START để chạy lại.';
+    } else if(st===2) $('reset-status').textContent='Xe đang cân bằng. Dừng điều khiển chỉ khóa lệnh web; Dừng khẩn cấp tắt motor, cần RESET rồi Bắt đầu để chạy lại.';
     if(st===0 && robotState.imuCalibrated===0) {
         const reasons=['Đang kiểm tra IMU','', 'Lỗi I²C','Sai mã IMU','Lỗi cấu hình IMU','Gia tốc chưa hợp lệ','Gyro còn rung','Chờ hiệu chuẩn firmware mới','Lỗi lưu hiệu chuẩn','Kiểm tra bias đã lưu'];
         $('state-display').textContent=reasons[robotState.imuDiagnostic] || 'Chờ IMU';

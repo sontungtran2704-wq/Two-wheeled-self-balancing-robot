@@ -3,12 +3,12 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const {calculate}=require('../lqr');
 const {chromium}=require(process.env.PLAYWRIGHT_MODULE||'C:/Users/DELL/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
 test('phone cockpit: two-finger combined driving, landscape, return, charts/exports/settings and lost Wi-Fi',async t=>{
- const root=path.join(__dirname,'../..'),out=path.join(root,'06_Kiem_tra/phone_auth_20261114');
+ const root=path.join(__dirname,'../..'),out=path.join(root,'06_Kiem_tra/stop_modes_20261114');
  const html=zlib.gunzipSync(fs.readFileSync(path.join(root,'.build/phone-page.html.gz'))).toString(),design=require('../../shared/design.json');
  const welcome=zlib.gunzipSync(fs.readFileSync(path.join(root,'.build/phone-welcome.html.gz'))).toString(),users=new Map();let logged=false,granted=false,session=41;
  const hash=password=>crypto.pbkdf2Sync(password,'test-salt',20000,32,'sha256').toString('hex');
  for(const f of ['style.css','dashboard.js','button-feedback.js'])assert(html.includes(fs.readFileSync(path.join(root,'4_Web/public',f),'utf8')),f+' must be shared exactly');
- let st=0,cal=0,offline=false,delayStatus=0,delayDrive=0,holdLqr=false,reply='',replyId=0,tick=0,K=design.K.slice(),pid=[3,1,.2];
+ let st=0,cal=0,offline=false,delayStatus=0,delayDrive=0,holdLqr=false,reply='',replyId=0,tick=0,K=design.K.slice(),pid=[3,1,.2],faultCode='SPEED_RAIL';
  const commands=[],errors=[],external=[],say=line=>{reply=line;replyId++;};
  const server=http.createServer((req,res)=>{
   res.setHeader('Cache-Control','no-store');
@@ -30,7 +30,7 @@ test('phone cockpit: two-finger combined driving, landscape, return, charts/expo
   if(req.url==='/api/auth/logout'){logged=false;granted=false;res.setHeader('Content-Type','application/json');res.setHeader('Set-Cookie','bb_phone=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0');res.end('{"success":true}');return;}
   if(req.url==='/status'){
    if(offline){req.socket.destroy();return;}
-   const body=`t=${++tick*80},st=${st},session=${session},seq=${tick},theta=0.01,omega=0,v=0.01,yaw=0,u=0.1,left=0,right=0,motion=1,fresh=1,sat=0,auto_mode=1,auto_wait=0,auto_ms=0,config=${design.config_id},hash=${design.config_sha256},fault=${st===3?'SPEED_RAIL':'NONE'},imu_calibrated=${cal},imu_diag=${cal?1:7},imu_cal_saved=${cal},imu_sample_fresh=1,hardware_confirmed=1,lqr2=1,phone_vkp=${pid[0]},phone_vki=${pid[1]},phone_vkd=${pid[2]},phone_k0=${K[0]},phone_k1=${K[1]}\nreply_id=${replyId}\n${reply}`;
+   const body=`t=${++tick*80},st=${st},session=${session},seq=${tick},theta=0.01,omega=0,v=0.01,yaw=0,u=0.1,left=0,right=0,motion=1,fresh=1,sat=0,auto_mode=1,auto_wait=0,auto_ms=0,config=${design.config_id},hash=${design.config_sha256},fault=${st===3?faultCode:'NONE'},imu_calibrated=${cal},imu_diag=${cal?1:7},imu_cal_saved=${cal},imu_sample_fresh=1,hardware_confirmed=1,lqr2=1,phone_vkp=${pid[0]},phone_vki=${pid[1]},phone_vkd=${pid[2]},phone_k0=${K[0]},phone_k1=${K[1]}\nreply_id=${replyId}\n${reply}`;
    setTimeout(()=>res.end(body),delayStatus);return;
   }
   if(req.url==='/command'){
@@ -40,7 +40,9 @@ test('phone cockpit: two-finger combined driving, landscape, return, charts/expo
     if(body==='START'&&st===2){granted=true;res.end('ACK:CONTROL_GRANTED');return;}
     setTimeout(()=>{
      if(body==='START'){if(cal){session++;st=2;granted=true;say('ACK:START');}else say('ERR:IMU');}
-     else if(body==='STOP'||body==='ESTOP'){st=0;granted=false;say('ACK:'+body);}
+     else if(body==='ESTOP'){st=3;faultCode='ESTOP';granted=false;say('ACK:ESTOP');}
+     else if(body==='STOP'||body==='RESET'){st=0;granted=false;say('ACK:'+body);}
+     else if(body==='CONTROL_STOP'){granted=false;say('ACK:CONTROL_STOP');}
      else if(body==='GET')say(`t=1\nPID:V,${pid.join(',')}\nPID:Y,3,0.8,0.02\nLQR:${K.join(',')}`);
      else if(body==='CALGYRO')say('ACK:CALGYRO_PENDING');
      else if(p[0]==='$P'){pid=p.slice(2).map(Number);say('ACK:$P');}
@@ -64,6 +66,7 @@ test('phone cockpit: two-finger combined driving, landscape, return, charts/expo
  await page.screenshot({path:path.join(out,'phone-login.png'),fullPage:true});await page.fill('#password','password123');await page.click('#submit');await page.waitForFunction(()=>document.querySelector('#state-display')?.textContent.includes('hiệu chuẩn'));
  assert.equal((await page.request.post(url+'/command',{headers:{'X-Robot-Token':'test-token'},data:'CMD,41,1,0.05,0'})).status(),403);
  assert(await page.locator('#reset-status').isHidden());assert.equal(await page.locator('.preset-buttons').count(),0);
+ assert.match(await page.locator('.footer').textContent(),/2026–2027/);assert.match(await page.locator('#btn-stop').textContent(),/Dừng khẩn cấp/);
  assert.equal(await page.locator('.drive-hands-hint').count(),0);assert.equal(await page.locator('#drive-orientation-hint').count(),0);
  assert(await page.locator('#btn-start').isDisabled());await page.waitForTimeout(150);assert(!commands.includes('START'));
  await page.locator('[onclick="robotCmd(\'calgyro\')"]').click();await page.waitForFunction(()=>[...document.querySelectorAll('.notification')].some(n=>n.textContent.includes('CALGYRO_PENDING')));assert.equal(st,0);
@@ -107,8 +110,8 @@ test('phone cockpit: two-finger combined driving, landscape, return, charts/expo
  }
  const chartBoxes=await page.locator('#drive-scene-charts .chart-card').evaluateAll(es=>es.map(e=>({h:e.getBoundingClientRect().height,w:e.getBoundingClientRect().width})));
  assert(chartBoxes[0].h>chartBoxes[2].h&&chartBoxes[1].h>chartBoxes[2].h);
- st=3;await page.waitForFunction(()=>document.querySelector('#drive-live-status').textContent.includes('SPEED_RAIL'));assert(await page.locator('#drive-live-status').evaluate(e=>e.classList.contains('status-fault')));assert(await page.locator('#drive-start').evaluate(e=>e.classList.contains('is-started')));
- await page.screenshot({path:path.join(out,'fault-terminal.png'),fullPage:false});st=2;await page.waitForFunction(()=>robotState.st===2);
+ st=3;faultCode='SPEED_RAIL';await page.waitForFunction(()=>document.querySelector('#drive-live-status').textContent==='QUÁ TỐC');assert(await page.locator('#drive-live-status').evaluate(e=>e.classList.contains('status-fault')));assert(await page.locator('#drive-start').evaluate(e=>e.classList.contains('is-started')));
+ await page.screenshot({path:path.join(out,'fault-terminal.png'),fullPage:false});faultCode='FALL';await page.waitForFunction(()=>document.querySelector('#drive-live-status').textContent==='XE ĐÃ ĐỔ');st=2;await page.waitForFunction(()=>robotState.st===2);
  // Leaving while both hands are held must cancel them, return the same charts
  // to the original panel, and never stop balancing just to close a view.
  await cdp.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[fwd,right]});await page.waitForTimeout(200);
@@ -116,7 +119,7 @@ test('phone cockpit: two-finger combined driving, landscape, return, charts/expo
  assert(await page.locator('#drive-screen').isHidden());assert.equal(await page.locator('#panel-charts .charts-container').count(),1);
  assert(commands.slice(exitAt).some(c=>/^CMD,42,\d+,0\.000000,0\.000000$/.test(c)));assert(!commands.slice(exitAt).includes('STOP'));
  await page.setViewportSize({width:390,height:844});
- delayStatus=200;await page.click('#btn-stop');await page.waitForFunction(()=>robotState.st===0);delayStatus=0;
+ delayStatus=200;await page.click('#btn-stop');await page.waitForFunction(()=>robotState.st===4);assert(commands.includes('ESTOP'));await page.click('#btn-reset');await page.waitForFunction(()=>robotState.st===0);delayStatus=0;
  assert(!await page.locator('#btn-start').evaluate(e=>e.classList.contains('is-started')));assert(!await page.locator('#btn-start').isDisabled());
  await page.fill('#pid-kp','2.5');await page.fill('#pid-ki','0.9');await page.fill('#pid-kd','0.15');await page.locator('[onclick="sendPid()"]').click();await page.waitForFunction(()=>document.querySelector('#current-kp').textContent==='2.500');assert(commands.includes('$P,V,2.5,0.9,0.15'));
  for(const [Q,R] of [[[400,4],1],[[100,1],1],[[300,3],1],[[50,1],3]]){const actual=await page.evaluate(({Q,R})=>window.phoneCalculate(Q,R).K,{Q,R}),expected=calculate(Q,R).K;actual.forEach((x,i)=>assert(Math.abs(x-expected[i])<1e-12));}
@@ -127,17 +130,20 @@ test('phone cockpit: two-finger combined driving, landscape, return, charts/expo
  await page.locator('.mobile-nav-btn[data-panel="data"]').click();await page.waitForTimeout(100);assert(await page.locator('#panel-data').isVisible());await page.screenshot({path:path.join(out,'phone-data.png'),fullPage:true});
  await page.locator('.mobile-nav-btn[data-panel="controls"]').click();let download=page.waitForEvent('download');await page.locator('[onclick="exportCSV()"]').click();let file=await download;assert(file.suggestedFilename().endsWith('.csv'));assert(fs.readFileSync(await file.path(),'utf8').includes('theta_rad'));
  download=page.waitForEvent('download');await page.locator('[onclick="downloadJSON()"]').click();file=await download;const exported=JSON.parse(fs.readFileSync(await file.path(),'utf8'));assert(exported.data.length>2&&exported.units.theta==='rad');
- await page.locator('[onclick="clearHistory()"]').click();await page.waitForTimeout(50);assert(await page.evaluate(()=>lastFaultCapture===null));st=3;await page.waitForFunction(()=>robotState.st===4);assert(await page.evaluate(()=>lastFaultCapture?.fault==='SPEED_RAIL'));
+ await page.locator('[onclick="clearHistory()"]').click();await page.waitForTimeout(50);assert(await page.evaluate(()=>lastFaultCapture===null));faultCode='SPEED_RAIL';st=3;await page.waitForFunction(()=>robotState.st===4);assert(await page.evaluate(()=>lastFaultCapture?.fault==='SPEED_RAIL'));
  st=0;await page.waitForFunction(()=>robotState.st===0);const startsAtOpen=commands.filter(c=>c==='START').length;
  await page.click('#btn-open-drive');await page.waitForTimeout(150);assert.equal(commands.filter(c=>c==='START').length,startsAtOpen,'opening the view must not arm');
  st=2;await page.waitForFunction(()=>robotState.st===2);await page.setViewportSize({width:844,height:390});await page.waitForTimeout(150);assert(await up.isDisabled());await page.click('#drive-start');await page.waitForFunction(()=>socket.controlStarted);
- await down();await page.waitForTimeout(200);await page.evaluate(()=>document.querySelector('#drive-stop').click());await page.mouse.up();await page.waitForFunction(()=>robotState.st===0);
+ const pauseAt=commands.length;await down();await page.waitForTimeout(200);await page.evaluate(()=>document.querySelector('#drive-stop').click());await page.mouse.up();await page.waitForFunction(()=>!socket.controlStarted);
+ for(let i=0;i<80&&!commands.slice(pauseAt).includes('CONTROL_STOP');i++)await page.waitForTimeout(25);
+ assert.equal(st,2);assert(commands.slice(pauseAt).includes('CONTROL_STOP'));assert(!commands.slice(pauseAt).some(c=>['STOP','ESTOP'].includes(c)));assert(await up.isDisabled());assert(!await page.locator('#drive-start').isDisabled());
+ assert.equal(await page.locator('#drive-screen #btn-stop').count(),0);assert.match(await page.locator('#drive-stop').textContent(),/Dừng điều khiển/);
  assert.equal(await page.locator('#drive-scene-forward').getAttribute('aria-pressed'),'false');await page.click('#drive-start');await page.waitForFunction(()=>robotState.st===2);await page.waitForTimeout(150);
  await down();await page.waitForTimeout(200);offline=true;await page.waitForFunction(()=>!socket.connected);await page.mouse.up();const count=commands.length;await page.waitForTimeout(400);assert.equal(commands.length,count);assert(!await up.evaluate(e=>e.classList.contains('is-pressed')));
  offline=false;await page.waitForFunction(()=>socket.connected);await page.waitForTimeout(300);assert(!commands.slice(count).some(c=>/^CMD,.*0\.050000/.test(c)));
  assert(await up.isDisabled());assert.equal(await page.evaluate(()=>socket.controlStarted),false);
  await page.click('#drive-exit');assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);await page.setViewportSize({width:1440,height:1000});await page.waitForTimeout(100);for(const id of ['panel-controls','panel-charts','panel-data'])assert(await page.locator('#'+id).isVisible());await page.screenshot({path:path.join(out,'desktop-direct.png'),fullPage:false});
- await page.click('#btn-stop');await page.waitForFunction(()=>robotState.st===0);await page.click('#logout');await page.waitForFunction(()=>document.querySelector('#auth-form'));
+ await page.click('#btn-stop');await page.waitForFunction(()=>robotState.st===4);await page.click('#logout');await page.waitForFunction(()=>document.querySelector('#auth-form'));
  assert.equal((await page.request.get(url+'/status',{headers:{'X-Robot-Token':'test-token'}})).status(),401);
  await page.fill('#username','phoneuser');await page.fill('#password','password123');await page.click('#submit');await page.waitForFunction(()=>document.querySelector('#btn-open-drive'));
  assert.equal(users.size,1);assert.equal(await page.evaluate(()=>socket.controlStarted),false);

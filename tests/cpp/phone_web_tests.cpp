@@ -33,8 +33,8 @@ struct Wifi {IP softAPIP(){return {"192.168.4.1"};}IP localIP(){return {"0.0.0.0
 int send(int,const char* p,size_t size,int){if(channel.fail){errno=channel.fail;return -1;}size=std::min(size,size_t(channel.chunk));channel.output.append(p,size);return int(size);}
 #include "PhoneWeb.h"
 static phone::Web web;
-static std::string accepted,cookie;static unsigned calls=0;
-void accept(const char* text,uint8_t source){assert(source==3);if(!std::strncmp(text,"WEBUSER,",8)){web.reply(phone::auth::commit(text)?"ACK:WEBUSER":"ERR:ACCOUNT_STORAGE");return;}++calls;accepted=text;web.reply(!std::strcmp(text,"START")?"ACK:START":"ACK:TEST");}
+static std::string accepted,cookie;static unsigned calls=0;static std::vector<std::string> commands;
+void accept(const char* text,uint8_t source){assert(source==3);if(!std::strncmp(text,"WEBUSER,",8)){web.reply(phone::auth::commit(text)?"ACK:WEBUSER":"ERR:ACCOUNT_STORAGE");return;}++calls;accepted=text;commands.emplace_back(text);web.reply(!std::strcmp(text,"START")?"ACK:START":"ACK:TEST");}
 void status(char* out,size_t cap){std::snprintf(out,cap,"t=123,session=1,st=0,imu_calibrated=0");}
 std::string req(const std::string& method,const std::string& path,const std::string& body="",const std::string& token="12345678123456781234567812345678",const std::string& host="192.168.4.1") {
   return method+" "+path+" HTTP/1.1\r\nHost: "+host+"\r\nOrigin: http://"+host+"\r\nX-Robot-Token: "+token+"\r\n"+(cookie.empty()?"":"Cookie: "+cookie+"\r\n")+"Content-Length: "+std::to_string(body.size())+"\r\n\r\n"+body;
@@ -85,6 +85,10 @@ int main(){
   // A new connection after timeout has no stale request or response bytes.
   validResponse(exchange(req("POST","/command","STOP")),"ACK:TEST");assert(calls==2&&accepted=="STOP");
   assert(exchange(req("POST","/command","CMD,1,2,0.05,0")).find("403")!=std::string::npos);assert(calls==2);
+  validResponse(exchange(req("POST","/command","START")),"ACK:START");const auto pauseAt=commands.size();
+  validResponse(exchange(req("POST","/command","CONTROL_STOP")),"ACK:CONTROL_STOP");
+  assert(commands.size()==pauseAt+2&&commands[pauseAt]=="SPEED,0"&&commands[pauseAt+1]=="TURN,0");
+  const auto stoppedAt=commands.size();assert(exchange(req("POST","/command","CMD,1,3,0.05,0")).find("403")!=std::string::npos);assert(commands.size()==stoppedAt);
   assert(exchange(req("POST","/api/auth/logout")).find("Max-Age=0")!=std::string::npos);assert(exchange(req("GET","/status")).find("401")!=std::string::npos);
   assert(exchange(req("POST","/api/auth/login","tester\npassword123")).find("Set-Cookie: bb_phone=")!=std::string::npos);
   clockMs+=28800001;assert(exchange(req("GET","/session")).find("401")!=std::string::npos);

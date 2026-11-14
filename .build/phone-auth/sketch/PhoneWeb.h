@@ -85,6 +85,11 @@ class Web {
       if(!request.bodySize){response(400,"ERR:EMPTY");return;}
       if(request.bodySize>160){response(413,"ERR:LINE_TOO_LONG");return;}
       for(const char* p=request.body();*p;++p)if(static_cast<unsigned char>(*p)<32||static_cast<unsigned char>(*p)>126){response(400,"ERR:FORMAT");return;}
+      if(!std::strcmp(request.body(),"CONTROL_STOP")){
+        controlGranted=false;startPending=false;
+        command("SPEED,0",3);command("TURN,0",3);
+        response(200,"ACK:CONTROL_STOP");return;
+      }
       const bool start=!std::strcmp(request.body(),"START"),stop=!std::strcmp(request.body(),"STOP")||!std::strcmp(request.body(),"ESTOP");
       if(stop){controlGranted=false;startPending=false;}
       if(!std::strncmp(request.body(),"CMD,",4)||!std::strncmp(request.body(),"SPEED,",6)||!std::strncmp(request.body(),"TURN,",5)||!std::strncmp(request.body(),"MOTION,",7)){

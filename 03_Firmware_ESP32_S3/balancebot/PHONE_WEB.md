@@ -1,5 +1,12 @@
 # Web điều khiển trực tiếp trên điện thoại
 
+## Hai chế độ dừng — cập nhật mới nhất 14/11/2026
+
+- **Dừng điều khiển**: có trong màn hình lái và ngoài dashboard. Đưa tiến/lùi/xoay về 0, thu hồi quyền điều khiển web; xe đang Run vẫn cân bằng. Không gửi STOP/ESTOP, không tắt motor. Muốn lái lại phải bấm Bắt đầu; thao tác giữ cũ không được phục hồi.
+- **Dừng khẩn cấp**: chỉ ở dashboard bên ngoài, không có trong màn hình lái. Gửi ESTOP theo đường dừng ưu tiên hiện có để tắt motor và chốt lỗi; cần Reset lỗi rồi Bắt đầu để chạy lại.
+
+Điện thoại kiểm tra quyền ngay trên ESP32 sau khi Dừng điều khiển. Web máy tính cũng thu hồi quyền dashboard và gửi cặp CMD0. Không thay thuật toán/giới hạn/tự phục hồi của firmware. Lỗi FALL hiển thị **XE ĐÃ ĐỔ**, SPEED_RAIL hiển thị **QUÁ TỐC**, các lỗi khác giữ mã. Đây là đổi nhãn UI; SPEED_RAIL vẫn là chạm giới hạn lệnh tốc độ bánh, không biến thành đo vận tốc bằng encoder. Năm hiển thị ở footer là **2026–2027** trên cả PC và điện thoại.
+
 ## Đăng ký/đăng nhập và quyền điều khiển — cập nhật mới nhất 14/11/2026
 
 Địa chỉ **http://192.168.4.1/** mở trang Đăng nhập cùng bố cục của web máy tính, không QR. Bấm **Đăng ký**, nhập tên, mật khẩu và nhập lại mật khẩu. Chỉ sau khi ESP32 ghi/đọc lại thành công mới báo đăng ký thành công; sau đó đăng nhập để mở dashboard. Lưu tối đa 8 tài khoản trên chính xe, dùng lại sau tắt nguồn/nạp firmware nếu không xóa NVS. Tài khoản xe và máy tính là hai nơi lưu riêng. Đăng ký thêm khi xe đang chạy: đăng nhập tài khoản có sẵn để Dừng trước, rồi đăng xuất/đăng ký; ghi tài khoản chỉ khi motor tắt và không hiệu chuẩn.

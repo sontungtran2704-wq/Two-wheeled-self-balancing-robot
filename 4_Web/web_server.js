@@ -313,6 +313,10 @@ function createBridge(options = {}) {
       desired={v:p.v,w:p.w};lastDrive=Date.now();if(!sendPair(p.v,p.w))error(socket,'Đường truyền bận; lệnh không gửi.');
     });
     socket.on('release',()=>{if(owner===socket.id)zero();});
+    socket.on('pauseControl',()=>{
+      if(owner&&owner!==socket.id)return error(socket,'Dashboard khác đang điều khiển.');
+      revoke();socket.emit('notice',{msg:'Đã dừng điều khiển web. Xe vẫn cân bằng; bấm Bắt đầu để điều khiển lại.',type:'info'});
+    });
     for(const [event,key,max,scale] of [['setSpeed','v',20,.01],['setTurn','w',.8*180/Math.PI,Math.PI/180]]){
       socket.on(event,value=>{
         if(!authority(socket,true))return;

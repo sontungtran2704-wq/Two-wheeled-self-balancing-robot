@@ -26,6 +26,10 @@ test('dashboard claims a robot already balancing autonomously without another ST
  assert(commands.includes('GET'));assert(!commands.includes('START'));
  socket.emit('drive',{v:.05,w:0});await delay(50);
  assert(commands.some(c=>/^CMD,9,\d+,0.050000,0.000000$/.test(c)));assert.deepEqual(errors,[]);
+ const pauseAt=commands.length;socket.emit('pauseControl');await delay(50);
+ assert(commands.slice(pauseAt).some(c=>/^CMD,9,\d+,0.000000,0.000000$/.test(c)));assert(!commands.slice(pauseAt).some(c=>['STOP','ESTOP'].includes(c)));
+ const blockedAt=commands.length;socket.emit('drive',{v:.1,w:.2});await delay(50);assert.equal(commands.length,blockedAt);assert.match(errors.at(-1),/START/);
+ socket.emit('robotControl',{command:'start'});await delay(50);socket.emit('drive',{v:.1,w:0});await delay(50);assert(commands.some(c=>/^CMD,9,\d+,0.100000,0.000000$/.test(c)));
 });
 
 test('CALGYRO distinguishes no link, sent, ACK, rejection and silence', async t => {

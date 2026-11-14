@@ -10,7 +10,7 @@ body.phone-driving .notification-container { display: none; }
 .drive-toolbar { display: flex; gap: 8px; align-items: center; min-width: 0; position:relative; }
 .drive-toolbar .btn { flex: 0 0 auto; min-height: 40px; padding: 8px 14px; font-size: 13px; white-space: nowrap; }
 .drive-toolbar #drive-exit { margin-right:auto; }
-.drive-live { position:absolute; left:50%; transform:translateX(-50%); max-width:calc(100% - 430px); min-width:170px; pointer-events:none; }
+.drive-live { position:absolute; left:50%; transform:translateX(-50%); max-width:calc(100% - 510px); min-width:170px; pointer-events:none; }
 .drive-terminal { display:block; text-align:center; padding:8px 18px; border-radius:999px; font:800 clamp(15px,2.8vw,24px)/1.2 ui-monospace,Consolas,monospace; letter-spacing:.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; border:1px solid; }
 .drive-terminal.status-balanced { color:#a6ffc3; background:linear-gradient(135deg,#207e40,#104a26); border-color:#39c773; box-shadow:0 0 18px #2fb45f30; }
 .drive-terminal.status-fault { color:#fff0f1; background:linear-gradient(135deg,#b72b35,#781b26); border-color:#f16a75; box-shadow:0 0 18px #e5484d30; }

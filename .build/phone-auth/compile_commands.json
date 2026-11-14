@@ -385,11 +385,11 @@
    "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
    "@D:\\blancing\\Robot_Collab\\.build\\phone-auth/build_opt.h",
    "@D:\\blancing\\Robot_Collab\\.build\\phone-auth/file_opts",
-   "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\STA.cpp",
+   "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\AP.cpp",
    "-o",
-   "D:\\blancing\\Robot_Collab\\.build\\phone-auth\\libraries\\WiFi\\STA.cpp.o"
+   "D:\\blancing\\Robot_Collab\\.build\\phone-auth\\libraries\\WiFi\\AP.cpp.o"
   ],
-  "file": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\STA.cpp"
+  "file": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\AP.cpp"
  },
  {
   "directory": "D:\\blancing\\Robot_Collab",
@@ -434,11 +434,11 @@
    "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
    "@D:\\blancing\\Robot_Collab\\.build\\phone-auth/build_opt.h",
    "@D:\\blancing\\Robot_Collab\\.build\\phone-auth/file_opts",
-   "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\AP.cpp",
+   "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\STA.cpp",
    "-o",
-   "D:\\blancing\\Robot_Collab\\.build\\phone-auth\\libraries\\WiFi\\AP.cpp.o"
+   "D:\\blancing\\Robot_Collab\\.build\\phone-auth\\libraries\\WiFi\\STA.cpp.o"
   ],
-  "file": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\AP.cpp"
+  "file": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\STA.cpp"
  },
  {
   "directory": "D:\\blancing\\Robot_Collab",
@@ -581,11 +581,11 @@
    "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
    "@D:\\blancing\\Robot_Collab\\.build\\phone-auth/build_opt.h",
    "@D:\\blancing\\Robot_Collab\\.build\\phone-auth/file_opts",
-   "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiMulti.cpp",
+   "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiGeneric.cpp",
    "-o",
-   "D:\\blancing\\Robot_Collab\\.build\\phone-auth\\libraries\\WiFi\\WiFiMulti.cpp.o"
+   "D:\\blancing\\Robot_Collab\\.build\\phone-auth\\libraries\\WiFi\\WiFiGeneric.cpp.o"
   ],
-  "file": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiMulti.cpp"
+  "file": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiGeneric.cpp"
  },
  {
   "directory": "D:\\blancing\\Robot_Collab",
@@ -630,11 +630,11 @@
    "-IC:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\Network\\src",
    "@D:\\blancing\\Robot_Collab\\.build\\phone-auth/build_opt.h",
    "@D:\\blancing\\Robot_Collab\\.build\\phone-auth/file_opts",
-   "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiGeneric.cpp",
+   "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiMulti.cpp",
    "-o",
-   "D:\\blancing\\Robot_Collab\\.build\\phone-auth\\libraries\\WiFi\\WiFiGeneric.cpp.o"
+   "D:\\blancing\\Robot_Collab\\.build\\phone-auth\\libraries\\WiFi\\WiFiMulti.cpp.o"
   ],
-  "file": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiGeneric.cpp"
+  "file": "C:\\Users\\DELL\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\3.3.12\\libraries\\WiFi\\src\\WiFiMulti.cpp"
  },
  {
   "directory": "D:\\blancing\\Robot_Collab",

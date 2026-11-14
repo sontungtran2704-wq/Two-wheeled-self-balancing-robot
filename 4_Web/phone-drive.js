@@ -74,7 +74,7 @@
         document.querySelector('.drive-pad').before(button);
         get('drive-exit').onclick=leave;
         get('drive-start').onclick=()=>socket.emit('robotControl',{command:'start'});
-        get('drive-stop').onclick=()=>socket.emit('robotControl',{command:'stop'});
+        get('drive-stop').onclick=()=>socket.emit('pauseControl');
         for(const b of document.querySelectorAll('#drive-screen [data-axis]')){
             b.disabled=true;b.setAttribute('aria-pressed','false');
             b.addEventListener('contextmenu',e=>e.preventDefault());
@@ -98,7 +98,7 @@
         };
         socket.on('serialData',d=>{
             const terminal=get('drive-live-status'),fault=[3,4].includes(d.st);
-            terminal.textContent=fault?'LỖI: '+(d.fault||'KHÔNG RÕ'):d.st===2?'ĐANG CÂN BẰNG':d.imu_calibrated!==1?'CHỜ HIỆU CHUẨN':d.st===1?'ĐANG BẮT ĐẦU':'ĐANG CHỜ';
+            terminal.textContent=fault?(d.fault==='FALL'?'XE ĐÃ ĐỔ':d.fault==='SPEED_RAIL'?'QUÁ TỐC':'LỖI: '+(d.fault||'KHÔNG RÕ')):d.st===2?'ĐANG CÂN BẰNG':d.imu_calibrated!==1?'CHỜ HIỆU CHUẨN':d.st===1?'ĐANG BẮT ĐẦU':'ĐANG CHỜ';
             terminal.className='drive-terminal '+(fault?'status-fault':d.st===2?'status-balanced':'status-waiting');
             if(d.st!==2){if(lastState===2)clear();}lastState=d.st;
             for(const b of document.querySelectorAll('#drive-screen [data-axis]'))b.disabled=d.st!==2||!socket.controlStarted;
