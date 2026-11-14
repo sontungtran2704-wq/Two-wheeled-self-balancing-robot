@@ -1,4 +1,5 @@
 #include "ControlCore.h"
+#include "GeneratedLqrModel.h"
 #include <cmath>
 #include <cstring>
 #include <cstdlib>
@@ -34,6 +35,15 @@ void NumericController::reset() {
   q_=d_=vref_=wref_=aref_=yacc_=stable_=0;n_=0;
   sat_=active_=stopping_=false;velocity.reset();yaw.reset();
 }
+bool NumericController::setGains(double k0,double k1) {
+  if(!std::isfinite(k0)||!std::isfinite(k1)||std::abs(k0)>10000||std::abs(k1)>10000)return false;
+  const double a=lqr_model::a00-lqr_model::b0*k0,b=lqr_model::a01-lqr_model::b0*k1;
+  const double c=lqr_model::a10-lqr_model::b1*k0,d=lqr_model::a11-lqr_model::b1*k1;
+  const double trace=a+d,det=a*d-b*c;
+  // Strict Jury test for this exact verified discrete two-state model.
+  if(!(1-det>1e-9 && 1-trace+det>1e-9 && 1+trace+det>1e-9))return false;
+  k0_=k0;k1_=k1;reset();return true;
+}
 Output NumericController::tick(double theta,double omega,double v,double yr,double vt,double wt,bool motion,bool fresh) {
   if(std::abs(theta)<cfg::stable_rad && std::abs(omega)<cfg::stable_rate)stable_+=cfg::dt;
   else stable_=0;
@@ -53,7 +63,7 @@ Output NumericController::tick(double theta,double omega,double v,double yr,doub
     }
   }
   const double tr=std::atan2(aref_,cfg::g)+std::asin(clip(cfg::r*cfg::M*aref_/(cfg::mb*cfg::l*std::hypot(cfg::g,aref_)),-1,1));
-  const double ub=-cfg::k0*theta-cfg::k1*omega,um=cfg::k0*tr+aref_;
+  const double ub=-k0_*theta-k1_*omega,um=k0_*tr+aref_;
   const double bal=clip(ub,-cfg::amax,cfg::amax),u=bal+clip(um,-cfg::amax-bal,cfg::amax-bal);
   const double L=q_-d_,R=q_+d_,step=cfg::amax*cfg::dt;
   const double Llo=std::max(-cfg::vmax,L-step),Lhi=std::min(cfg::vmax,L+step);
@@ -161,9 +171,19 @@ void Device::commandTo(const char* line,uint32_t now,char* out,size_t capacity) 
     return;
   }
   if(!std::strcmp(tok[0],"$K")) {reply("ERR:READ_ONLY_GAIN");return;}
+  if(!std::strcmp(tok[0],"LQR2") && count==4) {
+    if(state_!=State::Idle){reply("ERR:STATE");return;}
+    if(!sensorsFresh(now)){reply("ERR:IMU");return;}
+    if(std::strcmp(tok[1],cfg::sha256)||std::strcmp(tok[1],lqr_model::hash)){reply("ERR:CONFIG");return;}
+    double k0,k1;
+    if(!number(tok[2],k0)||!number(tok[3],k1)||std::abs(k0)>10000||std::abs(k1)>10000){reply("ERR:GAIN_RANGE");return;}
+    if(!control_.setGains(k0,k1)){reply("ERR:UNSTABLE_GAIN");return;}
+    restartAutonomousCountdown();
+    std::snprintf(out,capacity,"ACK:LQR2,%.12g,%.12g",control_.k0(),control_.k1());return;
+  }
   if(!std::strcmp(tok[0],"GET") && count==1) {
     char status[900];telemetryTo(now,status,sizeof status);
-    std::snprintf(out,capacity,"%s\nPID:V,%.9g,%.9g,%.9g\nPID:Y,%.9g,%.9g,%.9g",status,control_.velocity.kp,control_.velocity.ki,control_.velocity.kd,control_.yaw.kp,control_.yaw.ki,control_.yaw.kd);return;
+    std::snprintf(out,capacity,"%s\nPID:V,%.9g,%.9g,%.9g\nPID:Y,%.9g,%.9g,%.9g\nLQR:%.12g,%.12g",status,control_.velocity.kp,control_.velocity.ki,control_.velocity.kd,control_.yaw.kp,control_.yaw.ki,control_.yaw.kd,control_.k0(),control_.k1());return;
   }
   if(count==1 && !std::strcmp(tok[0],"ESTOP")) {suspendAutonomous();fault("ESTOP");reply("ACK:ESTOP");return;}
   if(count==1 && !std::strcmp(tok[0],"STOP")) {suspendAutonomous();if(state_!=State::Fault)state_=State::Idle;clearMotion();reply("ACK:STOP");return;}
@@ -212,7 +232,7 @@ void Device::commandTo(const char* line,uint32_t now,char* out,size_t capacity) 
 }
 std::string Device::command(const char* line,uint32_t now) {char out[1200];commandTo(line,now,out,sizeof out);return out;}
 void Device::telemetryTo(uint32_t now,char* out,size_t capacity) const {
-  std::snprintf(out,capacity,"t=%lu,theta=%.9g,omega=%.9g,v=%.9g,yaw=%.9g,left=%.9g,right=%.9g,u=%.9g,st=%u,motion=%u,session=%lu,seq=%lu,config=%s,hash=%s,fresh=%u,sat=%u,jitter_us=%ld,overruns=%lu,fault=%s,auto_mode=%u,auto_wait=%u,auto_ms=%lu",
+  std::snprintf(out,capacity,"t=%lu,theta=%.9g,omega=%.9g,v=%.9g,yaw=%.9g,left=%.9g,right=%.9g,u=%.9g,st=%u,motion=%u,session=%lu,seq=%lu,config=%s,hash=%s,fresh=%u,sat=%u,jitter_us=%ld,overruns=%lu,fault=%s,auto_mode=%u,auto_wait=%u,auto_ms=%lu,lqr2=1",
     static_cast<unsigned long>(now/1000),sensors_.theta,sensors_.omega,sensors_.v,sensors_.yaw,output_.left,output_.right,output_.u,unsigned(state_),unsigned(output_.motion_active),static_cast<unsigned long>(session_),static_cast<unsigned long>(last_tick_/5000),cfg::id,cfg::sha256,unsigned(commandFresh(now)),unsigned(output_.saturated),static_cast<long>(jitter_us_),static_cast<unsigned long>(overruns_),fault_,unsigned(auto_feature_),unsigned(autonomousWaiting()),static_cast<unsigned long>(autonomousElapsed(now)/1000));
 }
 std::string Device::telemetry(uint32_t now) const {char out[900];telemetryTo(now,out,sizeof out);return out;}

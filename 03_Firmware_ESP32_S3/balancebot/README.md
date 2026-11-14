@@ -1,6 +1,14 @@
 # Bản chính LQR + PID — lưu gyro và tự cân bằng (14/11/2026)
 
-Mở `balancebot.ino` trong thư mục này; cần giữ tất cả file cùng thư mục. Không dùng các sketch `balancebot_lqr_only` hoặc `balancebot_lqr_60_test` cho chức năng mới này. Không thay gain LQR, PID 3/1/0.2, GPIO, cơ khí, giới hạn STEP/gia tốc/tốc độ.
+Mở `balancebot.ino` trong thư mục này; cần giữ tất cả file cùng thư mục. Không dùng các sketch `balancebot_lqr_only` hoặc `balancebot_lqr_60_test` cho chức năng mới này. Không thay gain LQR mặc định, PID 3/1/0.2, GPIO, cơ khí, giới hạn STEP/gia tốc/tốc độ.
+
+## Cập nhật giao diện điện thoại trực tiếp — 14/11/2026
+
+Cập nhật mới nhất: bản điện thoại có Đăng ký/Đăng nhập dùng NVS riêng trên xe (tối đa 8 tài khoản, mật khẩu băm), không QR. Phải bấm Bắt đầu sau khi kết nối mới được di chuyển; thanh trạng thái giữa màn hình lái xanh/đỏ theo telemetry và mã lỗi, Bắt đầu giữ tối đến khi Dừng. Xem `PHONE_WEB.md` cho phạm vi hiện tại; các đoạn phía dưới nói chưa đưa tài khoản lên ESP32 là lịch sử trước cập nhật này. Không đổi điều kiện hiệu chuẩn, tự cân bằng hoặc phục hồi lỗi.
+
+Nối BalanceBot-Bench / BalanceBot13, mở **http://192.168.4.1/**; không cần máy tính bật trước hoặc chạy trung gian. Giao diện dùng chính HTML/CSS/dashboard/Chart.js của `4_Web`, có hiệu ứng nút, ba thẻ trên điện thoại, biểu đồ, CSV/JSON và chỉnh PID/zero/gyro/LQR. Xem `PHONE_WEB.md`. Mỗi firmware mới vẫn bắt buộc hiệu chuẩn thật đạt và lưu thành công trước khi chạy.
+
+Lệnh LQR2 được bổ sung trong cập nhật này để nút Tính K & gửi xe hoạt động trên cả điện thoại và web máy tính. Chỉ nhận khi xe Chờ, IMU hiệu chuẩn hợp lệ, hash mô hình khớp và K vượt kiểm tra ổn định rời rạc. K mặc định không đổi; K mới chỉ áp dụng sau thao tác gửi rõ ràng, tồn tại đến lần khởi động lại. SAVE tiếp tục chỉ lưu PID/zero. Các ghi chú “chưa có LQR2” ở cuối tài liệu là trạng thái lịch sử trước cập nhật này. Chưa thêm lưu Wi-Fi nhà hoặc tài khoản server máy tính vào ESP32.
 
 ## Hành vi
 

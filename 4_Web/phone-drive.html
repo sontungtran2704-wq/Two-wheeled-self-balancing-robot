@@ -1,0 +1,23 @@
+<section id="drive-screen" class="drive-screen" role="dialog" aria-modal="true" aria-label="Điều khiển xe" hidden>
+    <header class="drive-toolbar">
+        <button id="drive-exit" class="btn btn-small" type="button">‹ Quay lại</button>
+        <div class="drive-live"><span id="drive-live-status" class="drive-terminal status-waiting" role="status" aria-live="polite">CHỜ DỮ LIỆU</span></div>
+        <button id="drive-start" class="btn btn-success" type="button">▶ Bắt đầu</button>
+        <button id="drive-stop" class="btn btn-danger" type="button">■ Dừng</button>
+    </header>
+    <div class="drive-cockpit">
+        <div class="drive-hand drive-hand-left">
+            <span class="drive-axis-title">TIẾN / LÙI</span>
+            <button id="drive-scene-forward" class="btn btn-outline" data-axis="v" data-sign="1" type="button" aria-label="Giữ để tiến">▲<span>TIẾN</span></button>
+            <button id="drive-scene-back" class="btn btn-outline" data-axis="v" data-sign="-1" type="button" aria-label="Giữ để lùi">▼<span>LÙI</span></button>
+            <label class="drive-scene-speed">Tốc độ <output id="drive-scene-speed-value">5</output> cm/s<input id="drive-scene-speed" type="range" min="1" max="20" step="1" value="5"></label>
+        </div>
+        <main id="drive-scene-charts" class="drive-scene-charts" aria-label="Góc nghiêng, vận tốc và gia tốc"></main>
+        <div class="drive-hand drive-hand-right">
+            <span class="drive-axis-title">XOAY / RẼ</span>
+            <button id="drive-scene-left" class="btn btn-outline" data-axis="w" data-sign="1" type="button" aria-label="Giữ để xoay trái">◀<span>TRÁI</span></button>
+            <button id="drive-scene-right" class="btn btn-outline" data-axis="w" data-sign="-1" type="button" aria-label="Giữ để xoay phải">▶<span>PHẢI</span></button>
+        </div>
+    </div>
+    <div class="drive-bottom-line"><span id="drive-pair-value">Tiến/lùi: 0 cm/s · Xoay: 0°/s</span></div>
+</section>

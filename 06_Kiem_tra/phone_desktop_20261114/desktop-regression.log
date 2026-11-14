@@ -1,0 +1,42 @@
+✔ dashboard claims a robot already balancing autonomously without another START (706.39ms)
+✔ CALGYRO distinguishes no link, sent, ACK, rejection and silence (2477.5131ms)
+✔ web authenticates and calculates the current two-state LQR (429.0464ms)
+✔ permission failure is reported once and does not retry (1211.0765ms)
+✔ accounts hash passwords, reject duplicates and invalidate logout sessions (159.9477ms)
+✔ LAN mode permits only actual local network origins and keeps login required (13.2596ms)
+✖ dashboard TCP commands, telemetry, CSV, malformed and stale data (35497.057ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 36239.3893
+
+✖ failing tests:
+
+test at tests\browser.test.js:5:1
+✖ dashboard TCP commands, telemetry, CSV, malformed and stale data (35497.057ms)
+  locator.click: Timeout 30000ms exceeded.
+  Call log:
+  [2m  - waiting for locator('details').filter({ has: locator('#wifi-ssid') }).locator('summary')[22m
+  [2m    - locator resolved to <summary class="section-title">📶 WiFi của xe</summary>[22m
+  [2m  - attempting click action[22m
+  [2m    2 × waiting for element to be visible, enabled and stable[22m
+  [2m      - element is not visible[22m
+  [2m    - retrying click action[22m
+  [2m    - waiting 20ms[22m
+  [2m    2 × waiting for element to be visible, enabled and stable[22m
+  [2m      - element is not visible[22m
+  [2m    - retrying click action[22m
+  [2m      - waiting 100ms[22m
+  [2m    55 × waiting for element to be visible, enabled and stable[22m
+  [2m       - element is not visible[22m
+  [2m     - retrying click action[22m
+  [2m       - waiting 500ms[22m
+  
+      at TestContext.<anonymous> (D:\blancing\Robot_Collab\4_Web\tests\browser.test.js:36:92) {
+    name: 'TimeoutError',
+    log: [ "  - waiting for locator('details').filter({ has: locator('#wifi-ssid') }).locator('summary')", '    - locator resolved to <summary class="section-title">📶 WiFi của xe</summary>', '  - attempting click action', '    2 × waiting for element to be visible, enabled and stable', '      - element is not visible', '    - retrying click action', '    - waiting 20ms', '    2 × waiting for element to be visible, enabled and stable', '      - element is not visible', '    - retrying click action', '      - waiting 100ms', '    55 × waiting for element to be visible, enabled and stable', '       - element is not visible', '     - retrying click action', '       - waiting 500ms' ]
+  }

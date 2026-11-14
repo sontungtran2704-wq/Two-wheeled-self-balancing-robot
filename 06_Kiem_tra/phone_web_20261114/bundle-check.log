@@ -1,0 +1,3 @@
+PASS: all pre-existing sketch files unchanged except Runtime.cpp (HTTP integration)
+PASS: build/sketch matches final C++/header sources
+PASS: source/verification ZIP readback and binary copy; hashes saved in SHA256.json

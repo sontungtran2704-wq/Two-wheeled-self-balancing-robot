@@ -33,6 +33,9 @@ test('dashboard TCP commands, telemetry, CSV, malformed and stale data',async t=
  stream.write('ACK:LQR2,-1,-1\n');await page.waitForTimeout(100);assert.equal(await page.locator('#current-sent').textContent(),'Chưa');
  await page.click('#btn-lqr');await page.waitForTimeout(2200);assert.equal(await page.locator('#current-sent').textContent(),'Chưa','timeout must not claim success');
  holdLqrAck=false;await page.click('#btn-lqr');await page.waitForTimeout(150);assert(commands.some(c=>c.startsWith('LQR2,')));assert.equal(await page.locator('#current-sent').textContent(),'Có');
+ // Home-WiFi configuration is hidden in the product. Expose it only in this
+ // simulator fixture to exercise its existing protocol handlers/capability.
+ await page.locator('#wifi-ssid').evaluate(el=>{el.closest('.sidebar-section').hidden=false;});
  await page.locator('details').filter({has:page.locator('#wifi-ssid')}).locator('summary').click();
  await page.fill('#wifi-ssid','Home 2.4G');await page.fill('#wifi-pass','password123');await page.click('#btn-wifi-save');await page.waitForTimeout(200);
  assert(commands.includes('WIFI_SSID,486f6d6520322e3447'));assert(commands.includes('WIFI_PASS,70617373776f7264313233'));assert(commands.includes('WIFI_SAVE'));

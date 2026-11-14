@@ -1034,3 +1034,24 @@ select.form-input {
 .drive-pad-buttons .btn:active {
     transform: scale(0.97);
 }
+
+/* Shared pointer/keyboard feedback, including touch with pointer capture. */
+button.btn, button.connection-badge, .mobile-nav-btn {
+    transition: transform 90ms ease, filter 90ms ease, box-shadow 90ms ease, background 150ms ease;
+    -webkit-tap-highlight-color: transparent;
+}
+button.btn.is-pressed, button.connection-badge.is-pressed, .mobile-nav-btn.is-pressed {
+    transform: translateY(2px) scale(.97);
+    filter: brightness(1.2);
+    box-shadow: inset 0 3px 8px rgba(0,0,0,.4), 0 0 0 2px rgba(var(--primary-rgb),.4);
+}
+.drive-pad-buttons .btn.is-pressed { background: var(--primary); color: #fff; }
+@media (hover: none) {
+    .drive-pad-buttons .btn:hover:not(.is-pressed):not(:active) {
+        background: rgba(var(--primary-rgb),.1); color: var(--primary);
+    }
+}
+button:focus-visible { outline: 2px solid var(--primary); outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+    button.btn, button.connection-badge, .mobile-nav-btn { transition: none; }
+}

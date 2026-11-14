@@ -1,0 +1,50 @@
+{
+  "source": {
+    "balancebot.ino": "d55b7e0fefc4c6cdf1eee4d3971afe54834c21e2ea5dd41126325f7671c6df37",
+    "ControlCore.cpp": "0bd34ea6eb42e73cd6c916e52c0cef7d9636aeed80ff944a22a9a10a138a64ad",
+    "ControlCore.h": "2d95f75c525838c5635d72326a0e38da1f99a44f5412a51641ac3a59946c4b36",
+    "GeneratedConfig.h": "e755fd0a48fcfba740765aa0fe6c1daa4f48444d6aa2a98a44fe1f38a92b5201",
+    "GeneratedLqrModel.h": "96dc3ed392ec66f246f315c28380335be972b6f222b155de89de7a90fd663950",
+    "HardwareConfig.h": "b3c88077159c7adc0c90ce7354e30323ed8e88e7312d70f789209957a19817de",
+    "ImuCalibration.h": "1abb04fc069ee8996c4103b21907e4dfdc797c623340829c79702fb53c70fcb9",
+    "ImuHal.cpp": "8ad825caf1358cfa7f50951af4bc6605ec4c51086e5bf7aad862c148a56882de",
+    "ImuHal.h": "ce12e45854feebd44d7a1c65da4f237028dc09b85fd6066c311a17e75819af38",
+    "PHONE_WEB.md": "f84606990657ee336fc64f5a7668510fb89b9b993a6f4350f5e4a89d678bfa43",
+    "PhoneHttp.h": "d310b386881aa47dc7a092032cb883efb9ca3d255b771eaa264792b6b682835b",
+    "PhonePage.h": "d0591cba37cc7783c4076534b9dccc142e0737b6f5aea580ff9dcec22b9cfcb6",
+    "PhoneWeb.h": "999db2d611971de6d7a730699fe5ac8ce089d691f27fbc52ea4c18cf503b08e2",
+    "README.md": "d53bf875cc56c74044ab7806bf83ee868650ac6960c81d4d5f2afb087e136c52",
+    "Runtime.cpp": "6e252c1bc8e9b7f0117773d8bb53dcfded2fb9d8f1ee59cd9a74eae55b2e071f",
+    "SavedImuCalibration.h": "3ff88767e336650b88b630a530423ae02659731cb1f9d24848186065885f7229",
+    "StepNco.h": "34d4947f0b8ee8f2a46ececcbfb7bdabe7bb2a250c25610065438b2c6f884f73",
+    "StepperHal.cpp": "e224d19567ab2933b40a7df3f0c8f32cbb1b97e39f7d886276fee3f5c862dfd8",
+    "StepperHal.h": "5823bbd7e9972e41c0ac6f603150033be7b5515a0816220155fe3cfb8c8f9e0a"
+  },
+  "verification_inputs": {
+    "tests/cpp/phone_web_tests.cpp": "f7fec33dcedbeebe4e8d9f5a7d249e796408a4e002026417fd881ea67158911e",
+    "tests/cpp/standalone_tests.cpp": "88d06b0dea14ff2c22c5f9eb5ed1147773744f828b999c2f1b995f1f0e3f044b",
+    "tests/cpp/imu_calibration_tests.cpp": "72999a8e45338329d2101f349408eec9488c454c4528a79563d2924db99c0032",
+    "tests/cpp/imu_storage_tests.cpp": "7eeed5595b3bfe390e2b3af9e8b470ea2ee8de3c66db89e4e53a2bcc9753dc48",
+    "tools/build_phone_host.ps1": "cf1fe62e2b6eb0b3778d0a3aebcf44e809c0dc2625f10594096b449aa6cf58ee",
+    "4_Web/tests/phone_direct.test.js": "59f4f6ab7948d20ee0aebcaa2de93311cfd371c70149d9fad9ec943470ed2809",
+    "tests/mocks/Arduino.h": "360478b71ea3aea42f6e30fa86e81c9c248fffcd20fcd260c3382264a4001ee5",
+    "tests/mocks/esp_app_desc.h": "2fe93087747110a593e8519ebe6a9e592964131d1d76dca1fec3d51230a30bde",
+    "tests/mocks/Preferences.h": "62ae2eaa460480c3cc604684f4120b68801714428707302686e969b1931b669e",
+    "tests/mocks/Wire.h": "d3332055078695bf193cb5d2f8cc38cb1a6b6e872413b6dd56d253cb55bcd7e4",
+    "tests/mocks/runtime/Arduino.h": "799df86cee6218dc1302013d35cb488275d44ccf4a5e4eeb228296d5dc0a791e",
+    "tests/mocks/runtime/WiFi.h": "b7e9471975ed86569c41ddeb8638ced8e6d9d04819fe1d921df1fe4f9decd4bc",
+    "tests/mocks/runtime/sys/socket.h": "4ef4537555ee1d9d0cbda74ae1bbeb852e68abe9afbce5e2a5cd8f258ba43f8f"
+  },
+  "artifacts": {
+    "balancebot-phone-source.zip": "566e974f5f69700814ee23684ef3750d98514d28cde874c458edc2f8e39cff05",
+    "balancebot.ino.bin": "004155dcb64227abd4b3ff730079e3d138aac15c7f2b64e83ef15f2bfdb4afe4",
+    "before-source.zip": "fd3780024a75dbfc52a576a8fd33aa18eecb8b177e61bf0d0562e7097f29d452",
+    "browser.log": "44ce6addd5a774a20a2ffe4c1711d58462451e383134807e3096883265121f55",
+    "firmware-build.log": "f06434a25fdb8302946693fdca3ad2081ac860413c53c4e5ad507ead60e1c57e",
+    "host.log": "846c03678e0fb84619137d44a76c216157fa4f49553f0f1e6451a94ff14a51bb",
+    "KET_QUA.md": "1ec1fc4b0bf37bc349f31356ad6f1fb8967145c0861720fe2efc9ef7025420c7",
+    "phone-390.png": "24428716a19c1f4ff05817198ec9b83662691178d05c04bdb210cf81d6a78d8b",
+    "verification-inputs.zip": "6824ef3874e935eea9c830e6c53e21ef4f9e6d31d520c4a0f1ebaa189bd9a017",
+    "verify_bundle.py": "4b8ee9867937300430a21fbbc14102f1e2cf1d031084c6383176028d27b001be"
+  }
+}

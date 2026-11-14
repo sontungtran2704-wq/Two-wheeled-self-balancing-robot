@@ -9,6 +9,7 @@
 #include "StepperHal.h"
 #include "ImuHal.h"
 #include "HardwareConfig.h"
+#include "PhoneWeb.h"
 #if !defined(CONFIG_IDF_TARGET_ESP32S3)
 #error "This HAL is for ESP32-S3 only"
 #endif
@@ -23,6 +24,7 @@ static uint32_t maxTickUs=0;
 static std::atomic<uint32_t> queueDrops{0};
 static WiFiServer server(8080);
 static WiFiClient client;
+static phone::Web phoneWeb;
 #ifndef ROBOT_BENCH_AP_PASSWORD
 #define ROBOT_BENCH_AP_PASSWORD "BalanceBot13"
 #endif
@@ -76,6 +78,14 @@ static void controlTask(void*) {
       const uint32_t dispatch=micros();
       if(uint32_t(dispatch-request.received)>100000)std::strcpy(reply.line,"ERR:STALE_QUEUE");
       else if(!hardware::confirmed && !std::strcmp(request.line,"START"))std::strcpy(reply.line,"ERR:HARDWARE_UNCONFIRMED");
+      else if(!std::strncmp(request.line,"WEBUSER,",8)) {
+        if(request.source!=3)std::strcpy(reply.line,"ERR:SOURCE");
+        else if(device.state()==robot::State::Run||device.state()==robot::State::Arming||imu::calibrating())std::strcpy(reply.line,"ERR:MOTORS_ON");
+        else {
+          device.restartAutonomousCountdown();stepper::apply(0,0,false);
+          std::strcpy(reply.line,phone::auth::commit(request.line)?"ACK:WEBUSER":"ERR:ACCOUNT_STORAGE");wake=xTaskGetTickCount();
+        }
+      }
       else if(!std::strcmp(request.line,"CALGYRO")) {
         if(device.state()==robot::State::Run||device.state()==robot::State::Arming)
           std::strcpy(reply.line,"ERR:MOTORS_ON");
@@ -107,6 +117,7 @@ static void controlTask(void*) {
   }
 }
 static void emit(uint8_t source,const char* text) {
+  if(source==3)phoneWeb.reply(text);
   const size_t n=std::strlen(text);
   if(source==1 || source==0) {Serial.write(reinterpret_cast<const uint8_t*>(text),n);Serial.write('\n');}
   if((source==2 || source==0) && client.connected()) {
@@ -144,8 +155,14 @@ struct LineReader {
     if(length==160) {overflow=true;return;}if(!overflow)line[length++]=c;
   }
 };
+static void phoneStatus(char* out,size_t capacity) {
+  auto v=copyView();v.telemetryTo(micros(),out,capacity);
+  const size_t len=std::strlen(out);const auto tuning=v.tuning();
+  snprintf(out+len,capacity-len,",imu_calibrated=%u,imu_diag=%u,imu_cal_saved=%u,imu_cal_restored=%u,imu_sample_fresh=%u,hardware_confirmed=%u,cal_accel_mg=%u,phone_vkp=%.9g,phone_vki=%.9g,phone_vkd=%.9g,phone_k0=%.12g,phone_k1=%.12g",
+      unsigned(imu::calibrated()),imu::diagnostic(),unsigned(imu::calibrationSaved()),unsigned(imu::calibrationRestored()),unsigned(imu::sampleFresh()),unsigned(hardware::confirmed),imu::calibrationAccelMilliG(),tuning.vkp,tuning.vki,tuning.vkd,v.k0(),v.k1());
+}
 static void networkTask(void*) {
-  LineReader serialReader,tcpReader;uint32_t lastTelemetry=0,lastReconnect=0;bool serving=false;
+  LineReader serialReader,tcpReader;uint32_t lastTelemetry=0,lastReconnect=0;bool serving=false,phoneServing=false;
   if(*hardware::ssid) {WiFi.mode(WIFI_STA);WiFi.begin(hardware::ssid,hardware::password);}
   else {
     WiFi.mode(WIFI_AP);
@@ -159,6 +176,7 @@ static void networkTask(void*) {
     const uint32_t now=millis();
     if((*hardware::ssid && WiFi.status()==WL_CONNECTED) || benchApActive) {
       if(!serving) {server.begin();serving=true;}
+      if(!phoneServing){phoneWeb.begin(acceptLine,phoneStatus);phoneServing=true;}
       if(server.hasClient()) {
         auto candidate=server.accept();
         if(client.connected())candidate.stop();else {client=candidate;client.setNoDelay(true);tcpReader.clear();}
@@ -166,6 +184,7 @@ static void networkTask(void*) {
     } else if(*hardware::ssid && uint32_t(now-lastReconnect)>10000) {
       lastReconnect=now;WiFi.reconnect();
     }
+    if(phoneServing)phoneWeb.poll();
     for(int n=0;n<192 && Serial.available();++n)serialReader.consume(char(Serial.read()),1);
     for(int n=0;n<192 && client.connected() && client.available();++n)tcpReader.consume(char(client.read()),2);
     Reply reply;for(int n=0;n<4 && xQueueReceive(replies,&reply,0)==pdTRUE;++n)emit(reply.source,reply.line);
@@ -185,7 +204,7 @@ void setupRobot() {
   device=robot::Device(esp_random());view=device;
   const bool stepperReady=stepper::begin();
   if(!requests||!replies||!stepperReady) {device.fault("INITIALIZATION");view=device;return;}
-  loadTuning();device.enableAutonomous(hardware::confirmed);view=device;
+  phone::auth::load();loadTuning();device.enableAutonomous(hardware::confirmed);view=device;
   if(xTaskCreatePinnedToCore(imu::task,"imu",4096,nullptr,4,nullptr,1)!=pdPASS ||
      xTaskCreatePinnedToCore(controlTask,"balance",6144,nullptr,5,nullptr,1)!=pdPASS ||
      xTaskCreatePinnedToCore(networkTask,"link",8192,nullptr,1,nullptr,0)!=pdPASS) {

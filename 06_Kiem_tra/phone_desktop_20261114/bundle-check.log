@@ -1,0 +1,4 @@
+PASS: only declared firmware files changed; generated config/model, pins/directions, IMU/calibration/NVS and stepper files remain byte-identical
+PASS: actual target build C++/headers match final source
+PASS: shared desktop asset/model hashes and gzip readback
+PASS: source/test ZIP readback, binary copy and SHA256.json

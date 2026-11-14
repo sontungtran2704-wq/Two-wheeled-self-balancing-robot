@@ -15,7 +15,11 @@ class NumericController {
   PID velocity{cfg::velocity_kp,cfg::velocity_ki,cfg::velocity_kd},yaw{cfg::yaw_kp,cfg::yaw_ki,cfg::yaw_kd};
   Output tick(double theta,double omega,double v,double yaw_rate,double vtarget,double wtarget,bool motion,bool fresh);
   void reset();
+  bool setGains(double k0,double k1);
+  double k0() const {return k0_;}
+  double k1() const {return k1_;}
  private:
+  double k0_=cfg::k0,k1_=cfg::k1;
   double q_=0,d_=0,vref_=0,wref_=0,aref_=0,yacc_=0,stable_=0;
   uint32_t n_=0; bool sat_=false,active_=false,stopping_=false;
 };
@@ -36,6 +40,8 @@ class Device {
   const char* faultReason() const {return fault_;}
   uint32_t overruns() const {return overruns_;}
   Tuning tuning() const;
+  double k0() const {return control_.k0();}
+  double k1() const {return control_.k1();}
   bool restoreTuning(const Tuning& t);
   // Runtime enables this only after hardware initialization/confirmation.
   void enableAutonomous(bool allowed) {auto_feature_=allowed;auto_blocked_=!allowed;auto_timing_=false;}
