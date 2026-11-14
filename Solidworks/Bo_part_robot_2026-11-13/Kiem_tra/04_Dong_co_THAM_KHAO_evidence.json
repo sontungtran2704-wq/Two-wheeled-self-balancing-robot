@@ -1,0 +1,106 @@
+{
+  "notes": {
+    "status": "simplified reference only",
+    "body_mm": [
+      42,
+      42,
+      34
+    ],
+    "shaft_diameter_mm": 5,
+    "shaft_protrusion_mm": 25,
+    "omitted": "D flat, pilot boss diameter, mounting threads, body seams, connector, internals"
+  },
+  "expected_envelope_mm": [
+    42,
+    42,
+    59
+  ],
+  "exact_extrema_envelope_mm": [
+    42.0,
+    42.0,
+    59.0
+  ],
+  "geometry": {
+    "units": "mm",
+    "measurement_source": "SolidWorks API GetPartBox(True) + B-Rep cylindrical faces",
+    "envelope_mm": {
+      "length": 42.0,
+      "width": 42.0,
+      "height": 59.0,
+      "axis_order": "model_xyz"
+    },
+    "holes": [],
+    "compound_holes": [],
+    "slot_arc_candidates": [],
+    "cylindrical_faces": [
+      {
+        "diameter_mm": 5.0,
+        "origin_mm": [
+          0.0,
+          0.0,
+          25.0
+        ],
+        "axis": [
+          -0.0,
+          -0.0,
+          -1.0
+        ],
+        "area_mm2": 392.699082,
+        "axial_length_mm": 25.0,
+        "internal": false,
+        "loop_count": 2,
+        "edge_count": 2,
+        "body_index": 0,
+        "face_index": 6
+      }
+    ],
+    "errors": [],
+    "hole_count": 0,
+    "hole_groups": []
+  },
+  "sketches": {
+    "status": "pass",
+    "sketches": [
+      {
+        "status": "pass",
+        "constrained_status": 3,
+        "dimension_count": 1,
+        "relation_count": 14,
+        "fix_count": 0,
+        "dimension_names": [
+          "D1@Sketch1"
+        ],
+        "errors": [],
+        "name": "Sketch1",
+        "consumed_by": [
+          "Boss-Extrude1"
+        ],
+        "dangling": false
+      },
+      {
+        "status": "pass",
+        "constrained_status": 3,
+        "dimension_count": 1,
+        "relation_count": 2,
+        "fix_count": 0,
+        "dimension_names": [
+          "D1@Sketch2"
+        ],
+        "errors": [],
+        "name": "Sketch2",
+        "consumed_by": [
+          "Boss-Extrude2"
+        ],
+        "dangling": false
+      }
+    ]
+  },
+  "review": {
+    "status": "pass",
+    "score": 100,
+    "issues": [],
+    "recommendations": [],
+    "manual_review_required": true,
+    "manual_review_reason": "规则评分只能发现明显失败，最终几何是否符合用户意图仍需查看预览图或截图。"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Xe Cân Bằng ESP32-S3",
+  "short_name": "BalanceBot",
+  "description": "Bảng điều khiển xe hai bánh tự cân bằng LQR / Động cơ bước ESP32-S3",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#101827",
+  "theme_color": "#1a202c",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
+

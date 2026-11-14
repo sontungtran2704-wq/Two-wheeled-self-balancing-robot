@@ -1,13 +1,14 @@
 # Dashboard xe cân bằng
 
-### Mở trên điện thoại qua máy tính (13/11/2026)
+### Mở trên điện thoại qua máy tính (Cập nhật 14/11/2026)
 
-- Mở `Mo_Web.cmd` trên máy tính. Launcher bật `ROBOT_LAN=1`; server cho phép địa chỉ IPv4 LAN của máy tính, vẫn bắt buộc đăng nhập. Chạy Node trực tiếp mặc định chỉ mở localhost.
-- Điện thoại và máy tính nối cùng mạng nội bộ. Trên điện thoại nhập **IP máy tính:3000**, không dùng `127.0.0.1` và không dùng IP xe ở bước mở web. Địa chỉ kiểm tra hiện tại: `http://192.168.32.132:3000`; IP có thể đổi khi chuyển mạng hoặc router cấp lại IP. Launcher in địa chỉ LAN hiện tại.
-- Nếu Windows chặn kết nối đến, mở `Cho_Phep_Dien_Thoai.cmd` và chấp nhận hộp UAC. Script chỉ cho phép đúng Node.exe nhận TCP 3000 từ LocalSubnet trên profile Private. Không tắt tường lửa. Mạng đang dùng trên PC cần là mạng Private đáng tin cậy; router không được cô lập hai thiết bị.
-- Máy tính và server phải tiếp tục chạy. Điện thoại đăng nhập tài khoản đã tạo rồi mới kết nối xe. Chỉ để mở web, không cần nối Wi-Fi riêng của xe. Nếu dùng Wi-Fi nhà, PC phải truy cập được IP xe trên mạng đó. Nếu dùng AP xe, PC và điện thoại phải có đường mạng tới nhau và PC tới xe.
-- Đây là giao diện qua server máy tính, chưa phải web chạy độc lập trên ESP32. Không cần nạp firmware cho thay đổi LAN này.
-- Kiểm chứng mới: API 5/5, browser hiện có và browser LAN màn hình 390×844 tổng 2/2 đạt. Browser LAN thử đăng ký, đăng nhập, Socket.IO và đăng xuất qua IP LAN với tài khoản tạm; không gửi lệnh tới xe thật. Khả năng đi qua Wi-Fi/tường lửa từ điện thoại thật cần xác nhận riêng.
+- Mở `Mo_Web.cmd` trên máy tính. Launcher bật `ROBOT_LAN=1`; server tự động hiển thị **Mã QR Code** trực tiếp trên màn hình console và trên giao diện web máy tính.
+- **Cách vào nhanh nhất**: Bật camera điện thoại quét mã QR hiển thị trên cửa sổ console hoặc bấm nút `📱 Điện thoại` trên thanh tiêu đề web để quét. Không cần tự gõ IP thủ công.
+- Hỗ trợ **PWA (Progressive Web App)**: Trên trình duyệt Safari (iOS) chọn *Chia sẻ → Thêm vào Màn hình chính*, hoặc trên Chrome (Android) chọn *Cài đặt ứng dụng* để mở toàn màn hình như App native, có hỗ trợ rung phản hồi haptic khi lái.
+- Nếu muốn **chạy riêng web độc lập trên điện thoại 100% không cần máy tính**, xem hướng dẫn chi tiết tại [HUONG_DAN_CHAY_WEB_DOC_LAP_TREN_ESP32.md](file:///d:/TLHT/Two-wheeled-self-balancing-robot/4_Web/HUONG_DAN_CHAY_WEB_DOC_LAP_TREN_ESP32.md).
+- Nếu Windows chặn kết nối đến, mở `Cho_Phep_Dien_Thoai.cmd` và chấp nhận hộp UAC. Script chỉ cho phép đúng Node.exe nhận TCP 3000 từ LocalSubnet trên profile Private. Không tắt tường lửa.
+- Máy tính và server tiếp tục chạy ngầm. Cửa sổ console có thể thu nhỏ xuống thanh tác vụ.
+- Kiểm chứng: API 6/6, browser kiểm thử máy tính và mobile browser 390×844 đều đạt 100%.
 
 `public/index.html` và `public/style.css` giữ nguyên từng byte từ `4_Web (2).zip`. Máy chủ chuyển đổi giao thức. JavaScript của mẫu chỉ đổi phần đọc và xuất dữ liệu.
 

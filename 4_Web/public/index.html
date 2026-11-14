@@ -5,9 +5,16 @@
     <script src="file-entry.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#1a202c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="BalanceBot">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/svg+xml" href="/icons/icon.svg">
+    <link rel="apple-touch-icon" href="/icons/icon.svg">
     <title>Xe Cân Bằng - LQR / Động cơ bước</title>
     <link rel="stylesheet" href="style.css">
     <script src="/socket.io/socket.io.js"></script>
+    <script src="/qrcode.min.js"></script>
     <script src="/vendor/chart/chart.min.js"></script>
     <script>window.Chart || document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"><\/script>');</script>
 </head>
@@ -17,9 +24,9 @@
         <div class="header-content">
             <div class="header-left">
                 <h1 class="logo">XE CÂN BẰNG</h1>
-                <p class="subtitle">LQR · Động cơ bước · ESP32-S3</p>
             </div>
             <div class="header-right">
+                <button id="btn-phone-qr" type="button" class="connection-badge qr-badge" title="Mở trên điện thoại / Quét QR"><span aria-hidden="true">📱</span> <span class="hide-mobile">Điện thoại</span></button>
                 <div class="connection-badge">
                     <span id="status-indicator" class="status-dot disconnected"></span>
                     <span id="status-text">Chưa kết nối</span>
@@ -34,6 +41,21 @@
 
         <!-- LEFT SIDEBAR — CONTROLS -->
         <aside class="sidebar left-sidebar" id="panel-controls">
+
+            <div class="mobile-quick-telemetry" id="mobile-quick-bar">
+                <div class="quick-metric">
+                    <span class="qm-label">Góc θ</span>
+                    <span class="qm-value" id="quick-angle">0.0°</span>
+                </div>
+                <div class="quick-metric">
+                    <span class="qm-label">Vận tốc v</span>
+                    <span class="qm-value" id="quick-speed">0 cm/s</span>
+                </div>
+                <div class="quick-metric">
+                    <span class="qm-label">Trạng thái</span>
+                    <span class="qm-badge" id="quick-state">Chờ</span>
+                </div>
+            </div>
 
             <div class="sidebar-section">
                 <h3 class="section-title">🔌 Kết Nối ESP32-S3</h3>
@@ -58,7 +80,7 @@
                 </div>
             </div>
 
-            <div class="sidebar-section">
+            <div class="sidebar-section" hidden>
                 <details>
                     <summary class="section-title">📶 WiFi của xe</summary>
                     <p class="hint">Xe luôn phát WiFi <b>BalanceBot-Bench</b> (mật khẩu <code>BalanceBot13</code>, IP <code>192.168.4.1:8080</code>). Có thể lưu thêm Wi-Fi nhà <b>2,4 GHz</b> để máy tính vừa có Internet vừa điều khiển xe trên cùng mạng. Chỉ lưu khi xe Chờ; xe sẽ khởi động lại.</p>
@@ -86,9 +108,8 @@
                         <span class="icon">⏹️</span> Dừng
                     </button>
                 </div>
-                <p class="hint">Giữ xe thẳng đứng ~1 giây sau khi bấm Bắt Đầu thì xe mới chạy.</p>
                 <button id="btn-reset" class="btn btn-small" onclick="resetRobot()">↺ RESET lỗi → Chờ</button>
-                <p id="reset-status" class="hint" role="status">Sau lỗi, kê xe chắc rồi RESET. RESET không bật motor.</p>
+                <p id="reset-status" class="hint" role="status"></p>
                 <fieldset class="drive-pad">
                     <legend>Di chuyển — nhấn giữ</legend>
                     <input type="hidden" id="speed-input" value="0">
@@ -104,14 +125,13 @@
                         <button type="button" class="btn btn-outline drive-right" data-drive-v="0" data-drive-w="-20">Xoay phải ▶</button>
                         <button type="button" class="btn btn-outline drive-back" data-drive-v="-5" data-drive-w="0">▼ Lùi</button>
                     </div>
-                    <p id="drive-speed-hint" class="hint">Kéo thanh để chọn tốc độ cho lần nhấn Tiến/Lùi tiếp theo. Nhấn giữ để chạy, thả nút về 0. Xoay giữ nguyên 20°/s.</p>
+                    <p id="drive-speed-hint" class="hint"></p>
                     <div class="drive-pad-values"><span>Tiến/lùi: <b id="speed-value">0</b> cm/s</span><span>Xoay: <b id="turn-value">0</b> °/s</span></div>
                 </fieldset>
             </div>
 
             <div class="sidebar-section">
                 <h3 class="section-title">🎚️ PID vị trí (vòng ngoài)</h3>
-                <p class="hint">Mặc định Kp 3 / Ki 1 / Kd 0.2. Chỉ gửi PID khi motor tắt; bấm "Lưu vào xe" để giữ bộ đã chỉnh.</p>
                 <div class="data-action-row">
                     <input type="number" id="pid-kp" value="3" step="0.05" min="0" max="3" class="form-input" title="Kp (rad/m)">
                     <input type="number" id="pid-ki" value="1" step="0.01" min="0" max="1" class="form-input" title="Ki (rad/(m.s))">
@@ -122,7 +142,6 @@
 
             <div class="sidebar-section">
                 <h3 class="section-title">🎯 Zeropoint &amp; Cảm Biến</h3>
-                <p class="hint">Xe trôi ra trước → bấm ZP−. Trôi lùi → bấm ZP+. Hoặc giữ xe đúng điểm cân bằng rồi bấm "Lấy góc".</p>
                 <div class="data-action-row">
                     <button class="btn btn-small" onclick="robotCmd('zp-')">ZP −</button>
                     <button class="btn btn-small" onclick="robotCmd('zphere')">Lấy góc</button>
@@ -170,13 +189,11 @@
                     <button id="btn-lqr" class="btn btn-primary btn-full">
                         <span class="icon">💾</span> TÍNH K & GỬI XE
                     </button>
-                    <p class="hint">Chỉnh Q góc, Q tốc độ góc và R để tính LQR pitch hai trạng thái. Chỉ gửi khi xe Chờ và firmware hỗ trợ LQR2; đợi xác nhận mới thử xe. Gain có hiệu lực đến khi khởi động lại, chưa lưu bằng nút Lưu vào xe.</p>
                 </div>
             </div>
 
             <div class="sidebar-section">
                 <h3 class="section-title">📋 Cấu Hình Sẵn</h3>
-                <p class="hint">Chọn để hiện bộ số trên web. Dùng nút gửi LQR/PID khi muốn áp dụng xuống xe.</p>
                 <div class="preset-buttons">
                     <button class="btn btn-small" onclick="loadPreset('sim0')">Mô phỏng 0°</button>
                     <button class="btn btn-small" onclick="loadPreset('sim6')">Mô phỏng 6°</button>
@@ -331,6 +348,28 @@
             <span class="nav-label">Dữ Liệu</span>
         </button>
     </nav>
+
+    <!-- QR MODAL FOR PHONE CONNECTION -->
+    <div id="modal-qr" class="modal-overlay" hidden>
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>📱 Mở Web Trên Điện Thoại</h3>
+                <button id="btn-close-qr" type="button" class="btn-close" aria-label="Đóng">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="dashboard-qr-container" class="qr-code-view"></div>
+                <div class="qr-url-row">
+                    <input type="text" id="dashboard-phone-url" readonly class="form-input">
+                    <button type="button" id="btn-copy-phone-url" class="btn btn-small btn-primary">Sao chép</button>
+                </div>
+                <div class="qr-steps">
+                    <p><b>1.</b> Đảm bảo điện thoại và máy tính kết nối <b>cùng mạng Wi-Fi</b> (hoặc Wi-Fi xe).</p>
+                    <p><b>2.</b> Bật Camera điện thoại quét mã QR ở trên để mở ngay.</p>
+                    <p><b>3.</b> Đăng nhập tài khoản rồi bấm <i>Thêm vào màn hình chính (PWA)</i> để điều khiển toàn màn hình.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <script src="dashboard.js"></script>
     <script src="/session.js"></script>

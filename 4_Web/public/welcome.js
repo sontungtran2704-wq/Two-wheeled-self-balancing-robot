@@ -9,3 +9,25 @@ function clearCredentials(){for(const id of ['username','password','confirm'])el
 window.addEventListener('pageshow',clearCredentials);
 window.addEventListener('pagehide',clearCredentials);
 clearCredentials();
+
+// Render QR code for mobile connection if opened on PC
+fetch('/api/health').then(r=>r.json()).then(h=>{
+  if(h.urls && h.urls.length>0 && (location.hostname==='localhost'||location.hostname==='127.0.0.1')){
+    const phoneUrl=h.urls[0];
+    const box=el('phone-connect-box');
+    if(box && typeof qrcode==='function'){
+      const qr=qrcode(0,'M');
+      qr.addData(phoneUrl);
+      qr.make();
+      el('qr-container').innerHTML=qr.createSvgTag({scalable:true,cellSize:4,margin:1});
+      el('phone-url-display').textContent=phoneUrl;
+      box.hidden=false;
+      el('btn-copy-url').onclick=()=>{
+        navigator.clipboard?.writeText(phoneUrl).then(()=>{
+          el('btn-copy-url').textContent='Đã chép!';
+          setTimeout(()=>el('btn-copy-url').textContent='Sao chép',2000);
+        });
+      };
+    }
+  }
+}).catch(()=>{});

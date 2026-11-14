@@ -77,6 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initCharts();
     attachEventListeners();
     initMobileNav();
+    initQrModal();
     loadSavedLQR();
     refreshPorts();
     startRenderLoop();
@@ -270,6 +271,7 @@ function attachEventListeners() {
             if (drivePointer !== null || !socket.connected || robotState.st !== 2) return;
             e.preventDefault(); drivePointer = e.pointerId;
             button.setPointerCapture(e.pointerId);
+            if (navigator.vibrate) navigator.vibrate(25);
             setButtons(Math.sign(Number(button.dataset.driveV)) * driveSpeed(), Number(button.dataset.driveW));
         });
         for (const event of ['pointerup', 'pointercancel', 'lostpointercapture'])
@@ -328,6 +330,49 @@ function initMobileNav() {
     };
     applyMobile(mq.matches);
     mq.addEventListener('change', (e) => applyMobile(e.matches));
+}
+
+/* ============================================================
+   PHONE QR MODAL
+   ============================================================ */
+function initQrModal() {
+    const btn = $('btn-phone-qr');
+    const modal = $('modal-qr');
+    const closeBtn = $('btn-close-qr');
+    const copyBtn = $('btn-copy-phone-url');
+    const urlInput = $('dashboard-phone-url');
+    const qrContainer = $('dashboard-qr-container');
+    if (!btn || !modal) return;
+    
+    let cachedUrl = null;
+    function openModal() {
+        modal.hidden = false;
+        if (cachedUrl) return;
+        fetch('/api/health').then(r => r.json()).then(h => {
+            const url = (h.urls && h.urls[0]) || window.location.origin;
+            cachedUrl = url;
+            if (urlInput) urlInput.value = url;
+            if (qrContainer && typeof qrcode === 'function') {
+                const qr = qrcode(0, 'M');
+                qr.addData(url);
+                qr.make();
+                qrContainer.innerHTML = qr.createSvgTag({ scalable: true, cellSize: 4, margin: 1 });
+            }
+        }).catch(() => {
+            if (urlInput) urlInput.value = window.location.origin;
+        });
+    }
+    btn.addEventListener('click', openModal);
+    if (closeBtn) closeBtn.addEventListener('click', () => { modal.hidden = true; });
+    modal.addEventListener('click', e => { if (e.target === modal) modal.hidden = true; });
+    if (copyBtn && urlInput) {
+        copyBtn.addEventListener('click', () => {
+            navigator.clipboard?.writeText(urlInput.value).then(() => {
+                copyBtn.textContent = 'Đã chép!';
+                setTimeout(() => { copyBtn.textContent = 'Sao chép'; }, 2000);
+            });
+        });
+    }
 }
 
 /* ============================================================
@@ -501,6 +546,7 @@ function resetRobot() {
 }
 
 function stopRobot() {
+    if (navigator.vibrate) navigator.vibrate([40, 30, 40]);
     robotCmd('stop');
     // đưa các thanh trượt về 0 để lần chạy sau không tự đi
     ['speed-input', 'turn-input'].forEach(id => { $(id).value = 0; });
@@ -656,6 +702,16 @@ function flushDisplay() {
     $('pos-display').textContent   = position == null ? '—' : position.toFixed(4);
     const s = ROBOT_STATES[st];
     $('state-display').textContent = s ? s.label : '—';
+
+    const qAngle = $('quick-angle');
+    if (qAngle) qAngle.textContent = angle == null ? '—' : `${(angle * 180 / Math.PI).toFixed(1)}°`;
+    const qSpeed = $('quick-speed');
+    if (qSpeed) qSpeed.textContent = `${(velocity * 100).toFixed(0)} cm/s`;
+    const qState = $('quick-state');
+    if (qState) {
+        qState.textContent = s ? s.label : '—';
+        qState.className = `qm-badge ${s ? s.name.toLowerCase() : ''}`;
+    }
     if ([3, 4].includes(st)) {
         const detail = robotState.fault === 'SPEED_RAIL'
             ? ' Lệnh tốc độ bánh chạm giới hạn liên tục; đây không phải lỗi vượt góc ngã.' : '';

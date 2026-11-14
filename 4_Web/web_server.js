@@ -240,7 +240,7 @@ function createBridge(options = {}) {
   auth.mount(app,token=>{for(const socket of io.sockets.sockets.values())if(socket.authToken===token)socket.disconnect(true);});
   app.get('/welcome',(req,res)=>res.sendFile(path.join(__dirname,'public','welcome.html')));
   app.use((req,res,next)=>{
-    if(['/welcome.css','/welcome.js'].includes(req.path))return next();
+    if(['/welcome.css','/welcome.js','/manifest.json','/qrcode.min.js'].includes(req.path)||req.path.startsWith('/icons/'))return next();
     if(auth.session(req)){res.set('Cache-Control','no-store');return next();}
     if(req.path.startsWith('/api/'))return res.status(401).json({error:'AUTH_REQUIRED'});
     res.redirect('/welcome');

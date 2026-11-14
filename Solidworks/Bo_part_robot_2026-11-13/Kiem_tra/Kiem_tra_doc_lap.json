@@ -1,0 +1,18 @@
+[
+  {
+    "part": "01_Tam_nhom_tren",
+    "actual_volume_mm3": 16597.65980662202,
+    "expected_volume_mm3": 16597.65312301852,
+    "round_holes": 8,
+    "slot_end_arcs": 8,
+    "status": "pass"
+  },
+  {
+    "part": "02_Tam_nhom_duoi",
+    "actual_volume_mm3": 16525.029526272774,
+    "expected_volume_mm3": 16525.019500867525,
+    "round_holes": 12,
+    "slot_end_arcs": 8,
+    "status": "pass"
+  }
+]

@@ -1,0 +1,35 @@
+[
+  {
+    "name": "05_Vong_dem_M3",
+    "volume_mm3": 15.22112706694182,
+    "expected_volume_mm3": 15.221016406642548
+  },
+  {
+    "name": "06_Dai_oc_M3",
+    "volume_mm3": 48.865465779636125,
+    "pitch_mm": 0.5,
+    "thread_size": "M3x0.5",
+    "revolutions": 4.8
+  },
+  {
+    "name": "07_Vit_M3x5",
+    "volume_mm3": 92.92977058676802,
+    "pitch_mm": 0.5,
+    "thread_size": "M3x0.5",
+    "revolutions": 10.0
+  },
+  {
+    "name": "08_Vit_M3x10",
+    "volume_mm3": 121.62112599748028,
+    "pitch_mm": 0.5,
+    "thread_size": "M3x0.5",
+    "revolutions": 20.0
+  },
+  {
+    "name": "09_Tru_luc_giac_M3_42",
+    "volume_mm3": 333.67670451612634,
+    "pitch_mm": 0.5,
+    "thread_size": "M3x0.5",
+    "revolutions": 84.0
+  }
+]

@@ -1,0 +1,331 @@
+{
+  "native_parts": 10,
+  "step_files": 10,
+  "files": [
+    {
+      "path": "00_Doc_truoc.md",
+      "bytes": 7452,
+      "sha256": "568b2c1ce3530ad7313771d6f1e40ff3c8e4affa888824c9692fae6c2e524168"
+    },
+    {
+      "path": "00_Xem_truoc.png",
+      "bytes": 463079,
+      "sha256": "5256467efc1320214a9ab8b69f077b97eb70ce16fcd2d34bcf7116cfc8d62f46"
+    },
+    {
+      "path": "01_Tam_nhom_tren.SLDPRT",
+      "bytes": 84629,
+      "sha256": "e91478a2bc9705d885de9a0f1086aa619f91bb83aac28fcad523ae614a493c42"
+    },
+    {
+      "path": "01_Tam_nhom_tren.STEP",
+      "bytes": 134626,
+      "sha256": "ba9ec0c672c7ed71257c62caa51c8d2b6dea037e7db2fd5b6cd5e0db248e9b1a"
+    },
+    {
+      "path": "02_Tam_nhom_duoi.SLDPRT",
+      "bytes": 92208,
+      "sha256": "7135dc3d8d02ae37606fc933e5a07a4035f8c7baf10bea0a9a5b4c2664411648"
+    },
+    {
+      "path": "02_Tam_nhom_duoi.STEP",
+      "bytes": 174103,
+      "sha256": "1ba77e8dd6504a56a6d5a963c33a27821b07e9094ece48f3e743709c2efe274d"
+    },
+    {
+      "path": "03_Banh_xe_THAM_KHAO.SLDPRT",
+      "bytes": 36711,
+      "sha256": "e910797c5ad67abc45db47618d40933c3b851dfd0ff6462f39ad8797148faf0a"
+    },
+    {
+      "path": "03_Banh_xe_THAM_KHAO.STEP",
+      "bytes": 17276,
+      "sha256": "ed7601e16d06336284b833e80d9e2620b210a50ee98e3f08be39be237aac8b34"
+    },
+    {
+      "path": "04_Dong_co_THAM_KHAO.SLDPRT",
+      "bytes": 39537,
+      "sha256": "98d4140d54804821659c7004a68224b38729a0b050931222024471b678d483b8"
+    },
+    {
+      "path": "04_Dong_co_THAM_KHAO.STEP",
+      "bytes": 21870,
+      "sha256": "12d9e9d2359855b8f5301404a3cf530051ffdd36f29f43567cf33d542751310e"
+    },
+    {
+      "path": "05_Vong_dem_M3.SLDPRT",
+      "bytes": 37335,
+      "sha256": "50f25a094091f9c8e64043b756d1198075758b0db2543434f428413bf1c82ad4"
+    },
+    {
+      "path": "05_Vong_dem_M3.STEP",
+      "bytes": 21684,
+      "sha256": "fed856495088da384a29cd6a84c37334d2f5a29f649c1e3126a399dbd20d0f73"
+    },
+    {
+      "path": "06_Dai_oc_M3.SLDPRT",
+      "bytes": 186557,
+      "sha256": "811a0e3ef09f345f5037eab52661c55932093faa9f15ba7ce93df4c8a9811d9a"
+    },
+    {
+      "path": "06_Dai_oc_M3.STEP",
+      "bytes": 164536,
+      "sha256": "25ebc30301d2836d5e340eb3ed5ad5ff7a5739d7bd14ab330a354e97d3bee367"
+    },
+    {
+      "path": "07_Vit_M3x5.SLDPRT",
+      "bytes": 232627,
+      "sha256": "15af78be94bbe8f94167a06ef299de2b82d09a7c265982a99f31bc8489a65b62"
+    },
+    {
+      "path": "07_Vit_M3x5.STEP",
+      "bytes": 284315,
+      "sha256": "44c7bef23ffb807a5392cb5be14b4095e4511025ff9653463c033fcaf9853be9"
+    },
+    {
+      "path": "08_Vit_M3x10.SLDPRT",
+      "bytes": 363940,
+      "sha256": "31e0e9da75f69a7c95f7c71a13cdf882cf27d14840503d5ba518931989b6d0fa"
+    },
+    {
+      "path": "08_Vit_M3x10.STEP",
+      "bytes": 528261,
+      "sha256": "a63f3c12472947e6e7ff9a32ffda5fe2ba44ee8ec724b834edead977a2ef8e54"
+    },
+    {
+      "path": "09_Tru_luc_giac_M3_42.SLDPRT",
+      "bytes": 1298528,
+      "sha256": "04bcf533ca8208b46bedc6c0b006686e4f95d0061b6f408f1551077ce7d6ea71"
+    },
+    {
+      "path": "09_Tru_luc_giac_M3_42.STEP",
+      "bytes": 2087351,
+      "sha256": "61dd0ea576b15fa93d9f40a9976ab8e08a765db8ce1e00523686a7a8a25a0831"
+    },
+    {
+      "path": "10_Ga_L_CHUA_DU_LO.SLDPRT",
+      "bytes": 56117,
+      "sha256": "9c9b110accd3259483ec2c49dc3f399942e3ef88e5ffe94c2f5ac1255fbe0d54"
+    },
+    {
+      "path": "10_Ga_L_CHUA_DU_LO.STEP",
+      "bytes": 64536,
+      "sha256": "de218fcab939a0d8b8ea92fad998884407022b798180a8df1f2c054a1baddb14"
+    },
+    {
+      "path": "Kiem_tra/01_Tam_nhom_tren.STL",
+      "bytes": 103084,
+      "sha256": "5130b2d00ce5994e3e21bc05e2cb1ccc7273e64dab6a8816bb18445a789dd0b8"
+    },
+    {
+      "path": "Kiem_tra/01_Tam_nhom_tren_evidence.json",
+      "bytes": 24667,
+      "sha256": "4bee6102d7893a5b6d16a6f0061c223968a1431c0915e607173d21479a586204"
+    },
+    {
+      "path": "Kiem_tra/01_Tam_nhom_tren_review_report.json",
+      "bytes": 31499,
+      "sha256": "d16421f05682e908ad4d56cb13583005a61a9806f23adbd909e947b8c08e6bbf"
+    },
+    {
+      "path": "Kiem_tra/01_Tam_nhom_tren_review_summary.md",
+      "bytes": 971,
+      "sha256": "141ffff5f76beb1a33997997e5d17432720e627525c960d6c5d62feb032e60ec"
+    },
+    {
+      "path": "Kiem_tra/02_Tam_nhom_duoi.STL",
+      "bytes": 142284,
+      "sha256": "ce3d025fe1dc51e056327d33894116530b9f3f1a71c670fe39892a4c474571da"
+    },
+    {
+      "path": "Kiem_tra/02_Tam_nhom_duoi_evidence.json",
+      "bytes": 32553,
+      "sha256": "114308dc61ca4b5ce652c135c28c18ac7ed2739987f032184aee80196f783755"
+    },
+    {
+      "path": "Kiem_tra/02_Tam_nhom_duoi_review_report.json",
+      "bytes": 38501,
+      "sha256": "c1275931ef65e8ee17af79ab19b15a80b4ea4d230f0332783d5e8fbaf9f343e1"
+    },
+    {
+      "path": "Kiem_tra/02_Tam_nhom_duoi_review_summary.md",
+      "bytes": 971,
+      "sha256": "f1e4b4c14e71888d05c7d2ae0c9bd6fa2a9a5dfa6f5e5244cb33b8ab6d86af2d"
+    },
+    {
+      "path": "Kiem_tra/03_Banh_xe_THAM_KHAO.STL",
+      "bytes": 19484,
+      "sha256": "9af2f83aef56422e7cffe08098fbddc92b9388732a0bae08954a9476575d9cf0"
+    },
+    {
+      "path": "Kiem_tra/03_Banh_xe_THAM_KHAO_evidence.json",
+      "bytes": 3669,
+      "sha256": "e7ea0ece8715042cfae797c22ff3290f0945e39051033164d8ed57be7da12d98"
+    },
+    {
+      "path": "Kiem_tra/03_Banh_xe_THAM_KHAO_review_report.json",
+      "bytes": 9394,
+      "sha256": "f89f459564ef00f64fa3b7742d76411902c08bc4cbdf9aa237f67525e3bfac41"
+    },
+    {
+      "path": "Kiem_tra/03_Banh_xe_THAM_KHAO_review_summary.md",
+      "bytes": 921,
+      "sha256": "e5e011c24beb16d037c70db65cbe830c180149956b1800b48d22759d23441469"
+    },
+    {
+      "path": "Kiem_tra/04_Dong_co_THAM_KHAO.STL",
+      "bytes": 8384,
+      "sha256": "9087b9f26dc74a768f4c771706add287147c5869d4a0929e8417f7699a2c4431"
+    },
+    {
+      "path": "Kiem_tra/04_Dong_co_THAM_KHAO_evidence.json",
+      "bytes": 2375,
+      "sha256": "f36e23c3632071eadaf28ea30e149d214e695b08167e62c56b1b6a54210344f5"
+    },
+    {
+      "path": "Kiem_tra/04_Dong_co_THAM_KHAO_review_report.json",
+      "bytes": 8372,
+      "sha256": "ea59eb3502c1e8eab024a219425e0a7246c943962e8099009f1d0c2a6f400091"
+    },
+    {
+      "path": "Kiem_tra/04_Dong_co_THAM_KHAO_review_summary.md",
+      "bytes": 921,
+      "sha256": "2c7c5e59dbcfce8b967d346579fb10a5c7ce9121406e658c34e777f67ed4b2bd"
+    },
+    {
+      "path": "Kiem_tra/05_Vong_dem_M3.STL",
+      "bytes": 20684,
+      "sha256": "c00807ea0e3de7eced76a258ff94ca775c3e59e0fe31e712d0729c96c2b6f919"
+    },
+    {
+      "path": "Kiem_tra/05_Vong_dem_M3_evidence.json",
+      "bytes": 4066,
+      "sha256": "d573ff1a510fc63ecb7687dc8f40da325e3e93e22ce46bc61e7386ef26823006"
+    },
+    {
+      "path": "Kiem_tra/05_Vong_dem_M3_review_report.json",
+      "bytes": 10058,
+      "sha256": "804b962ce827c1529fd8438c5f730770d578a95ea7e01eafebc45d4ea46893b5"
+    },
+    {
+      "path": "Kiem_tra/05_Vong_dem_M3_review_summary.md",
+      "bytes": 909,
+      "sha256": "38e154791ec6bcc249d2ec9a574a6333c475c152c47720a62dd4c8d629d21403"
+    },
+    {
+      "path": "Kiem_tra/06_Dai_oc_M3.STL",
+      "bytes": 251984,
+      "sha256": "d7df9335b7c9ad6a9c596428f40584bf7fad4fc1df253e0764f5a1574ac0cc09"
+    },
+    {
+      "path": "Kiem_tra/06_Dai_oc_M3_evidence.json",
+      "bytes": 3802,
+      "sha256": "d4a5716bdf05ccd79d8d538ff90c407072674600f33548d52d13a795a078526a"
+    },
+    {
+      "path": "Kiem_tra/06_Dai_oc_M3_review_report.json",
+      "bytes": 9890,
+      "sha256": "4d5bbfed8c6afc249ab934eadc9eba2a4a6842fb8e7d5b19abcde5b4b81f6417"
+    },
+    {
+      "path": "Kiem_tra/06_Dai_oc_M3_review_summary.md",
+      "bytes": 963,
+      "sha256": "467da9b32892bebe5cfc4f66d815a84930f868d241d48c040b3c49506cd6106c"
+    },
+    {
+      "path": "Kiem_tra/07_Vit_M3x5.STL",
+      "bytes": 541084,
+      "sha256": "2788e2c5971659285e24cc5a699a8d4ee806ebc35650ed372d7648705aa9196e"
+    },
+    {
+      "path": "Kiem_tra/07_Vit_M3x5_evidence.json",
+      "bytes": 4988,
+      "sha256": "08939017f23b41d8c1dbed5a95908ca1d95123e61e28d1b374694f5bfa1feed2"
+    },
+    {
+      "path": "Kiem_tra/07_Vit_M3x5_review_report.json",
+      "bytes": 11544,
+      "sha256": "05d9faf7fdfce4dd28b36719841739f55683ce7f8308935bddc55e4db6e66927"
+    },
+    {
+      "path": "Kiem_tra/07_Vit_M3x5_review_summary.md",
+      "bytes": 961,
+      "sha256": "5684d458dca843576c5bc7c588f3e147f06fdde071dfb7335121a116661f48a3"
+    },
+    {
+      "path": "Kiem_tra/08_Vit_M3x10.STL",
+      "bytes": 928984,
+      "sha256": "9f4ce44416a6bf44de5c85266c0e8e70474d5d689786d38bdb51bef5568bc6a5"
+    },
+    {
+      "path": "Kiem_tra/08_Vit_M3x10_evidence.json",
+      "bytes": 4995,
+      "sha256": "a1e7014fef211c1fc0919d27ff08d8b54f2c1c4bbad5cf5067e0027289480e78"
+    },
+    {
+      "path": "Kiem_tra/08_Vit_M3x10_review_report.json",
+      "bytes": 11555,
+      "sha256": "38f761a317fc34a44d05f6f6525fbcb422eaa0273c761502c80f0e375cab5f4c"
+    },
+    {
+      "path": "Kiem_tra/08_Vit_M3x10_review_summary.md",
+      "bytes": 963,
+      "sha256": "da0b973bd64eb3508a0c9655451838e8f9879775b51c7ad33c976153b7237cb0"
+    },
+    {
+      "path": "Kiem_tra/09_Tru_luc_giac_M3_42.STL",
+      "bytes": 2705084,
+      "sha256": "6d17982f79d3c3193628a8d80eb6c838923a7debbf89d87f10b9269c60354c4f"
+    },
+    {
+      "path": "Kiem_tra/09_Tru_luc_giac_M3_42_evidence.json",
+      "bytes": 3714,
+      "sha256": "b74c3018b3cc35599e4447cfbe0258158d1962d35fccafb16116916e611cfc62"
+    },
+    {
+      "path": "Kiem_tra/09_Tru_luc_giac_M3_42_review_report.json",
+      "bytes": 9958,
+      "sha256": "32bece2dc4324b39d58b12e81d8fa81b39a69a361780868a36cc486960a4ac0e"
+    },
+    {
+      "path": "Kiem_tra/09_Tru_luc_giac_M3_42_review_summary.md",
+      "bytes": 981,
+      "sha256": "b0afb2339a64666969be63b20dafb283b7be569ee3d96828d7f34693b79f9f4f"
+    },
+    {
+      "path": "Kiem_tra/10_Ga_L_CHUA_DU_LO.STL",
+      "bytes": 40484,
+      "sha256": "d877ac8bb6f72501ac0d052db950a1b464f08c4ba47d29d57ef2c0e6dd530d68"
+    },
+    {
+      "path": "Kiem_tra/10_Ga_L_CHUA_DU_LO_evidence.json",
+      "bytes": 11816,
+      "sha256": "3cd52064fa90c4c71a9112d339f449d4585ffef2a3f918352126fcf1ed8d2e8a"
+    },
+    {
+      "path": "Kiem_tra/10_Ga_L_CHUA_DU_LO_review_report.json",
+      "bytes": 18278,
+      "sha256": "168b9ea026a1a874e4b710e9b0ce9741e7166a3221b2d60317a1f97121564719"
+    },
+    {
+      "path": "Kiem_tra/10_Ga_L_CHUA_DU_LO_review_summary.md",
+      "bytes": 917,
+      "sha256": "7184a0c239cb1693cb9a037e39208f75b8d7ad9d9cece6bc6aeb1e766bd74626"
+    },
+    {
+      "path": "Kiem_tra/Kiem_tra_bo_sung.json",
+      "bytes": 760,
+      "sha256": "3648fcd42968b51a4cad13aaa44d63a7c7c77bfa0df8ce2e4891dd32d0b32964"
+    },
+    {
+      "path": "Kiem_tra/Kiem_tra_doc_lap.json",
+      "bytes": 418,
+      "sha256": "2f3d41f460d485f0c00f7f56fdc420cd35767d803b79d609d575a3bb8d821d19"
+    },
+    {
+      "path": "Kiem_tra/Kiem_tra_ga_L.json",
+      "bytes": 2173,
+      "sha256": "e68cdcf1810d8052be0b6770e0cfa8cde3eb7c5f99a7eb1d0cc6fadd1088ab2d"
+    }
+  ]
+}
