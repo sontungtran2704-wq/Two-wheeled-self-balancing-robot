@@ -41,8 +41,12 @@ static void loadTuning() {
   Preferences prefs;if(!prefs.begin("balancebot",true))return;
   StoredTuning value{};
   if(prefs.getBytesLength("tuning-v1")==sizeof value &&
-     prefs.getBytes("tuning-v1",&value,sizeof value)==sizeof value &&
-     std::memcmp(value.hash,cfg::sha256,65)==0)device.restoreTuning(value.tuning);
+     prefs.getBytes("tuning-v1",&value,sizeof value)==sizeof value) {
+    // Verified predecessor differs only in safety thresholds/dwell. Preserve its PID/zero.
+    constexpr char previousHash[]="b3a774dc8d5a5891cf70cace06f40e6272ab717040ef0031ed9c320f20c68872";
+    if(std::memcmp(value.hash,cfg::sha256,65)==0||std::memcmp(value.hash,previousHash,65)==0)
+      device.restoreTuning(value.tuning);
+  }
   prefs.end();
 }
 static void setStop(bool emergency) {
@@ -72,11 +76,22 @@ static void controlTask(void*) {
       const uint32_t dispatch=micros();
       if(uint32_t(dispatch-request.received)>100000)std::strcpy(reply.line,"ERR:STALE_QUEUE");
       else if(!hardware::confirmed && !std::strcmp(request.line,"START"))std::strcpy(reply.line,"ERR:HARDWARE_UNCONFIRMED");
+      else if(!std::strcmp(request.line,"CALGYRO")) {
+        if(device.state()==robot::State::Run||device.state()==robot::State::Arming)
+          std::strcpy(reply.line,"ERR:MOTORS_ON");
+        else if(!hardware::pinsConfigured)std::strcpy(reply.line,"ERR:PINMAP_UNCONFIRMED");
+        else if(imu::calibrating())std::strcpy(reply.line,"ERR:CALIBRATION_BUSY");
+        else {
+          device.restartAutonomousCountdown();stepper::apply(0,0,false);
+          imu::requestCalibration();std::strcpy(reply.line,"ACK:CALGYRO_PENDING");
+        }
+      }
       else if(!std::strcmp(request.line,"SAVE")) {
         // Only this task can arm. No flash write can overlap an armed state.
         if(device.state()==robot::State::Run || device.state()==robot::State::Arming)
           std::strcpy(reply.line,"ERR:MOTORS_ON");
         else {
+          device.restartAutonomousCountdown();
           stepper::apply(0,0,false);
           std::strcpy(reply.line,saveTuning()?"ACK:SAVED":"ERR:STORAGE");
           wake=xTaskGetTickCount();
@@ -110,12 +125,6 @@ static void acceptLine(const char* line,uint8_t source) {
   if(!std::strcmp(line,"STOP") || !std::strcmp(line,"ESTOP")) {
     const bool emergency=!std::strcmp(line,"ESTOP");setStop(emergency);transportOwner=0;
     emit(source,emergency?"ACK:ESTOP_QUEUED":"ACK:STOP_QUEUED");return;
-  }
-  if(!std::strcmp(line,"CALGYRO")) {
-    auto v=copyView();
-    if(v.state()==robot::State::Run||v.state()==robot::State::Arming)emit(source,"ERR:MOTORS_ON");
-    else if(!hardware::pinsConfigured)emit(source,"ERR:PINMAP_UNCONFIRMED");
-    else {imu::requestCalibration();emit(source,"ACK:CALGYRO_PENDING");}return;
   }
   if(transportOwner && source!=transportOwner && std::strcmp(line,"GET")) {emit(source,"ERR:OWNER");return;}
   if(!std::strcmp(line,"START"))transportOwner=source;
@@ -164,7 +173,7 @@ static void networkTask(void*) {
       lastTelemetry=now;char out[1100];auto v=copyView();v.telemetryTo(micros(),out,sizeof out);
       const size_t len=std::strlen(out);uint32_t duration;
       portENTER_CRITICAL(&sharedLock);duration=maxTickUs;portEXIT_CRITICAL(&sharedLock);
-      snprintf(out+len,sizeof out-len,",tick_max_us=%lu,queue_drops=%lu,imu_calibrated=%u,imu_diag=%u,imu_who=%u,cal_accel_mg=%u,cal_accel_std_mg=%u,cal_gyro_std_mrad=%u,imu_sample_fresh=%u,hardware_confirmed=%u",static_cast<unsigned long>(duration),static_cast<unsigned long>(queueDrops.load()),unsigned(imu::calibrated()),imu::diagnostic(),imu::identity(),imu::calibrationAccelMilliG(),imu::calibrationAccelStdMg(),imu::calibrationGyroStdMrad(),unsigned(imu::sampleFresh()),unsigned(hardware::confirmed));emit(0,out);
+      snprintf(out+len,sizeof out-len,",tick_max_us=%lu,queue_drops=%lu,imu_calibrated=%u,imu_diag=%u,imu_who=%u,cal_accel_mg=%u,cal_accel_std_mg=%u,cal_gyro_std_mrad=%u,imu_sample_fresh=%u,hardware_confirmed=%u,imu_cal_saved=%u,imu_cal_restored=%u",static_cast<unsigned long>(duration),static_cast<unsigned long>(queueDrops.load()),unsigned(imu::calibrated()),imu::diagnostic(),imu::identity(),imu::calibrationAccelMilliG(),imu::calibrationAccelStdMg(),imu::calibrationGyroStdMrad(),unsigned(imu::sampleFresh()),unsigned(hardware::confirmed),unsigned(imu::calibrationSaved()),unsigned(imu::calibrationRestored()));emit(0,out);
     }
     vTaskDelay(pdMS_TO_TICKS(2));
   }
@@ -176,7 +185,7 @@ void setupRobot() {
   device=robot::Device(esp_random());view=device;
   const bool stepperReady=stepper::begin();
   if(!requests||!replies||!stepperReady) {device.fault("INITIALIZATION");view=device;return;}
-  loadTuning();view=device;
+  loadTuning();device.enableAutonomous(hardware::confirmed);view=device;
   if(xTaskCreatePinnedToCore(imu::task,"imu",4096,nullptr,4,nullptr,1)!=pdPASS ||
      xTaskCreatePinnedToCore(controlTask,"balance",6144,nullptr,5,nullptr,1)!=pdPASS ||
      xTaskCreatePinnedToCore(networkTask,"link",8192,nullptr,1,nullptr,0)!=pdPASS) {

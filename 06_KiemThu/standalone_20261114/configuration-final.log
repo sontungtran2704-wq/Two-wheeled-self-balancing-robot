@@ -1,0 +1,10 @@
+test_generated_gain_matches_source_and_header (test_configuration.ConfigurationTests.test_generated_gain_matches_source_and_header) ... ok
+test_hashed_config_checkout_preserves_lf (test_configuration.ConfigurationTests.test_hashed_config_checkout_preserves_lf) ... ok
+test_motor_build_uses_configured_pinmap (test_configuration.ConfigurationTests.test_motor_build_uses_configured_pinmap) ... ok
+test_requested_standalone_thresholds (test_configuration.ConfigurationTests.test_requested_standalone_thresholds) ... ok
+test_runtime_gain_validation_uses_exported_discrete_model (test_configuration.ConfigurationTests.test_runtime_gain_validation_uses_exported_discrete_model) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 0.002s
+
+OK

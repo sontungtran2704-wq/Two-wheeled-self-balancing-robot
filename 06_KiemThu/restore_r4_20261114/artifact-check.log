@@ -1,0 +1,3 @@
+PASS: all 15 sketch files match frozen r4 ZIP; compiled C++/headers match restored source.
+PASS: verification-input ZIP readback; newly built binary matches r4 SHA256 and copied readback.
+PASS: manifest written. No COM, upload, calibration command, START or motor operation.

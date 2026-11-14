@@ -44,7 +44,8 @@ Output NumericController::tick(double theta,double omega,double v,double yr,doub
   if(n_%4==0) {
     vref_=ramp(vref_,active_?vt:0,cfg::velocity_slew*cfg::pid_dt);
     wref_=ramp(wref_,active_?wt:0,cfg::yaw_slew*cfg::pid_dt);
-    const double desired=active_?velocity.update(vref_,v,cfg::pid_dt,cfg::accel_max,sat_):0;
+    // Run is already armed. Hold zero speed while the stability gate still blocks drive/yaw commands.
+    const double desired=(motion||active_)?velocity.update(vref_,v,cfg::pid_dt,cfg::accel_max,sat_):0;
     yacc_=active_?yaw.update(wref_,yr,cfg::pid_dt,cfg::yaw_accel_max,sat_):0;
     aref_+=cfg::pid_dt/(cfg::accel_filter_s+cfg::pid_dt)*(desired-aref_);
     if(stopping_ && std::abs(v)<.01 && std::abs(yr)<.03 && std::abs(aref_)<.01) {
@@ -71,7 +72,21 @@ void Device::clearMotion() {
   target_v_=target_w_=0;motion_=leased_=have_seq_=false;seq_=0;
   output_={};control_.reset();arm_timing_=false;saturation_us_=0;
 }
-void Device::fault(const char* reason) {state_=State::Fault;fault_=reason;clearMotion();}
+void Device::fault(const char* reason) {state_=State::Fault;fault_=reason;clearMotion();auto_timing_=false;}
+void Device::automaticStart(uint32_t now,bool continuous) {
+  if(!autonomousWaiting() || !continuous || !sensorsFresh(now) ||
+     std::abs(sensors_.theta)>=cfg::arm_rad ||
+     std::abs(sensors_.theta+pitchZero_)>=cfg::arm_rad ||
+     std::abs(sensors_.omega)>=cfg::stable_rate || std::abs(sensors_.yaw)>=cfg::stable_rate) {
+    auto_timing_=false;return;
+  }
+  if(!auto_timing_) {auto_timing_=true;auto_since_=now;return;}
+  if(uint32_t(now-auto_since_)<uint32_t(cfg::auto_rearm_s*1000000))return;
+  // Five continuous seconds already supplied the arming dwell. Never resume old commands.
+  clearMotion();auto_timing_=false;fault_="NONE";
+  ++session_;if(!session_)++session_;
+  motion_=true;state_=State::Run;
+}
 Tuning Device::tuning() const {
   return {control_.velocity.kp,control_.velocity.ki,control_.velocity.kd,
           control_.yaw.kp,control_.yaw.ki,control_.yaw.kd,pitchZero_};
@@ -95,7 +110,10 @@ void Device::tick(uint32_t now,const Sensors& s) {
     if((state_==State::Run || state_==State::Arming) && interval>15000) fault("DEADLINE");
   }
   last_tick_=now;ticked_=true;
-  if(state_==State::Idle || state_==State::Fault)return;
+  if(state_==State::Idle || state_==State::Fault) {
+    automaticStart(now,interval<=cfg::imu_max_age_us);
+    return;
+  }
   if(!sensorsFresh(now)) {fault("IMU");return;}
   if(state_==State::Arming) {
     if(std::abs(sensors_.theta)<cfg::arm_rad && std::abs(s.theta)<cfg::arm_rad && std::abs(s.omega)<cfg::arm_rate) {
@@ -108,7 +126,7 @@ void Device::tick(uint32_t now,const Sensors& s) {
     } else arm_timing_=false;
     return;
   }
-  if(std::abs(sensors_.theta)>cfg::fall_rad) {fault("FALL");return;}
+  if(std::abs(sensors_.theta)>=cfg::fall_rad) {fault("FALL");return;}
   output_=control_.tick(sensors_.theta,s.omega,s.v,s.yaw,target_v_,target_w_,motion_,commandFresh(now));
   // A command may legitimately saturate briefly; prolonged speed rail means balance authority is gone.
   if(std::abs((output_.left+output_.right)/2)>=cfg::vmax-1e-9)saturation_us_+=5000;
@@ -137,6 +155,7 @@ void Device::commandTo(const char* line,uint32_t now,char* out,size_t capacity) 
     if(!std::strcmp(line,"ZP-"))nextZero=pitchZero_-tenthDegree;
     if(std::abs(nextZero)>=cfg::arm_rad){reply("ERR:POSE");return;}
     pitchZero_=nextZero;
+    restartAutonomousCountdown();
     sensors_.theta=rawPitch-pitchZero_;
     std::snprintf(out,capacity,"ACK:%s,zero_rad=%.6f",line,pitchZero_);
     return;
@@ -146,18 +165,18 @@ void Device::commandTo(const char* line,uint32_t now,char* out,size_t capacity) 
     char status[900];telemetryTo(now,status,sizeof status);
     std::snprintf(out,capacity,"%s\nPID:V,%.9g,%.9g,%.9g\nPID:Y,%.9g,%.9g,%.9g",status,control_.velocity.kp,control_.velocity.ki,control_.velocity.kd,control_.yaw.kp,control_.yaw.ki,control_.yaw.kd);return;
   }
-  if(count==1 && !std::strcmp(tok[0],"ESTOP")) {fault("ESTOP");reply("ACK:ESTOP");return;}
-  if(count==1 && !std::strcmp(tok[0],"STOP")) {if(state_!=State::Fault)state_=State::Idle;clearMotion();reply("ACK:STOP");return;}
+  if(count==1 && !std::strcmp(tok[0],"ESTOP")) {suspendAutonomous();fault("ESTOP");reply("ACK:ESTOP");return;}
+  if(count==1 && !std::strcmp(tok[0],"STOP")) {suspendAutonomous();if(state_!=State::Fault)state_=State::Idle;clearMotion();reply("ACK:STOP");return;}
   if(count==1 && !std::strcmp(tok[0],"RESET")) {
     if(state_==State::Run || state_==State::Arming) {reply("ERR:MOTORS_ON");return;}
-    state_=State::Idle;fault_="NONE";clearMotion();reply("ACK:RESET");return;
+    suspendAutonomous();state_=State::Idle;fault_="NONE";clearMotion();reply("ACK:RESET");return;
   }
   if(count==1 && !std::strcmp(tok[0],"START")) {
     if(state_==State::Fault) {reply("ERR:RESET_REQUIRED");return;}
     if(state_!=State::Idle) {reply("ERR:STATE");return;}
     if(!sensorsFresh(now)) {reply("ERR:IMU");return;}
     if(std::abs(sensors_.theta)>=cfg::arm_rad || std::abs(sensors_.theta+pitchZero_)>=cfg::arm_rad || std::abs(sensors_.omega)>=cfg::arm_rate) {reply("ERR:POSE");return;}
-    clearMotion();++session_;if(!session_)++session_;state_=State::Arming;
+    clearMotion();auto_blocked_=false;auto_timing_=false;++session_;if(!session_)++session_;state_=State::Arming;
     arm_timing_=true;arm_since_=now;reply("ACK:START");return;
   }
   if(!std::strcmp(tok[0],"$P") && count==5) {
@@ -165,7 +184,7 @@ void Device::commandTo(const char* line,uint32_t now,char* out,size_t capacity) 
     double kp,ki,kd;
     if(!number(tok[2],kp)||!number(tok[3],ki)||!number(tok[4],kd)||kp<0||kp>5||ki<0||ki>2||kd<0||kd>.2) {reply("ERR:GAIN_RANGE");return;}
     PID* pid=!std::strcmp(tok[1],"V")?&control_.velocity:(!std::strcmp(tok[1],"Y")?&control_.yaw:nullptr);
-    if(!pid) {reply("ERR:AXIS");return;}pid->kp=kp;pid->ki=ki;pid->kd=kd;pid->reset();reply("ACK:$P");return;
+    if(!pid) {reply("ERR:AXIS");return;}restartAutonomousCountdown();pid->kp=kp;pid->ki=ki;pid->kd=kd;pid->reset();reply("ACK:$P");return;
   }
   if(!std::strcmp(tok[0],"MOTION") && count==2) {
     if(std::strcmp(tok[1],"0") && std::strcmp(tok[1],"1")) {reply("ERR:FORMAT");return;}
@@ -193,8 +212,8 @@ void Device::commandTo(const char* line,uint32_t now,char* out,size_t capacity) 
 }
 std::string Device::command(const char* line,uint32_t now) {char out[1200];commandTo(line,now,out,sizeof out);return out;}
 void Device::telemetryTo(uint32_t now,char* out,size_t capacity) const {
-  std::snprintf(out,capacity,"t=%lu,theta=%.9g,omega=%.9g,v=%.9g,yaw=%.9g,left=%.9g,right=%.9g,u=%.9g,st=%u,motion=%u,session=%lu,seq=%lu,config=%s,hash=%s,fresh=%u,sat=%u,jitter_us=%ld,overruns=%lu,fault=%s",
-    static_cast<unsigned long>(now/1000),sensors_.theta,sensors_.omega,sensors_.v,sensors_.yaw,output_.left,output_.right,output_.u,unsigned(state_),unsigned(output_.motion_active),static_cast<unsigned long>(session_),static_cast<unsigned long>(last_tick_/5000),cfg::id,cfg::sha256,unsigned(commandFresh(now)),unsigned(output_.saturated),static_cast<long>(jitter_us_),static_cast<unsigned long>(overruns_),fault_);
+  std::snprintf(out,capacity,"t=%lu,theta=%.9g,omega=%.9g,v=%.9g,yaw=%.9g,left=%.9g,right=%.9g,u=%.9g,st=%u,motion=%u,session=%lu,seq=%lu,config=%s,hash=%s,fresh=%u,sat=%u,jitter_us=%ld,overruns=%lu,fault=%s,auto_mode=%u,auto_wait=%u,auto_ms=%lu",
+    static_cast<unsigned long>(now/1000),sensors_.theta,sensors_.omega,sensors_.v,sensors_.yaw,output_.left,output_.right,output_.u,unsigned(state_),unsigned(output_.motion_active),static_cast<unsigned long>(session_),static_cast<unsigned long>(last_tick_/5000),cfg::id,cfg::sha256,unsigned(commandFresh(now)),unsigned(output_.saturated),static_cast<long>(jitter_us_),static_cast<unsigned long>(overruns_),fault_,unsigned(auto_feature_),unsigned(autonomousWaiting()),static_cast<unsigned long>(autonomousElapsed(now)/1000));
 }
 std::string Device::telemetry(uint32_t now) const {char out[900];telemetryTo(now,out,sizeof out);return out;}
 }

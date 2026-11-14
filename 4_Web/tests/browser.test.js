@@ -18,6 +18,15 @@ test('dashboard TCP commands, telemetry, CSV, malformed and stale data',async t=
  const outAuth=path.join(__dirname,'../results');await page.screenshot({path:path.join(outAuth,'account-header.png'),fullPage:false});
  await page.fill('#wifi-host','127.0.0.1:18080');await page.click('#btn-connect');await page.waitForFunction(()=>document.querySelector('#state-display').textContent==='Chờ');
  assert.deepEqual(errors,[]);
+ pause=true;
+ await page.evaluate(()=>{
+   updateRobotData({theta:0,thetaDot:0,xDot:0,u:0,st:3,fault:'FALL',imu_calibrated:1,imu_sample_fresh:1,auto_wait:1,auto_ms:3000});
+   flushDisplay();
+ });
+ assert.match(await page.locator('#reset-status').textContent(),/±10°/);
+ assert.match(await page.locator('#reset-status').textContent(),/còn 2.0 s/);
+ pause=false;
+ await page.waitForTimeout(100);
  await page.click('#btn-lqr');await page.waitForTimeout(120);assert(!commands.some(c=>c.startsWith('LQR2,')),'old firmware must not receive gains');
  lqrCap=1;await page.waitForTimeout(120);holdLqrAck=true;await page.click('#btn-lqr');await page.waitForTimeout(100);
  assert.equal(await page.locator('#current-sent').textContent(),'Chưa','writing bytes must not claim applied gains');

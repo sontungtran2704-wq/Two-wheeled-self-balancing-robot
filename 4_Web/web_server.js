@@ -4,6 +4,7 @@
 const express = require('express');
 const http = require('node:http');
 const net = require('node:net');
+const os = require('node:os');
 const path = require('node:path');
 const {Server} = require('socket.io');
 const {SerialPort} = require('serialport');
@@ -15,8 +16,12 @@ const finite = (n, max) => typeof n === 'number' && Number.isFinite(n) && Math.a
 
 function createBridge(options = {}) {
   const port = Number(options.port ?? process.env.PORT ?? 3000);
-  const host = options.host ?? process.env.HOST ?? '127.0.0.1';
-  const origins = new Set([`http://localhost:${port}`, `http://127.0.0.1:${port}`,
+  const lan = options.lan ?? (process.env.ROBOT_LAN === '1');
+  const host = options.host ?? process.env.HOST ?? (lan ? '0.0.0.0' : '127.0.0.1');
+  const lanOrigins = lan ? [...new Set(Object.values(os.networkInterfaces()).flat().filter(n=>
+    n && n.family==='IPv4' && !n.internal && /^(10\.|192\.168\.|172\.(1[6-9]|2\d|3[01])\.)/.test(n.address)
+  ).map(n=>`http://${n.address}:${port}`))] : [];
+  const origins = new Set([`http://localhost:${port}`, `http://127.0.0.1:${port}`, ...lanOrigins,
     ...(process.env.ALLOWED_ORIGINS || '').split(',').filter(Boolean)]);
   const hosts = new Set([...origins].map(x => new URL(x).host));
   const allowed = req => hosts.has(req.headers.host) && (!req.headers.origin || origins.has(req.headers.origin));
@@ -231,7 +236,7 @@ function createBridge(options = {}) {
   function disconnect(){wanted=null;clearTimeout(retry);retry=null;generation++;revoke();closeLink();io.emit('serialDisconnected');emitState();}
   app.use((req,res,next)=>allowed(req)?next():res.status(403).json({error:'Forbidden origin/host'}));
   app.use(express.json({limit:'2kb'}));
-  app.get('/api/health',(req,res)=>res.json({service:'balancebot-web',auth:true}));
+  app.get('/api/health',(req,res)=>res.json({service:'balancebot-web',auth:true,lan,urls:lanOrigins}));
   auth.mount(app,token=>{for(const socket of io.sockets.sockets.values())if(socket.authToken===token)socket.disconnect(true);});
   app.get('/welcome',(req,res)=>res.sendFile(path.join(__dirname,'public','welcome.html')));
   app.use((req,res,next)=>{
@@ -293,6 +298,11 @@ function createBridge(options = {}) {
         if(latest.imu_calibrated===0)
           return error(socket,'MPU6050 chưa hiệu chuẩn. Giữ xe yên và bấm Hiệu chuẩn gyro.');
         if(!claim(socket))return;
+        if(latest.st===2 && latest.auto_mode===1) {
+          write('GET');
+          socket.emit('notice',{msg:'Xe đã tự cân bằng. Dashboard đã nhận quyền điều khiển.',type:'info'});
+          return;
+        }
       } else if(['RESET','CALGYRO'].includes(cmd) && owner && owner!==socket.id) return error(socket,'Dashboard khác đang điều khiển.');
       if(!write(cmd))error(socket,'Chưa kết nối tới xe.');
     });

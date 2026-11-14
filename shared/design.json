@@ -1,6 +1,6 @@
 {
   "config_id": "nema17-relative-v1",
-  "config_sha256": "b3a774dc8d5a5891cf70cace06f40e6272ab717040ef0031ed9c320f20c68872",
+  "config_sha256": "f713711d2dd1267aa36c0c2f214783cd0f568f78af534471ced4ef95d0ea5654",
   "schema_version": 1,
   "physical_status": "UNVERIFIED",
   "state_order": [

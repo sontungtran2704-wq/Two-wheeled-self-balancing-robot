@@ -1,0 +1,19 @@
+{
+  "input": "D:\\Users\\DELL\\Downloads\\robot_1794634350468.json",
+  "sha256": "c14e3ea9efb134a9bd60de77830b33f2b43addc88b3048cd848323dc7ada634f",
+  "points": 3000,
+  "note": "Multiple sessions/time reset; only final Run segment used. v derives from pulses, not encoder ground speed. No positional encoder; integrated distance is not measured displacement.",
+  "start_t": 40.348,
+  "preceding_idle_t": 40.308,
+  "first_motion_active_t": 43.34,
+  "gate_delay_s": 2.9920000000000044,
+  "integrated_v_until_gate_m": -0.5205572900116715,
+  "integrated_v_segment_m": -0.9886961980776029,
+  "min_v": -0.484516186,
+  "all_command_fresh": [
+    0
+  ],
+  "faults": [
+    "NONE"
+  ]
+}

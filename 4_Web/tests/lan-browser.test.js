@@ -1,0 +1,31 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict');
+const fs=require('node:fs'),os=require('node:os'),path=require('node:path');
+const {createBridge}=require('../web_server');
+const {chromium}=require(process.env.PLAYWRIGHT_MODULE);
+
+test('phone viewport logs in and opens Socket.IO through the PC LAN address',async t=>{
+ const bridge=createBridge({port:13023,lan:true,authFile:path.join(fs.mkdtempSync(path.join(os.tmpdir(),'robot-lan-browser-')),'users.json')});
+ await bridge.listen();t.after(()=>bridge.close());
+ const health=await(await fetch('http://127.0.0.1:13023/api/health')).json();
+ assert(health.urls.length,'a private LAN address is required for this integration test');
+ const root=health.urls[0];
+ const browser=await chromium.launch({channel:'msedge',headless:true});t.after(()=>browser.close());
+ const context=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
+ const page=await context.newPage(),errors=[];page.on('pageerror',e=>errors.push(e.message));
+ await page.goto(root);
+ await page.waitForURL(root+'/welcome');
+ assert.equal((await page.request.get(root+'/api/status')).status(),401);
+ await page.click('#toggle');await page.fill('#username','lan_test');await page.fill('#password','testpassword123');await page.fill('#confirm','testpassword123');await page.click('#submit');
+ await page.waitForFunction(()=>document.querySelector('#message').textContent.includes('Đăng ký thành công'));
+ assert.equal((await page.request.get(root+'/api/status')).status(),401);
+ await page.fill('#username','lan_test');await page.fill('#password','testpassword123');await page.click('#submit');
+ await page.waitForURL(root+'/');
+ await page.waitForFunction(()=>socket.connected);
+ assert.equal((await page.request.get(root+'/api/status')).status(),200);
+ assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth));
+ await page.click('#logout');await page.waitForURL(root+'/welcome');
+ assert.equal(await page.locator('#username').inputValue(),'');
+ assert.equal((await page.request.get(root+'/api/status')).status(),401);
+ assert.deepEqual(errors,[]);
+});

@@ -578,6 +578,8 @@ let previousSampleFault = false;
 
 function updateRobotData(data) {
     robotState.fault = data.fault;
+    robotState.autoWait=data.auto_wait===1;
+    robotState.autoMs=Number.isFinite(data.auto_ms)?data.auto_ms:0;
     robotState.imuDiagnostic=data.imu_diag;
     robotState.imuCalibrated=data.imu_calibrated;
     robotState.calAccelMg=data.cal_accel_mg;
@@ -585,11 +587,18 @@ function updateRobotData(data) {
         lastImuDiagnostic = data.imu_diag;
         const messages = ['Đang kiểm tra IMU', 'Hiệu chuẩn gyro đạt', 'Lỗi đọc I²C',
             'Mã nhận dạng IMU không khớp', 'Cấu hình thanh ghi IMU thất bại',
-            'Gia tốc ngoài dải tĩnh', 'Gyro chưa ổn định'];
+            'Gia tốc ngoài dải tĩnh', 'Gyro chưa ổn định',
+            'Firmware này chưa có hiệu chuẩn hợp lệ: giữ xe yên và bấm Hiệu chuẩn gyro lần đầu',
+            'Không lưu được hiệu chuẩn gyro vào bộ nhớ',
+            'Đang kiểm tra dữ liệu với gyro bias đã lưu; không hiệu chuẩn lại'];
         const accel = data.imu_diag === 5 && data.cal_accel_mg > 0
             ? ` (${(data.cal_accel_mg / 1000).toFixed(3)} g; trung bình cần 0,90–1,10 g)` : '';
-        const message = messages[data.imu_diag] && messages[data.imu_diag] + accel;
-        if (message) showNotification(message, data.imu_diag === 1 ? 'success' : data.imu_diag === 0 ? 'info' : 'error');
+        const message = data.imu_diag===1 && data.imu_cal_restored===1
+            ? 'Đang dùng hiệu chuẩn gyro đã lưu; không hiệu chuẩn lại khi bật nguồn'
+            : data.imu_diag===1 && data.imu_cal_saved===1
+                ? 'Hiệu chuẩn gyro đạt — đã lưu vào ESP32'
+                : messages[data.imu_diag] && messages[data.imu_diag] + accel;
+        if (message) showNotification(message, data.imu_diag === 1 ? 'success' : [0,9].includes(data.imu_diag) ? 'info' : 'error');
     }
     robotState.angle      = (data.imu_sample_fresh === 0 || (data.imu_sample_fresh == null && data.imu_calibrated === 0)) ? null : Number(data.theta);
     robotState.angularVel = (data.imu_sample_fresh === 0 || (data.imu_sample_fresh == null && data.imu_calibrated === 0)) ? null : Number(data.thetaDot);
@@ -654,8 +663,12 @@ function flushDisplay() {
     } else if (st === 0) {
         $('reset-status').textContent = 'Xe đang Chờ. RESET không tự bật motor; START là thao tác riêng.';
     }
+    if(robotState.autoWait && [0,3,4].includes(st) && robotState.imuCalibrated===1) {
+        const remaining=Math.max(0,5-robotState.autoMs/1000).toFixed(1);
+        $('reset-status').textContent=`Tự cân bằng: giữ xe trong ±10° và ổn định liên tục 5 giây (còn ${remaining} s). Ra ngoài vùng hoặc rung sẽ đếm lại. Bấm DỪNG để hủy tự chạy lại.`;
+    } else if(st===2) $('reset-status').textContent='Xe đang cân bằng. DỪNG sẽ tắt motor và hủy tự chạy lại; START để chạy lại.';
     if(st===0 && robotState.imuCalibrated===0) {
-        const reasons=['Đang hiệu chuẩn IMU','', 'Lỗi I²C','Sai mã IMU','Lỗi cấu hình IMU','Gia tốc chưa hợp lệ','Gyro còn rung'];
+        const reasons=['Đang kiểm tra IMU','', 'Lỗi I²C','Sai mã IMU','Lỗi cấu hình IMU','Gia tốc chưa hợp lệ','Gyro còn rung','Chờ hiệu chuẩn firmware mới','Lỗi lưu hiệu chuẩn','Kiểm tra bias đã lưu'];
         $('state-display').textContent=reasons[robotState.imuDiagnostic] || 'Chờ IMU';
         $('state-display').title=`Motor chưa ARM. Gia tốc hiệu chuẩn: ${robotState.calAccelMg ?? '—'} mg; trung bình 900–1100 mg; góc khi chưa hiệu chuẩn chỉ dùng chẩn đoán.`;
     } else $('state-display').title='';

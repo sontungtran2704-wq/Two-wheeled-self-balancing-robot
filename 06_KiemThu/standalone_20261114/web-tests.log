@@ -1,0 +1,27 @@
+✔ dashboard claims a robot already balancing autonomously without another START (577.2178ms)
+✔ CALGYRO distinguishes no link, sent, ACK, rejection and silence (2454.8094ms)
+✔ web authenticates and calculates the current two-state LQR (388.1009ms)
+✔ permission failure is reported once and does not retry (1203.9969ms)
+✔ accounts hash passwords, reject duplicates and invalidate logout sessions (201.6529ms)
+✔ LAN mode permits only actual local network origins and keeps login required (12.99ms)
+✖ dashboard TCP commands, telemetry, CSV, malformed and stale data (2104.0449ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4915.5194
+
+✖ failing tests:
+
+test at tests\browser.test.js:5:1
+✖ dashboard TCP commands, telemetry, CSV, malformed and stale data (2104.0449ms)
+  page.evaluate: ReferenceError: updateDisplay is not defined
+      at eval (eval at evaluate (:311:30), <anonymous>:3:4)
+      at UtilityScript.evaluate (<anonymous>:313:16)
+      at UtilityScript.<anonymous> (<anonymous>:1:44)
+      at TestContext.<anonymous> (D:\blancing\Robot_Collab\4_Web\tests\browser.test.js:21:13) {
+    log: []
+  }

@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <cstddef>
 #include <string>
+#include <cstring>
 #include "GeneratedConfig.h"
 namespace robot {
 enum class State : uint8_t { Idle, Arming, Run, Fault };
@@ -36,16 +37,27 @@ class Device {
   uint32_t overruns() const {return overruns_;}
   Tuning tuning() const;
   bool restoreTuning(const Tuning& t);
+  // Runtime enables this only after hardware initialization/confirmation.
+  void enableAutonomous(bool allowed) {auto_feature_=allowed;auto_blocked_=!allowed;auto_timing_=false;}
+  void suspendAutonomous() {auto_blocked_=true;auto_timing_=false;}
+  // Configuration/calibration interrupts the dwell, but must not clear an explicit STOP.
+  void restartAutonomousCountdown() {auto_timing_=false;}
+  bool autonomousWaiting() const {return auto_feature_&&!auto_blocked_&&(state_==State::Idle||
+    (state_==State::Fault&&(!std::strcmp(fault_,"FALL")||!std::strcmp(fault_,"SPEED_RAIL"))));}
+  uint32_t autonomousElapsed(uint32_t now) const {return auto_timing_?uint32_t(now-auto_since_):0;}
  private:
   NumericController control_; Output output_; Sensors sensors_;
   State state_=State::Idle;
   uint32_t last_tick_=0,arm_since_=0,last_command_=0,session_,seq_=0,saturation_us_=0,overruns_=0;
   int32_t jitter_us_=0;
   bool ticked_=false,arm_timing_=false,motion_=false,leased_=false,have_seq_=false;
+  bool auto_feature_=false,auto_blocked_=true,auto_timing_=false;
+  uint32_t auto_since_=0;
   double target_v_=0,target_w_=0;
   double pitchZero_=0;
   const char* fault_="NONE";
   bool sensorsFresh(uint32_t now) const;
   void clearMotion();
+  void automaticStart(uint32_t now, bool continuous);
 };
 }

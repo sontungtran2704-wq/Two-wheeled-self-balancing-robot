@@ -1,0 +1,1 @@
+PASS: real IMU task has no boot calibration/write; explicit save/readback/reboot reuse; unchanged bias; corrupt/moving/I2C/write failures block readiness

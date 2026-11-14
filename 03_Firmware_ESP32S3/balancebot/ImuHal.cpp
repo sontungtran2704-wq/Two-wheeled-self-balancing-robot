@@ -1,7 +1,10 @@
 #include "ImuHal.h"
 #include "ImuCalibration.h"
 #include "HardwareConfig.h"
+#include "SavedImuCalibration.h"
 #include <Wire.h>
+#include <Preferences.h>
+#include <esp_app_desc.h>
 #include <cmath>
 #include <atomic>
 namespace imu {
@@ -9,7 +12,8 @@ static portMUX_TYPE lock=portMUX_INITIALIZER_UNLOCKED;
 static robot::Sensors latest;
 static bool recalibrate=false,ready=false;
 // 0=pending, 1=ready, 2=I2C read, 3=WHO_AM_I, 4=register write,
-// 5=acceleration outside static range, 6=gyro motion or variance.
+// 5=acceleration outside static range, 6=gyro motion or variance,
+// 7=no valid calibration for this firmware, 8=storage failure, 9=checking saved bias (not recalibrating).
 static std::atomic<unsigned> imuDiagnostic{0};
 unsigned diagnostic(){return imuDiagnostic.load();}
 static std::atomic<unsigned> imuIdentity{256};
@@ -17,6 +21,36 @@ unsigned identity(){return imuIdentity.load();}
 static std::atomic<unsigned> calibrationAccelMg{0};
 unsigned calibrationAccelMilliG(){return calibrationAccelMg.load();}
 static double bias[3]={},theta=0;
+static std::atomic<bool> savedCalibration{false},restoredCalibration{false},calibrationBusy{false};
+bool calibrating(){return calibrationBusy.load();}
+bool calibrationSaved(){return savedCalibration.load();}
+bool calibrationRestored(){return restoredCalibration.load();}
+static CalibrationContext calibrationContext() {
+  CalibrationContext context{uint8_t(identity()),hardware::imuAddress,uint8_t(hardware::sda),uint8_t(hardware::scl),hardware::pitchTrim};
+  const auto* app=esp_app_get_description();
+  if(app&&app->magic_word==ESP_APP_DESC_MAGIC_WORD)std::memcpy(context.firmwareSha256,app->app_elf_sha256,32);
+  return context;
+}
+static bool loadCalibration() {
+  Preferences prefs;if(!prefs.begin("imu-cal-v1",true))return false;
+  uint8_t bytes[calibrationBytes]{};SavedGyro value;
+  const bool ok=prefs.getBytesLength("gyro")==sizeof bytes&&
+    prefs.getBytes("gyro",bytes,sizeof bytes)==sizeof bytes&&decodeCalibration(bytes,sizeof bytes,calibrationContext(),value);
+  prefs.end();if(!ok)return false;
+  for(int i=0;i<3;++i)bias[i]=value.bias[i];
+  calibrationAccelMg=unsigned(std::lround(value.norm*1000));
+  savedCalibration=true;restoredCalibration=true;return true;
+}
+static bool saveCalibration(const CalibrationWindow& stats) {
+  SavedGyro value;for(int i=0;i<3;++i)value.bias[i]=bias[i];
+  value.norm=stats.normMean;value.accelStd=stats.accelStd();value.gyroStd=stats.gyroStd();
+  uint8_t bytes[calibrationBytes]{},readback[calibrationBytes]{};
+  if(!encodeCalibration(bytes,calibrationContext(),value))return false;
+  Preferences prefs;if(!prefs.begin("imu-cal-v1",false))return false;
+  const bool ok=prefs.putBytes("gyro",bytes,sizeof bytes)==sizeof bytes&&
+    prefs.getBytes("gyro",readback,sizeof readback)==sizeof readback&&std::memcmp(bytes,readback,sizeof bytes)==0;
+  prefs.end();return ok;
+}
 static bool writeReg(uint8_t reg,uint8_t value) {
   Wire.beginTransmission(hardware::imuAddress);Wire.write(reg);Wire.write(value);return Wire.endTransmission()==0;
 }
@@ -84,33 +118,59 @@ static bool calibrate() {
     if(result==1){
       for(int j=0;j<3;++j)bias[j]=stats.gmean[j];
       theta=std::atan2(-stats.amean[0],stats.amean[2])-hardware::pitchTrim;
+      // ready remains false until this flash write/readback completes; motor cannot arm.
+      savedCalibration=saveCalibration(stats);restoredCalibration=false;
+      if(!savedCalibration){imuDiagnostic=8;return false;}
       return true;
     }
     if(window==2)imuDiagnostic=result;
   }
   return false;
 }
-void requestCalibration(){portENTER_CRITICAL(&lock);recalibrate=true;ready=false;latest.valid=false;portEXIT_CRITICAL(&lock);}
+void requestCalibration(){calibrationBusy=true;portENTER_CRITICAL(&lock);recalibrate=true;ready=false;latest.valid=false;portEXIT_CRITICAL(&lock);}
 bool calibrated(){portENTER_CRITICAL(&lock);const bool value=ready;portEXIT_CRITICAL(&lock);return value;}
 robot::Sensors snapshot(){portENTER_CRITICAL(&lock);const auto s=latest;portEXIT_CRITICAL(&lock);return s;}
 void task(void*) {
   if(!hardware::pinsConfigured){vTaskDelete(nullptr);return;}
-  bool initialized=setupImu();requestCalibration();uint32_t previous=micros();
+  bool initialized=setupImu();
+  bool verifyRestored=initialized&&loadCalibration();
+  // Never estimate bias on boot. Only an explicit CALGYRO starts calibration.
+  if(initialized)imuDiagnostic=verifyRestored?9:7;
+  CalibrationWindow verification;
+  uint32_t previous=micros();
   TickType_t wake=xTaskGetTickCount();
   for(;;) {
     portENTER_CRITICAL(&lock);const bool requested=recalibrate;recalibrate=false;portEXIT_CRITICAL(&lock);
     if(requested) {
+      verifyRestored=false;verification=CalibrationWindow{};
+      savedCalibration=false;restoredCalibration=false;
       imuDiagnostic=0;
       calibrationAccelMg=0;
       if(!initialized)initialized=setupImu();
       vTaskDelay(pdMS_TO_TICKS(1000));const bool ok=initialized && calibrate();
       if(ok)imuDiagnostic=1;
-      portENTER_CRITICAL(&lock);ready=ok;portEXIT_CRITICAL(&lock);previous=micros();wake=xTaskGetTickCount();
+      portENTER_CRITICAL(&lock);ready=ok;portEXIT_CRITICAL(&lock);calibrationBusy=false;previous=micros();wake=xTaskGetTickCount();
     }
     double a[3],g[3];
     if(initialized && raw(a,g)) {
       const uint32_t now=micros();const double dt=double(uint32_t(now-previous))*1e-6;previous=now;
       if(dt>0 && dt<.02) {
+        if(verifyRestored) {
+          double residual[3];for(int i=0;i<3;++i)residual[i]=g[i]-bias[i];
+          verification.add(a,residual);
+          if(verification.n>=100) {
+            bool stationary=verification.finite&&verification.normMean>=.90&&verification.normMean<=1.10&&
+              verification.accelStd()<=.02&&verification.gyroStd()<=.02&&verification.gyroPeak<=.15;
+            for(double mean:verification.gmean)stationary=stationary&&std::abs(mean)<=.02;
+            if(stationary) {
+              theta=std::atan2(-verification.amean[0],verification.amean[2])-hardware::pitchTrim;
+              portENTER_CRITICAL(&lock);ready=true;portEXIT_CRITICAL(&lock);
+              verifyRestored=false;imuDiagnostic=1;
+            }
+            // This checks the saved result without estimating or changing bias.
+            verification=CalibrationWindow{};
+          }
+        }
         const double omega=g[1]-bias[1],norm=std::sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);
         const bool controlValid=calibrated();
         if(controlValid)theta+=omega*dt;
@@ -118,8 +178,8 @@ void task(void*) {
         // Accelerometer is a weak long-term correction, and is acceleration contaminated.
         if(controlValid && norm>.85&&norm<1.15)theta+=dt/(.5+dt)*(std::atan2(-a[0],a[2])-hardware::pitchTrim-theta);
         publish(g,controlValid);
-      }
-    }
+      } else verification=CalibrationWindow{};
+    } else verification=CalibrationWindow{};
     vTaskDelayUntil(&wake,pdMS_TO_TICKS(5));
   }
 }

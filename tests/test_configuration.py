@@ -1,7 +1,14 @@
-import hashlib,json,unittest
+import hashlib,json,unittest,math
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 class ConfigurationTests(unittest.TestCase):
+    def test_requested_standalone_thresholds(self):
+        c=json.loads((ROOT/'shared/robot.json').read_text())
+        self.assertAlmostEqual(c['safety']['arm_rad'],math.radians(10))
+        self.assertAlmostEqual(c['safety']['fall_rad'],math.radians(40))
+        self.assertEqual(c['safety']['auto_rearm_s'],5)
+        header=(ROOT/'03_Firmware_ESP32S3/balancebot/GeneratedConfig.h').read_text()
+        self.assertIn('constexpr double auto_rearm_s=5;',header)
     def test_hashed_config_checkout_preserves_lf(self):
         attributes=(ROOT/'.gitattributes').read_text()
         self.assertIn('shared/robot.json text eol=lf',attributes)

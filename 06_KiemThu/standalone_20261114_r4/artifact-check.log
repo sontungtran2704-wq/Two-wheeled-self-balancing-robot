@@ -1,0 +1,3 @@
+PASS: compiled C++/headers equal source after Arduino #line removal.
+PASS: source ZIP and verification ZIP readback equal source bytes.
+PASS: r3 firmware comparison only ControlCore.cpp and README.md differ.

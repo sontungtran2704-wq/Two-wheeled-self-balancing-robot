@@ -1,10 +1,12 @@
 $ErrorActionPreference = 'Stop'
 $webUrl = 'http://127.0.0.1:3000'
+# Allow phones on the same private network; account login remains required.
+$env:ROBOT_LAN = '1'
 
 function Test-RobotWeb {
     try {
         $status = Invoke-RestMethod "$webUrl/api/health" -TimeoutSec 1
-        return ($status.service -eq 'balancebot-web')
+        return ($status.service -eq 'balancebot-web' -and $status.lan -eq $true)
     } catch { return $false }
 }
 
@@ -28,6 +30,8 @@ try {
             throw 'Khong mo duoc server web. Cong 3000 co the dang bi ung dung khac su dung. Khong tu dong dung tien trinh nao.'
         }
     }
+    $webInfo = Invoke-RestMethod "$webUrl/api/health" -TimeoutSec 2
+    foreach ($phoneUrl in $webInfo.urls) { Write-Host "Dien thoai cung mang: $phoneUrl" }
     Start-Process $webUrl
 } catch {
     Write-Host $_.Exception.Message -ForegroundColor Red

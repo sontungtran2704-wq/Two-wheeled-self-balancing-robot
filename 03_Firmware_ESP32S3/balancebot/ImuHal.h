@@ -12,5 +12,8 @@ unsigned calibrationAccelMilliG();
 unsigned calibrationAccelStdMg();
 unsigned calibrationGyroStdMrad();
 bool sampleFresh();
+bool calibrationSaved();
+bool calibrationRestored();
+bool calibrating();
 }
 

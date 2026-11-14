@@ -1,0 +1,4 @@
+PASS: source ZIP and test-input ZIP readback verified.
+PASS: compiled C++/headers match source after Arduino #line removal.
+PASS: r4 firmware comparison only Runtime.cpp, WifiSettings.h, README.md differ.
+PASS: protected LQR/PID/generated/hardware/IMU/web inputs match r4 checksums.

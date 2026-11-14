@@ -1,0 +1,3 @@
+PASS: no-web boot/FALL/SPEED_RAIL recovery 5s, +/-10 boundary, 40 FALL, configuration dwell restart, STOP/RESET latch, other faults, stale/NaN/motion/gaps/wrap, zero targets/session, saved calibration CRC/context/ranges
+PASS: existing IMU calibration acceptance tests
+PASS: real IMU task has no boot calibration/write; explicit save/readback/reboot reuse; unchanged bias; corrupt/moving/I2C/write failures block readiness

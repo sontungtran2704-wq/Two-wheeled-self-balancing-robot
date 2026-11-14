@@ -1,0 +1,142 @@
+[
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/balancebot.ino",
+    "sha256": "7f245ac82c41278a7159a0b47824676d6d264b7e9b698c14d5beeec71ffcd3b7"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/ControlCore.cpp",
+    "sha256": "d5e6fc534c2c215efa81dd98d6c4f58431c72bcfafef0101c92e59b2e83c63ab"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/ControlCore.h",
+    "sha256": "95a43bf7a96ffbf839c830a928e201f9f2bc7a440e723aa90664331a2f3127dd"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/GeneratedConfig.h",
+    "sha256": "e755fd0a48fcfba740765aa0fe6c1daa4f48444d6aa2a98a44fe1f38a92b5201"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/GeneratedLqrModel.h",
+    "sha256": "96dc3ed392ec66f246f315c28380335be972b6f222b155de89de7a90fd663950"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/HardwareConfig.h",
+    "sha256": "838124ddeccb7b8070f0e54798a75902524fa4abf164a9f8ddaaed8ca40e5930"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/ImuCalibration.h",
+    "sha256": "9d0e0aefae98649328a805f410aaf24beb9347377a09d13101ef8539b166da62"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/ImuHal.cpp",
+    "sha256": "693d06368873c15c8ba4f16855e2d0ad523c5e49387a4a41ef33c9cb45057d35"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/ImuHal.h",
+    "sha256": "a4ab22249e32e8081437f124b294b83d964615e34d9c06a8eaf364833e7f089e"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/README.md",
+    "sha256": "d9e7bceed42f2e6e1e661126847d3abef842904b785e403355f458aeee189d69"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/Runtime.cpp",
+    "sha256": "dc511093ada549322721b100c84b8f56877157ce93e1a6de803d9df70b4cdf4d"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/SavedImuCalibration.h",
+    "sha256": "c32aef506b13971fda8c93e12acef7744624d216581a857956bc071699147c77"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/StepNco.h",
+    "sha256": "00e9d65d30bd8de7db940e78fa8297992fd41a8fead7cc068e309092aa408b47"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/StepperHal.cpp",
+    "sha256": "6dae6694c1ffe449cf0ed9ec9721cc47e1717a5435430f94a7ab9e1033392fe7"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/StepperHal.h",
+    "sha256": "e7bec4f8a75ff8e3d4f2e7cd3ec2b2f47119df5a646117f5352aba85c6ef43bc"
+  },
+  {
+    "path": "06_KiemThu/restore_r4_20261114/balancebot-r4-source.zip",
+    "sha256": "ca6dd9174fff4be768ca08107cb4abc67c3cd1d7f07687bb21573c8ad5d10a4a"
+  },
+  {
+    "path": "06_KiemThu/restore_r4_20261114/balancebot.ino.bin",
+    "sha256": "b398397584f41ec657b774c1a4ee8e368ab524ad4346d362edc91f08c6144ead"
+  },
+  {
+    "path": "06_KiemThu/restore_r4_20261114/before-restore-source.zip",
+    "sha256": "5fa351c2628bd59cbf17cc926fabc65177d8be3c9d91d0504a71cd32354870d7"
+  },
+  {
+    "path": "06_KiemThu/restore_r4_20261114/firmware-build.log",
+    "sha256": "0c7ad1fea6cabed1556a51846c4b9f81203bc40c874c634a4ac6604fe934e67b"
+  },
+  {
+    "path": "06_KiemThu/restore_r4_20261114/host.log",
+    "sha256": "68db527d041e7968311249ba4ed675036cfc4722c51ffc528e112d3a126d94f1"
+  },
+  {
+    "path": "06_KiemThu/restore_r4_20261114/KET_QUA.md",
+    "sha256": "82389cebda2b0ac3bd400403c773952c2ab9e73fed8190daa59549a7489b7e2b"
+  },
+  {
+    "path": "06_KiemThu/restore_r4_20261114/source-check.log",
+    "sha256": "be4af5f6312f096dec407c52273daf9bd877e11177f9f52835ad3692e8fb65e4"
+  },
+  {
+    "path": "06_KiemThu/restore_r4_20261114/verification-inputs.zip",
+    "sha256": "23494a3c096ddfadefd34d16091aefb456200723be7d5fb6b52c01075d899e38"
+  },
+  {
+    "path": "06_KiemThu/restore_r4_20261114/verify_restore.py",
+    "sha256": "1c7cc932e267a986fd7ebb7dc7dc5250dc3f04baff9b57dac02d1f2f28bd44e1"
+  },
+  {
+    "path": "4_Web/public/dashboard.js",
+    "sha256": "46d8c4010fdec52bc3ceeb0565e01b5b33254c61774487a986cdd51502d04547"
+  },
+  {
+    "path": "shared/design.json",
+    "sha256": "890dfab36dd145ff5d082498ca5abf1b91ee715b3aa2317a3d736dade263eeab"
+  },
+  {
+    "path": "shared/robot.json",
+    "sha256": "f713711d2dd1267aa36c0c2f214783cd0f568f78af534471ced4ef95d0ea5654"
+  },
+  {
+    "path": "tests/cpp/imu_calibration_tests.cpp",
+    "sha256": "72999a8e45338329d2101f349408eec9488c454c4528a79563d2924db99c0032"
+  },
+  {
+    "path": "tests/cpp/imu_storage_tests.cpp",
+    "sha256": "7eeed5595b3bfe390e2b3af9e8b470ea2ee8de3c66db89e4e53a2bcc9753dc48"
+  },
+  {
+    "path": "tests/cpp/standalone_tests.cpp",
+    "sha256": "88d06b0dea14ff2c22c5f9eb5ed1147773744f828b999c2f1b995f1f0e3f044b"
+  },
+  {
+    "path": "tests/mocks/Arduino.h",
+    "sha256": "360478b71ea3aea42f6e30fa86e81c9c248fffcd20fcd260c3382264a4001ee5"
+  },
+  {
+    "path": "tests/mocks/esp_app_desc.h",
+    "sha256": "2fe93087747110a593e8519ebe6a9e592964131d1d76dca1fec3d51230a30bde"
+  },
+  {
+    "path": "tests/mocks/Preferences.h",
+    "sha256": "62ae2eaa460480c3cc604684f4120b68801714428707302686e969b1931b669e"
+  },
+  {
+    "path": "tests/mocks/Wire.h",
+    "sha256": "d3332055078695bf193cb5d2f8cc38cb1a6b6e872413b6dd56d253cb55bcd7e4"
+  },
+  {
+    "path": "tools/build_standalone_host.ps1",
+    "sha256": "c8b73caa1bd993071f8719e6fa877596a2cd74f3039cea9e77512b441a516612"
+  }
+]

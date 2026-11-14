@@ -1,0 +1,1 @@
+PASS: boot/FALL 5s, +/-10 boundary, 40 FALL, STOP/RESET latch, other faults, stale/NaN/motion/gaps/wrap, zero targets/session, saved calibration CRC/context/ranges

@@ -1,0 +1,5 @@
+PASS: pre-restore backup readback verified (16 files).
+PASS: all 15 restored sketch files exactly match frozen r4 source.
+Restored: ControlCore.cpp, README.md, Runtime.cpp
+Removed backed-up post-r4 addition: WifiSettings.h
+Dashboard/config unchanged and byte-match r4 verification inputs.

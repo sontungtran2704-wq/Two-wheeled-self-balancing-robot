@@ -1,0 +1,4 @@
+PASS: compiled C++/headers equal source after Arduino #line directive removal.
+PASS: sketch and verification ZIP entries equal source bytes.
+PASS: r2 comparison changed only ImuHal.cpp, SavedImuCalibration.h, README.md.
+Manifest path error corrected (relative inputs resolved against project root).

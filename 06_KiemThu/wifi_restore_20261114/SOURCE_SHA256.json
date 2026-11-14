@@ -1,0 +1,178 @@
+[
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/balancebot.ino",
+    "sha256": "7f245ac82c41278a7159a0b47824676d6d264b7e9b698c14d5beeec71ffcd3b7"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/ControlCore.cpp",
+    "sha256": "d5e6fc534c2c215efa81dd98d6c4f58431c72bcfafef0101c92e59b2e83c63ab"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/ControlCore.h",
+    "sha256": "95a43bf7a96ffbf839c830a928e201f9f2bc7a440e723aa90664331a2f3127dd"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/GeneratedConfig.h",
+    "sha256": "e755fd0a48fcfba740765aa0fe6c1daa4f48444d6aa2a98a44fe1f38a92b5201"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/GeneratedLqrModel.h",
+    "sha256": "96dc3ed392ec66f246f315c28380335be972b6f222b155de89de7a90fd663950"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/HardwareConfig.h",
+    "sha256": "838124ddeccb7b8070f0e54798a75902524fa4abf164a9f8ddaaed8ca40e5930"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/ImuCalibration.h",
+    "sha256": "9d0e0aefae98649328a805f410aaf24beb9347377a09d13101ef8539b166da62"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/ImuHal.cpp",
+    "sha256": "693d06368873c15c8ba4f16855e2d0ad523c5e49387a4a41ef33c9cb45057d35"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/ImuHal.h",
+    "sha256": "a4ab22249e32e8081437f124b294b83d964615e34d9c06a8eaf364833e7f089e"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/README.md",
+    "sha256": "495d6b286d792c73fb9f714ceaa3731ee182b9132bf93b4e46c9407fccd0af74"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/Runtime.cpp",
+    "sha256": "651228ad03a5cd69b6fd5f7e191b22bc04478982cfbd131815ebf42130baa599"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/SavedImuCalibration.h",
+    "sha256": "c32aef506b13971fda8c93e12acef7744624d216581a857956bc071699147c77"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/StepNco.h",
+    "sha256": "00e9d65d30bd8de7db940e78fa8297992fd41a8fead7cc068e309092aa408b47"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/StepperHal.cpp",
+    "sha256": "6dae6694c1ffe449cf0ed9ec9721cc47e1717a5435430f94a7ab9e1033392fe7"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/StepperHal.h",
+    "sha256": "e7bec4f8a75ff8e3d4f2e7cd3ec2b2f47119df5a646117f5352aba85c6ef43bc"
+  },
+  {
+    "path": "03_Firmware_ESP32S3/balancebot/WifiSettings.h",
+    "sha256": "f97235bcd289ad3821deb4de6b994cfcc959842518efb623947477b022d6fde3"
+  },
+  {
+    "path": "tools/build_wifi_host.ps1",
+    "sha256": "286fbb28114f12b797a37058ced9a753bcc592c2b49195ec076cb45a5ef3107f"
+  },
+  {
+    "path": "tools/build_standalone_host.ps1",
+    "sha256": "c8b73caa1bd993071f8719e6fa877596a2cd74f3039cea9e77512b441a516612"
+  },
+  {
+    "path": "tests/cpp/wifi_runtime_tests.cpp",
+    "sha256": "20a48858f70152bf884306b180b3393b1790e7a066e1a860609aeb05e80d63eb"
+  },
+  {
+    "path": "tests/cpp/standalone_tests.cpp",
+    "sha256": "4b56aae90916138567e5819698c9d70a7b9acda94983d2bbf4adf24b0572e0b0"
+  },
+  {
+    "path": "tests/cpp/imu_storage_tests.cpp",
+    "sha256": "dc9726a97f1ea1f8e402ea7f342e8bad52395455cac9b40e15c2a9aa095aeaa3"
+  },
+  {
+    "path": "tests/cpp/imu_calibration_tests.cpp",
+    "sha256": "72999a8e45338329d2101f349408eec9488c454c4528a79563d2924db99c0032"
+  },
+  {
+    "path": "tests/mocks/Arduino.h",
+    "sha256": "360478b71ea3aea42f6e30fa86e81c9c248fffcd20fcd260c3382264a4001ee5"
+  },
+  {
+    "path": "tests/mocks/esp_app_desc.h",
+    "sha256": "2fe93087747110a593e8519ebe6a9e592964131d1d76dca1fec3d51230a30bde"
+  },
+  {
+    "path": "tests/mocks/Preferences.h",
+    "sha256": "62ae2eaa460480c3cc604684f4120b68801714428707302686e969b1931b669e"
+  },
+  {
+    "path": "tests/mocks/Wire.h",
+    "sha256": "d3332055078695bf193cb5d2f8cc38cb1a6b6e872413b6dd56d253cb55bcd7e4"
+  },
+  {
+    "path": "tests/mocks/runtime/Arduino.h",
+    "sha256": "799df86cee6218dc1302013d35cb488275d44ccf4a5e4eeb228296d5dc0a791e"
+  },
+  {
+    "path": "tests/mocks/runtime/WiFi.h",
+    "sha256": "b7e9471975ed86569c41ddeb8638ced8e6d9d04819fe1d921df1fe4f9decd4bc"
+  },
+  {
+    "path": "tests/mocks/runtime/sys/socket.h",
+    "sha256": "4ef4537555ee1d9d0cbda74ae1bbeb852e68abe9afbce5e2a5cd8f258ba43f8f"
+  },
+  {
+    "path": "4_Web/tests/browser.test.js",
+    "sha256": "cce2536b57b49459e30412ac922a64940650f810a1bc82d6df99e2363695502c"
+  },
+  {
+    "path": "4_Web/web_server.js",
+    "sha256": "efd83f88a742fd8f4b2103cf9b3d9af11b8f22a3e8e22355831cf387f700987b"
+  },
+  {
+    "path": "4_Web/public/dashboard.js",
+    "sha256": "46d8c4010fdec52bc3ceeb0565e01b5b33254c61774487a986cdd51502d04547"
+  },
+  {
+    "path": "shared/robot.json",
+    "sha256": "f713711d2dd1267aa36c0c2f214783cd0f568f78af534471ced4ef95d0ea5654"
+  },
+  {
+    "path": "shared/design.json",
+    "sha256": "890dfab36dd145ff5d082498ca5abf1b91ee715b3aa2317a3d736dade263eeab"
+  },
+  {
+    "path": "06_KiemThu/wifi_restore_20261114/artifact-check.log",
+    "sha256": "e3a438eef693d3beadd1761f8627e2266ea4cf2e58bf782598c36044638380a0"
+  },
+  {
+    "path": "06_KiemThu/wifi_restore_20261114/balancebot-wifi-source.zip",
+    "sha256": "24b11e3018bcb416af6e6edb7df10aaba4633cade88c6fa4161eb195c0c8a488"
+  },
+  {
+    "path": "06_KiemThu/wifi_restore_20261114/balancebot.ino.bin",
+    "sha256": "8eea2d59935f4d063a034ff5f8d03685a03859416e41fdb68be96ea239cfa7d2"
+  },
+  {
+    "path": "06_KiemThu/wifi_restore_20261114/browser.log",
+    "sha256": "c1c25820368b6057cb60c5e615885d4e19e103ca95451941129e1bcd1f35a0c0"
+  },
+  {
+    "path": "06_KiemThu/wifi_restore_20261114/firmware-build.log",
+    "sha256": "056a9a043fbd322b265a27462d840f94e4645eab1607525f08424518067b69c9"
+  },
+  {
+    "path": "06_KiemThu/wifi_restore_20261114/KET_QUA.md",
+    "sha256": "1641a5fcfe90325f430544f9016a60b2c9d36266d87189cc53a66f11bbc791bb"
+  },
+  {
+    "path": "06_KiemThu/wifi_restore_20261114/previous-r4-source.zip",
+    "sha256": "ca6dd9174fff4be768ca08107cb4abc67c3cd1d7f07687bb21573c8ad5d10a4a"
+  },
+  {
+    "path": "06_KiemThu/wifi_restore_20261114/standalone-host.log",
+    "sha256": "0b12c391bc568a46124f46b090d723d8c0c931d4b7a5f0c5460487b1e2d9ca9e"
+  },
+  {
+    "path": "06_KiemThu/wifi_restore_20261114/verification-inputs.zip",
+    "sha256": "8443a47a0889cf99fdd499a52dd98aad342da78dd261119ae31301bd044b3d39"
+  },
+  {
+    "path": "06_KiemThu/wifi_restore_20261114/wifi-host.log",
+    "sha256": "93c9a5750e3f8ff9b700da9de7e65a9a2133c2a30fb87e1765c3e64158f05969"
+  }
+]

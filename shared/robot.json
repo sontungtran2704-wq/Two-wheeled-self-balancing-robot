@@ -7,6 +7,6 @@
   "timing": {"lqr_s": 0.005, "pid_s": 0.02, "telemetry_s": 0.04, "lease_s": 0.4, "imu_max_age_s": 0.015, "stable_s": 1.0},
   "lqr": {"state_order": ["theta_rad", "omega_rad_s"], "input": "relative_tangential_acceleration_m_s2", "baseline_Q": [25, 1], "baseline_R": 2, "Q": [400, 4], "R": 1},
   "pid": {"velocity": {"kp": 3.0, "ki": 1.0, "kd": 0.2}, "yaw": {"kp": 3.0, "ki": 0.8, "kd": 0.02}, "derivative_tau_s": 0.08, "accel_filter_s": 0.12, "accel_max": 0.35, "yaw_accel_max": 2.0, "velocity_max": 0.2, "yaw_rate_max": 0.8, "velocity_slew": 0.12, "yaw_slew": 0.6},
-  "safety": {"arm_rad": 0.06981317007977318, "fall_rad": 0.3839724354387525, "stable_rad": 0.05235987755982989, "stable_rate": 0.15, "arm_rate": 0.3, "arm_s": 1.0, "deadline_fault_s": 0.015, "saturation_fault_s": 0.3},
+  "safety": {"arm_rad": 0.17453292519943295, "fall_rad": 0.6981317007977318, "auto_rearm_s": 5.0, "stable_rad": 0.05235987755982989, "stable_rate": 0.15, "arm_rate": 0.3, "arm_s": 1.0, "deadline_fault_s": 0.015, "saturation_fault_s": 0.3},
   "provisional_ranges": {"mb": [0.9, 1.4], "mw": [0.0165, 0.033], "r": [0.033, 0.04], "l": [0.025, 0.06], "Jc_scale": [0.6, 1.5], "W": [0.16, 0.228], "actuator_delay_s": [0, 0.005, 0.01], "tracking_gain": [0.8, 1.0, 1.2]}
 }

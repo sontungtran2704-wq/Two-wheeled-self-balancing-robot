@@ -11,6 +11,23 @@ async function login(port){
 }
 const delay = ms => new Promise(r => setTimeout(r, ms));
 
+test('dashboard claims a robot already balancing autonomously without another START',async t=>{
+ const net=require('node:net'),{EventEmitter}=require('node:events'),{createBridge}=require('../web_server');
+ const bridge=createBridge({port:13024,authFile:path.join(fs.mkdtempSync(path.join(os.tmpdir(),'robot-auto-')),'users.json')});
+ const socket=new EventEmitter();socket.id='autonomous-test';bridge.io.listeners('connection')[0](socket);
+ const errors=[],commands=[];socket.on('serialError',e=>errors.push(e));let stream,sequence=0;
+ const fake=net.createServer(s=>{stream=s;let buffer='';s.on('data',b=>{buffer+=b;let n;while((n=buffer.indexOf('\n'))>=0){commands.push(buffer.slice(0,n));buffer=buffer.slice(n+1);}});});
+ await new Promise(r=>fake.listen(0,'127.0.0.1',r));await bridge.listen();
+ const d=bridge.design,timer=setInterval(()=>{if(stream&&!stream.destroyed)stream.write(`t=${sequence*40},theta=0,omega=0,v=0,yaw=0,left=0,right=0,st=2,motion=1,session=9,seq=${++sequence},config=${d.config_id},hash=${d.config_sha256},fresh=0,sat=0,imu_calibrated=1,auto_mode=1,auto_wait=0,auto_ms=0\n`);},40);
+ t.after(async()=>{clearInterval(timer);stream?.destroy();await bridge.close();await new Promise(r=>fake.close(r));});
+ const cookie=await login(13024);
+ assert.equal((await fetch('http://127.0.0.1:13024/api/connect',{method:'POST',headers:{Cookie:cookie,'Content-Type':'application/json'},body:JSON.stringify({port:`tcp:127.0.0.1:${fake.address().port}`})})).status,200);
+ await delay(100);commands.length=0;socket.emit('robotControl',{command:'start'});await delay(50);
+ assert(commands.includes('GET'));assert(!commands.includes('START'));
+ socket.emit('drive',{v:.05,w:0});await delay(50);
+ assert(commands.some(c=>/^CMD,9,\d+,0.050000,0.000000$/.test(c)));assert.deepEqual(errors,[]);
+});
+
 test('CALGYRO distinguishes no link, sent, ACK, rejection and silence', async t => {
   const net = require('node:net');
   const {EventEmitter} = require('node:events');
@@ -120,4 +137,23 @@ test('accounts hash passwords, reject duplicates and invalidate logout sessions'
  assert.equal((await request('/api/status',null,cookie)).status,401);
  await bridge.close();bridge=createBridge({port:13019,authFile:file});await bridge.listen();
  assert.equal((await request('/api/auth/login',data)).status,200,'account must survive server restart');
+});
+
+test('LAN mode permits only actual local network origins and keeps login required',async t=>{
+ const {createBridge}=require('../web_server'),os=require('node:os');
+ const file=path.join(fs.mkdtempSync(path.join(os.tmpdir(),'robot-lan-')),'users.json');
+ const bridge=createBridge({port:13022,lan:true,authFile:file});await bridge.listen();t.after(()=>bridge.close());
+ const root='http://127.0.0.1:13022';
+ const status=(route,headers)=>new Promise((resolve,reject)=>{
+   const req=require('node:http').get(root+route,{headers},res=>{res.resume();res.on('end',()=>resolve(res.statusCode));});
+   req.on('error',reject);
+ });
+ const health=await (await fetch(root+'/api/health')).json();assert.equal(health.lan,true);assert.equal(bridge.server.address().address,'0.0.0.0');
+ for(const url of health.urls) {
+   const authority=new URL(url).host;
+   assert.equal(await status('/api/health',{Host:authority,Origin:url}),200);
+   assert.equal(await status('/api/status',{Host:authority,Origin:url}),401);
+ }
+ assert.equal(await status('/api/health',{Host:'evil.invalid:13022'}),403);
+ assert.equal(await status('/api/health',{Origin:'https://evil.invalid'}),403);
 });

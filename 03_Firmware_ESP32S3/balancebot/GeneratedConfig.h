@@ -2,7 +2,7 @@
 #pragma once
 namespace cfg {
 constexpr const char* id="nema17-relative-v1";
-constexpr const char* sha256="b3a774dc8d5a5891cf70cace06f40e6272ab717040ef0031ed9c320f20c68872";
+constexpr const char* sha256="f713711d2dd1267aa36c0c2f214783cd0f568f78af534471ced4ef95d0ea5654";
 constexpr double dt=0.0050000000000000001;
 constexpr double pid_dt=0.02;
 constexpr double k0=-23.793396834761598;
@@ -25,8 +25,9 @@ constexpr double velocity_max=0.20000000000000001;
 constexpr double yaw_rate_max=0.80000000000000004;
 constexpr double velocity_slew=0.12;
 constexpr double yaw_slew=0.59999999999999998;
-constexpr double arm_rad=0.069813170079773182;
-constexpr double fall_rad=0.38397243543875248;
+constexpr double arm_rad=0.17453292519943295;
+constexpr double fall_rad=0.69813170079773179;
+constexpr double auto_rearm_s=5;
 constexpr double stable_rad=0.05235987755982989;
 constexpr double stable_rate=0.14999999999999999;
 constexpr double arm_rate=0.29999999999999999;
