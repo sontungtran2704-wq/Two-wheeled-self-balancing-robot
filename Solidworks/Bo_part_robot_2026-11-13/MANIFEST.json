@@ -1,16 +1,21 @@
 {
-  "native_parts": 10,
-  "step_files": 10,
+  "native_parts": 16,
+  "step_files": 16,
   "files": [
     {
       "path": "00_Doc_truoc.md",
-      "bytes": 7452,
-      "sha256": "568b2c1ce3530ad7313771d6f1e40ff3c8e4affa888824c9692fae6c2e524168"
+      "bytes": 8580,
+      "sha256": "5997dddb6f272ef0d5de58d4b10ace1f3f2f6f35200eae06db9638439f07a2b3"
     },
     {
       "path": "00_Xem_truoc.png",
-      "bytes": 463079,
-      "sha256": "5256467efc1320214a9ab8b69f077b97eb70ce16fcd2d34bcf7116cfc8d62f46"
+      "bytes": 465487,
+      "sha256": "b375385dfc6e89c788303c97e34c8baf1124c2ead4b6ae6dc224fe43f4e6472c"
+    },
+    {
+      "path": "00_Xem_truoc_bo_sung_pin.png",
+      "bytes": 135623,
+      "sha256": "ff3ad4e8a12a7a7c0f218ca9ee0c10d400f4e733d97191117bdf326c306d7aa2"
     },
     {
       "path": "01_Tam_nhom_tren.SLDPRT",
@@ -103,14 +108,74 @@
       "sha256": "61dd0ea576b15fa93d9f40a9976ab8e08a765db8ce1e00523686a7a8a25a0831"
     },
     {
-      "path": "10_Ga_L_CHUA_DU_LO.SLDPRT",
-      "bytes": 56117,
-      "sha256": "9c9b110accd3259483ec2c49dc3f399942e3ef88e5ffe94c2f5ac1255fbe0d54"
+      "path": "10_Ga_L.SLDPRT",
+      "bytes": 62260,
+      "sha256": "b8a97250c2c797caf0572cd5d1d95c5afcccea1567323d11fb3b0a2e14dcc94a"
     },
     {
-      "path": "10_Ga_L_CHUA_DU_LO.STEP",
-      "bytes": 64536,
-      "sha256": "de218fcab939a0d8b8ea92fad998884407022b798180a8df1f2c054a1baddb14"
+      "path": "10_Ga_L.STEP",
+      "bytes": 83601,
+      "sha256": "44221cdb9f8b579c80493fbdb87f226fff77067de94354d1501fdd29f97486a9"
+    },
+    {
+      "path": "11_Tru_luc_giac_M3_22.SLDPRT",
+      "bytes": 1083248,
+      "sha256": "0610ba4ceb39c6383aeb5f842127c8b96c9c509ad9ab33e326cfab153897322c"
+    },
+    {
+      "path": "11_Tru_luc_giac_M3_22.STEP",
+      "bytes": 1104743,
+      "sha256": "403ca22ee00a2f68c8947c1a8ee1b2734052b25536b61546e7bc13d9d94bb4b0"
+    },
+    {
+      "path": "12_Pin_D17_L65_1.SLDPRT",
+      "bytes": 34023,
+      "sha256": "852ff81b67a1999477e16eeabbf71cacd821ed509223ab998e9fab2451edbef0"
+    },
+    {
+      "path": "12_Pin_D17_L65_1.STEP",
+      "bytes": 11919,
+      "sha256": "871db9dc13594b626608d0d7c6cf567e1bad4e383015e93fa8d94ae035dcaf6b"
+    },
+    {
+      "path": "13_Pin_D17_L65_2.SLDPRT",
+      "bytes": 33997,
+      "sha256": "13173c6198a83d8b7b1abf0642f6536352471a1e4c47c96f2187c8059f857c86"
+    },
+    {
+      "path": "13_Pin_D17_L65_2.STEP",
+      "bytes": 11930,
+      "sha256": "f9bafe19dccefac504c1064aeb617b8541d80947c641a1bfc995868db084ab88"
+    },
+    {
+      "path": "14_Pin_D17_L65_3.SLDPRT",
+      "bytes": 34768,
+      "sha256": "7bb838b62974de52661cf451d9add860025148e12c75dc461fb5f420f59af4e2"
+    },
+    {
+      "path": "14_Pin_D17_L65_3.STEP",
+      "bytes": 11929,
+      "sha256": "5af7c4c0cc349b09a91b7222b3d88b71af0312d17a6f7728ded4aef72dcc03db"
+    },
+    {
+      "path": "15_Khay_pin_60x75x20.SLDPRT",
+      "bytes": 51230,
+      "sha256": "0cb0955ee4bf0c2558988426b7619f542642f98594e9e55a889485ed3fee0234"
+    },
+    {
+      "path": "15_Khay_pin_60x75x20.STEP",
+      "bytes": 45839,
+      "sha256": "e0913e4d4ccfc10bd8e119000ede0f3c081460a25b78a6981eb86267ca1c7e32"
+    },
+    {
+      "path": "16_Banh_10_nan_THAM_KHAO.SLDPRT",
+      "bytes": 159261,
+      "sha256": "534a8a374813dedc8343ca16e1f924bfe7303c1d434319b73489a9066710e2c7"
+    },
+    {
+      "path": "16_Banh_10_nan_THAM_KHAO.STEP",
+      "bytes": 368191,
+      "sha256": "bbd0004b5f3b30baf9a1fc22f6ef4351250ff05021f8e5ccfc0fbad243bce332"
     },
     {
       "path": "Kiem_tra/01_Tam_nhom_tren.STL",
@@ -293,24 +358,144 @@
       "sha256": "b0afb2339a64666969be63b20dafb283b7be569ee3d96828d7f34693b79f9f4f"
     },
     {
-      "path": "Kiem_tra/10_Ga_L_CHUA_DU_LO.STL",
-      "bytes": 40484,
-      "sha256": "d877ac8bb6f72501ac0d052db950a1b464f08c4ba47d29d57ef2c0e6dd530d68"
+      "path": "Kiem_tra/10_Ga_L.STL",
+      "bytes": 56084,
+      "sha256": "c099092a90a743c56e55ba301921ae5793edf531a61ae1ec19b92fd7f2e45e72"
     },
     {
-      "path": "Kiem_tra/10_Ga_L_CHUA_DU_LO_evidence.json",
-      "bytes": 11816,
-      "sha256": "3cd52064fa90c4c71a9112d339f449d4585ffef2a3f918352126fcf1ed8d2e8a"
+      "path": "Kiem_tra/10_Ga_L_evidence.json",
+      "bytes": 15899,
+      "sha256": "86d3986e8b56156cba802f352bdff7a7386fd3ff7ad5b6431766bd6c8e26d288"
     },
     {
-      "path": "Kiem_tra/10_Ga_L_CHUA_DU_LO_review_report.json",
-      "bytes": 18278,
-      "sha256": "168b9ea026a1a874e4b710e9b0ce9741e7166a3221b2d60317a1f97121564719"
+      "path": "Kiem_tra/10_Ga_L_review_report.json",
+      "bytes": 22455,
+      "sha256": "3ca5fa940b859aa7e1c87259889c3fb974c9f556054d93a6c62c6bd8e0dbbd11"
     },
     {
-      "path": "Kiem_tra/10_Ga_L_CHUA_DU_LO_review_summary.md",
-      "bytes": 917,
-      "sha256": "7184a0c239cb1693cb9a037e39208f75b8d7ad9d9cece6bc6aeb1e766bd74626"
+      "path": "Kiem_tra/10_Ga_L_review_summary.md",
+      "bytes": 895,
+      "sha256": "b87f94f3502f84e0f50739d67c3f4697771768a0ca02997f9ec5d5825a9f33dc"
+    },
+    {
+      "path": "Kiem_tra/11_Tru_luc_giac_M3_22.STL",
+      "bytes": 1742684,
+      "sha256": "4e6ca37304d31626628f91eef48a4a0a1b7880585d1e1ec72623f216aab45581"
+    },
+    {
+      "path": "Kiem_tra/11_Tru_luc_giac_M3_22_evidence.json",
+      "bytes": 3697,
+      "sha256": "7ae2e2e117e0525847d92ed4b0d447d8e5bfaad505f948ab8bb32bfddcaf2518"
+    },
+    {
+      "path": "Kiem_tra/11_Tru_luc_giac_M3_22_review_report.json",
+      "bytes": 9958,
+      "sha256": "55de3df8a3850e2d6adf15bc1c986e4b317bcd27014a5a3c5eba7a3c84e77688"
+    },
+    {
+      "path": "Kiem_tra/11_Tru_luc_giac_M3_22_review_summary.md",
+      "bytes": 981,
+      "sha256": "731bd551f5307fc311ac5bc010072c40966ebba62a83d1a78e113c331c1c244f"
+    },
+    {
+      "path": "Kiem_tra/12_Pin_D17_L65_1.STL",
+      "bytes": 7484,
+      "sha256": "af4cb0943d986dbb88bae4482c7f2f68b0ce5a9451fe1823a295509d04dc3946"
+    },
+    {
+      "path": "Kiem_tra/12_Pin_D17_L65_1_evidence.json",
+      "bytes": 1918,
+      "sha256": "013610364cc9fe9d0edb02218de3e1bc6d7b2f7b66d7066e022f0bb5ffa4c306"
+    },
+    {
+      "path": "Kiem_tra/12_Pin_D17_L65_1_review_report.json",
+      "bytes": 7626,
+      "sha256": "038eafb445f49086ee711dd3306763734f57e1cedee6f86818496b52e4f88269"
+    },
+    {
+      "path": "Kiem_tra/12_Pin_D17_L65_1_review_summary.md",
+      "bytes": 913,
+      "sha256": "bc5fee4d72d5899a78a06fb6388dd8bc9fe80c39efb2de2f0437e2ea887f8b7f"
+    },
+    {
+      "path": "Kiem_tra/13_Pin_D17_L65_2.STL",
+      "bytes": 7484,
+      "sha256": "7f5f22da3421065128111b0c35d62094869c2e477660ade55a00e1c21aae735c"
+    },
+    {
+      "path": "Kiem_tra/13_Pin_D17_L65_2_evidence.json",
+      "bytes": 1918,
+      "sha256": "013610364cc9fe9d0edb02218de3e1bc6d7b2f7b66d7066e022f0bb5ffa4c306"
+    },
+    {
+      "path": "Kiem_tra/13_Pin_D17_L65_2_review_report.json",
+      "bytes": 7626,
+      "sha256": "d6a2178208b8f522eaac21d11dfa47e1912b08e4d985d96f9f1c2f937718c269"
+    },
+    {
+      "path": "Kiem_tra/13_Pin_D17_L65_2_review_summary.md",
+      "bytes": 913,
+      "sha256": "00257a9e93affdd9238cf233e05b353fcb2cfc9867933403120911beb4d24a36"
+    },
+    {
+      "path": "Kiem_tra/14_Pin_D17_L65_3.STL",
+      "bytes": 7484,
+      "sha256": "c816b41214bc88000ae4a1e95da51a4112b4054172f5e375750ce719f5af402e"
+    },
+    {
+      "path": "Kiem_tra/14_Pin_D17_L65_3_evidence.json",
+      "bytes": 1918,
+      "sha256": "013610364cc9fe9d0edb02218de3e1bc6d7b2f7b66d7066e022f0bb5ffa4c306"
+    },
+    {
+      "path": "Kiem_tra/14_Pin_D17_L65_3_review_report.json",
+      "bytes": 7626,
+      "sha256": "1633ee12999d3467052829d9bfc58de22a3f50ec211646b6691238600a29f617"
+    },
+    {
+      "path": "Kiem_tra/14_Pin_D17_L65_3_review_summary.md",
+      "bytes": 913,
+      "sha256": "d104f6d4c2082bb325db9425ccce18eff555f6ef39fe608dc8867a39d5e30e8e"
+    },
+    {
+      "path": "Kiem_tra/15_Khay_pin_60x75x20.STL",
+      "bytes": 3084,
+      "sha256": "f2c0534e65b1a3a9104253120427ee7f95ad671ba5046c6aeb76bc41e58a75c6"
+    },
+    {
+      "path": "Kiem_tra/15_Khay_pin_60x75x20_evidence.json",
+      "bytes": 3173,
+      "sha256": "ee349341494c0314ed169c9b1a2220e9ffaa8eceee3513151fcdc5fa5a8eb89f"
+    },
+    {
+      "path": "Kiem_tra/15_Khay_pin_60x75x20_review_report.json",
+      "bytes": 9689,
+      "sha256": "1ce6df6f7d78a593fb1f37adb5c8b863f846dc38630b037ea7a30d9bcac81550"
+    },
+    {
+      "path": "Kiem_tra/15_Khay_pin_60x75x20_review_summary.md",
+      "bytes": 921,
+      "sha256": "c48fda81eaec28ecf81b75ca83debee3125b28f3729c16e4cba50a90539fac58"
+    },
+    {
+      "path": "Kiem_tra/16_Banh_10_nan_THAM_KHAO.STL",
+      "bytes": 137684,
+      "sha256": "6752cebfecec11fa48efde2577a9b1680f14e17e6f7accbf8620ab09c5a92dc2"
+    },
+    {
+      "path": "Kiem_tra/16_Banh_10_nan_THAM_KHAO_evidence.json",
+      "bytes": 54271,
+      "sha256": "06ffef97e67950464f55f7e0561284676ecda12325147d50f889d67e6163d813"
+    },
+    {
+      "path": "Kiem_tra/16_Banh_10_nan_THAM_KHAO_review_report.json",
+      "bytes": 60725,
+      "sha256": "205a332761613b68a0bd96114d673a7466d0db51f521350e4055b61b359182cf"
+    },
+    {
+      "path": "Kiem_tra/16_Banh_10_nan_THAM_KHAO_review_summary.md",
+      "bytes": 987,
+      "sha256": "e35863203ffbfa026538fd4bebf3a579887776206ffa0c52d09350c551a745a7"
     },
     {
       "path": "Kiem_tra/Kiem_tra_bo_sung.json",
@@ -324,8 +509,8 @@
     },
     {
       "path": "Kiem_tra/Kiem_tra_ga_L.json",
-      "bytes": 2173,
-      "sha256": "e68cdcf1810d8052be0b6770e0cfa8cde3eb7c5f99a7eb1d0cc6fadd1088ab2d"
+      "bytes": 14770,
+      "sha256": "d07fd10f591f3b4f36959687e24a93e1594daee498cb6aa6552d38af88bf4ad8"
     }
   ]
 }

@@ -11,19 +11,20 @@
       31
     ],
     "clearance_diameter_mm": 3.4,
-    "foot_hole_spacing_mm": 30,
+    "foot_hole_spacing_mm": 25,
     "foot_hole_from_outer_edge_mm": 22,
     "foot_hole_model_xz_mm": [
       [
-        -15,
+        -12.5,
         -23
       ],
       [
-        15,
+        12.5,
         -23
       ]
     ],
-    "scope": "sharp corner simplified bracket; bend radius not specified; not flat pattern"
+    "scope": "sharp corner simplified bracket; bend radius not specified; not flat pattern",
+    "revision": "user confirmed matching inner base holes at25 mm"
   },
   "expected_envelope_mm": [
     50,
@@ -133,7 +134,7 @@
       {
         "diameter_mm": 3.4,
         "position_mm": [
-          15.0,
+          12.5,
           55.0,
           -23.0
         ],
@@ -150,7 +151,7 @@
       {
         "diameter_mm": 3.4,
         "position_mm": [
-          -15.0,
+          -12.5,
           55.0,
           -23.0
         ],
@@ -271,7 +272,7 @@
       {
         "diameter_mm": 3.4,
         "origin_mm": [
-          15.0,
+          12.5,
           55.0,
           -23.0
         ],
@@ -291,7 +292,7 @@
       {
         "diameter_mm": 3.4,
         "origin_mm": [
-          -15.0,
+          -12.5,
           55.0,
           -23.0
         ],
@@ -494,7 +495,7 @@
       },
       {
         "position_mm": [
-          15.0,
+          12.5,
           55.0,
           -23.0
         ],
@@ -512,7 +513,7 @@
           {
             "diameter_mm": 3.4,
             "position_mm": [
-              15.0,
+              12.5,
               55.0,
               -23.0
             ],
@@ -530,7 +531,7 @@
       },
       {
         "position_mm": [
-          -15.0,
+          -12.5,
           55.0,
           -23.0
         ],
@@ -548,7 +549,7 @@
           {
             "diameter_mm": 3.4,
             "position_mm": [
-              -15.0,
+              -12.5,
               55.0,
               -23.0
             ],

@@ -297,7 +297,7 @@
       {
         "diameter_mm": 3.4,
         "position_mm": [
-          15.0,
+          12.5,
           55.0,
           -23.0
         ],
@@ -314,7 +314,7 @@
       {
         "diameter_mm": 3.4,
         "position_mm": [
-          -15.0,
+          -12.5,
           55.0,
           -23.0
         ],
@@ -435,7 +435,7 @@
       {
         "diameter_mm": 3.4,
         "origin_mm": [
-          15.0,
+          12.5,
           55.0,
           -23.0
         ],
@@ -455,7 +455,7 @@
       {
         "diameter_mm": 3.4,
         "origin_mm": [
-          -15.0,
+          -12.5,
           55.0,
           -23.0
         ],
@@ -658,7 +658,7 @@
       },
       {
         "position_mm": [
-          15.0,
+          12.5,
           55.0,
           -23.0
         ],
@@ -676,7 +676,7 @@
           {
             "diameter_mm": 3.4,
             "position_mm": [
-              15.0,
+              12.5,
               55.0,
               -23.0
             ],
@@ -694,7 +694,7 @@
       },
       {
         "position_mm": [
-          -15.0,
+          -12.5,
           55.0,
           -23.0
         ],
@@ -712,7 +712,7 @@
           {
             "diameter_mm": 3.4,
             "position_mm": [
-              -15.0,
+              -12.5,
               55.0,
               -23.0
             ],
@@ -837,7 +837,7 @@
       "size_bytes": 4800054,
       "width": 1600,
       "height": 1000,
-      "unique_sample_values": 63,
+      "unique_sample_values": 61,
       "dark_pixel_ratio": 0.9324001736111112,
       "likely_blank": false
     },
@@ -856,12 +856,12 @@
     {
       "path": "D:\\TLHT\\Two-wheeled-self-balancing-robot-clone\\Two-wheeled-self-balancing-robot\\Solidworks\\Bo_part_robot_2026-11-13\\10_Ga_L.SLDPRT",
       "exists": true,
-      "size_bytes": 62873
+      "size_bytes": 62260
     },
     {
       "path": "D:\\TLHT\\Two-wheeled-self-balancing-robot-clone\\Two-wheeled-self-balancing-robot\\Solidworks\\Bo_part_robot_2026-11-13\\10_Ga_L.STEP",
       "exists": true,
-      "size_bytes": 83599
+      "size_bytes": 83601
     }
   ],
   "checks": {

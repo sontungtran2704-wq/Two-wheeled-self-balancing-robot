@@ -1,0 +1,427 @@
+{
+  "model": {
+    "title": "07_Vit_M3x5",
+    "path": "D:\\TLHT\\Two-wheeled-self-balancing-robot-clone\\Two-wheeled-self-balancing-robot\\Solidworks\\Bo_part_robot_2026-11-13\\07_Vit_M3x5.SLDPRT",
+    "type": 1,
+    "feature_count": 25,
+    "features": [
+      {
+        "name": "Comments",
+        "type": "CommentsFolder",
+        "error_code": 0,
+        "is_warning": false,
+        "health_status": "healthy"
+      },
+      {
+        "name": "Favorites",
+        "type": "FavoriteFolder",
+        "error_code": 0,
+        "is_warning": false,
+        "health_status": "healthy"
+      },
+      {
+        "name": "History",
+        "type": "HistoryFolder",
+        "error_code": 0,
+        "is_warning": false,
+        "health_status": "healthy"
+      },
+      {
+        "name": "Selection Sets",
+        "type": "SelectionSetFolder",
+        "error_code": 0,
+        "is_warning": false,
+        "health_status": "healthy"
+      },
+      {
+        "name": "Sensors",
+        "type": "SensorFolder",
+        "error_code": 0,
+        "is_warning": false,
+        "health_status": "healthy"
+      },
+      {
+        "name": "Design Binder",
+        "type": "DocsFolder",
+        "error_code": 0,
+        "is_warning": false,
+        "health_status": "healthy"
+      },
+      {
+        "name": "Annotations",
+        "type": "DetailCabinet",
+        "error_code": 0,
+        "is_warning": false,
+        "health_status": "healthy"
+      },
+      {
+        "name": "Surface Bodies",
+        "type": "SurfaceBodyFolder",
+        "error_code": 0,
+        "is_warning": false,
+        "health_status": "healthy"
+      },
+      {
+        "name": "Solid Bodies",
+        "type": "SolidBodyFolder",
+        "error_code": 0,
+        "is_warning": false,
+        "health_status": "healthy"
+      },
+      {
+        "name": "Lights and Cameras",
+        "type": "EnvFolder",
+        "error_code": 0,
+        "is_warning": false,
+        "health_status": "healthy"
+      },
+      {
+        "name": "Markups",
+        "type": "InkMarkupFolder",
+        "error_code": 0,
+        "is_warning": false,
+        "health_status": "healthy"
+      },
+      {
+        "name": "Equations",
+        "type": "EqnFolder",
+        "error_code": 0,
+        "is_warning": false,
+        "health_status": "healthy"
+      },
+      {
+        "name": "Material <not specified>",
+        "type": "MaterialFolder",
+        "error_code": 0,
+        "is_warning": false,
+        "health_status": "healthy"
+      },
+      {
+        "name": "Front Plane",
+        "type": "RefPlane",
+        "error_code": 0,
+        "is_warning": false,
+        "health_status": "healthy"
+      },
+      {
+        "name": "Top Plane",
+        "type": "RefPlane",
+        "error_code": 0,
+        "is_warning": false,
+        "health_status": "healthy"
+      },
+      {
+        "name": "Right Plane",
+        "type": "RefPlane",
+        "error_code": 0,
+        "is_warning": false,
+        "health_status": "healthy"
+      },
+      {
+        "name": "Origin",
+        "type": "OriginProfileFeature",
+        "error_code": 0,
+        "is_warning": false,
+        "health_status": "healthy"
+      },
+      {
+        "name": "Sketch1",
+        "type": "ProfileFeature",
+        "error_code": 0,
+        "is_warning": false,
+        "health_status": "healthy"
+      },
+      {
+        "name": "Boss-Extrude1",
+        "type": "Extrusion",
+        "error_code": 0,
+        "is_warning": false,
+        "health_status": "healthy"
+      },
+      {
+        "name": "Sketch2",
+        "type": "ProfileFeature",
+        "error_code": 0,
+        "is_warning": false,
+        "health_status": "healthy"
+      },
+      {
+        "name": "Boss-Extrude2",
+        "type": "ICE",
+        "error_code": 0,
+        "is_warning": false,
+        "health_status": "healthy"
+      },
+      {
+        "name": "Mat_dau_vit",
+        "type": "RefPlane",
+        "error_code": 0,
+        "is_warning": false,
+        "health_status": "healthy"
+      },
+      {
+        "name": "Sketch3",
+        "type": "ProfileFeature",
+        "error_code": 0,
+        "is_warning": false,
+        "health_status": "healthy"
+      },
+      {
+        "name": "Cut-Extrude1",
+        "type": "ICE",
+        "error_code": 0,
+        "is_warning": false,
+        "health_status": "healthy"
+      },
+      {
+        "name": "Ren_ngoai_M3x0_5",
+        "type": "SweepThread",
+        "error_code": 0,
+        "is_warning": false,
+        "health_status": "healthy"
+      }
+    ],
+    "faulty_features": [],
+    "warning_features": [],
+    "unknown_feature_health": []
+  },
+  "cad_spec": {
+    "units": "mm",
+    "measurement_source": "SolidWorks API GetPartBox(True) + B-Rep cylindrical faces",
+    "envelope_mm": {
+      "length": 5.5,
+      "width": 5.5,
+      "height": 8.204072,
+      "axis_order": "model_xyz"
+    },
+    "holes": [],
+    "compound_holes": [],
+    "slot_arc_candidates": [
+      {
+        "diameter_mm": 3.0,
+        "position_mm": [
+          0.0,
+          0.0,
+          -5.0
+        ],
+        "axis": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "axial_length_mm": 0.13119,
+        "through_state": "unknown",
+        "through_evidence": "B-Rep cylinder boundaries cannot distinguish blind from through",
+        "measurement_source": "B-Rep internal cylindrical face",
+        "classification_reason": "internal cylinder has more than two boundary edges"
+      }
+    ],
+    "cylindrical_faces": [
+      {
+        "diameter_mm": 3.0,
+        "origin_mm": [
+          0.0,
+          0.0,
+          -5.0
+        ],
+        "axis": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "area_mm2": 45.15201,
+        "axial_length_mm": 4.790777,
+        "internal": false,
+        "loop_count": 1,
+        "edge_count": 5,
+        "body_index": 0,
+        "face_index": 5
+      },
+      {
+        "diameter_mm": 5.5,
+        "origin_mm": [
+          0.0,
+          0.0,
+          3.0
+        ],
+        "axis": [
+          -0.0,
+          -0.0,
+          -1.0
+        ],
+        "area_mm2": 51.836279,
+        "axial_length_mm": 3.0,
+        "internal": false,
+        "loop_count": 2,
+        "edge_count": 2,
+        "body_index": 0,
+        "face_index": 7
+      },
+      {
+        "diameter_mm": 3.0,
+        "origin_mm": [
+          0.0,
+          0.0,
+          -5.0
+        ],
+        "axis": [
+          0.0,
+          0.0,
+          1.0
+        ],
+        "area_mm2": 1.236439,
+        "axial_length_mm": 0.13119,
+        "internal": true,
+        "loop_count": 1,
+        "edge_count": 4,
+        "body_index": 0,
+        "face_index": 13
+      }
+    ],
+    "errors": [],
+    "hole_count": 0,
+    "hole_groups": []
+  },
+  "sketch_quality": {
+    "status": "review_required",
+    "sketches": [
+      {
+        "status": "pass",
+        "constrained_status": 3,
+        "dimension_count": 1,
+        "relation_count": 3,
+        "fix_count": 0,
+        "dimension_names": [
+          "D1@Sketch1"
+        ],
+        "errors": [],
+        "name": "Sketch1",
+        "consumed_by": [
+          "Boss-Extrude1"
+        ],
+        "dangling": false
+      },
+      {
+        "status": "pass",
+        "constrained_status": 3,
+        "dimension_count": 1,
+        "relation_count": 2,
+        "fix_count": 0,
+        "dimension_names": [
+          "D1@Sketch2"
+        ],
+        "errors": [],
+        "name": "Sketch2",
+        "consumed_by": [
+          "Boss-Extrude2"
+        ],
+        "dangling": false
+      },
+      {
+        "status": "pass",
+        "constrained_status": 3,
+        "dimension_count": 1,
+        "relation_count": 16,
+        "fix_count": 0,
+        "dimension_names": [
+          "D1@Sketch3"
+        ],
+        "errors": [],
+        "name": "Sketch3",
+        "consumed_by": [
+          "Cut-Extrude1"
+        ],
+        "dangling": false
+      },
+      {
+        "status": "review_required",
+        "constrained_status": 3,
+        "dimension_count": 4,
+        "relation_count": 12,
+        "fix_count": 1,
+        "dimension_names": [
+          "Pitch@Thread Profile1",
+          "Profile_Angle@Thread Profile1",
+          "Profile_Height@Thread Profile1",
+          "Profile_Land@Thread Profile1"
+        ],
+        "errors": [],
+        "name": "Thread Profile1",
+        "consumed_by": [
+          "Ren_ngoai_M3x0_5"
+        ],
+        "dangling": false
+      }
+    ]
+  },
+  "interference": null,
+  "drawing_structure": null,
+  "drawing_layout": null,
+  "previews": [
+    {
+      "path": "D:\\TLHT\\Two-wheeled-self-balancing-robot-clone\\Two-wheeled-self-balancing-robot\\Solidworks\\Bo_part_robot_2026-11-13\\Kiem_tra\\07_Vit_M3x5_isometric.bmp",
+      "exists": true,
+      "size_bytes": 4800054,
+      "width": 1600,
+      "height": 1000,
+      "unique_sample_values": 136,
+      "dark_pixel_ratio": 0.9329427083333334,
+      "likely_blank": false
+    },
+    {
+      "path": "D:\\TLHT\\Two-wheeled-self-balancing-robot-clone\\Two-wheeled-self-balancing-robot\\Solidworks\\Bo_part_robot_2026-11-13\\Kiem_tra\\07_Vit_M3x5_front.bmp",
+      "exists": true,
+      "size_bytes": 4800054,
+      "width": 1600,
+      "height": 1000,
+      "unique_sample_values": 65,
+      "dark_pixel_ratio": 0.9324001736111112,
+      "likely_blank": false
+    }
+  ],
+  "expected_outputs": [
+    {
+      "path": "D:\\TLHT\\Two-wheeled-self-balancing-robot-clone\\Two-wheeled-self-balancing-robot\\Solidworks\\Bo_part_robot_2026-11-13\\07_Vit_M3x5.SLDPRT",
+      "exists": true,
+      "size_bytes": 122431
+    },
+    {
+      "path": "D:\\TLHT\\Two-wheeled-self-balancing-robot-clone\\Two-wheeled-self-balancing-robot\\Solidworks\\Bo_part_robot_2026-11-13\\07_Vit_M3x5.STEP",
+      "exists": true,
+      "size_bytes": 370281
+    }
+  ],
+  "checks": {
+    "rebuild_succeeded": true,
+    "model_available": true,
+    "previews_created": true,
+    "previews_not_blank": true,
+    "expected_outputs_exist": true,
+    "feature_summary_available": true,
+    "geometry_measurements_available": true,
+    "geometry_measurements_error_free": true,
+    "feature_errors_absent": true
+  },
+  "review_notes": [
+    "人工或视觉模型仍需检查预览图中的主体、比例、方向、关键部件、重叠/悬空问题。",
+    "若 previews_not_blank 为 false，优先检查视图缩放、模型是否为空、SaveBMP 是否成功。",
+    "若 expected_outputs_exist 为 false，优先检查保存/导出路径和 COM 错误码。"
+  ],
+  "evaluation": {
+    "status": "warn",
+    "score": 90,
+    "issues": [
+      {
+        "code": "sketch_quality_review_required",
+        "severity": "warn",
+        "message": "建模草图的约束或驱动尺寸未通过回读。"
+      }
+    ],
+    "recommendations": [
+      "检查草图约束、Fix 与设计参数后重新验收。"
+    ],
+    "manual_review_required": true,
+    "manual_review_reason": "规则评分只能发现明显失败，最终几何是否符合用户意图仍需查看预览图或截图。"
+  },
+  "summary_path": "D:\\TLHT\\Two-wheeled-self-balancing-robot-clone\\Two-wheeled-self-balancing-robot\\Solidworks\\Bo_part_robot_2026-11-13\\Kiem_tra\\07_Vit_M3x5_review_summary.md"
+}

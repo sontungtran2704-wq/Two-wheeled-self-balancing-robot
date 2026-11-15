@@ -1,0 +1,136 @@
+{
+  "notes": {
+    "user_dimensions_mm": [
+      60,
+      75,
+      20
+    ],
+    "wall_bottom_mm": 1,
+    "assumptions": {
+      "outer_dimensions": true,
+      "three_equal_pockets_mm": [
+        18.666666666666668,
+        73,
+        19
+      ],
+      "divider_thickness_mm": 1
+    },
+    "scope": "simplified three-cell tray; spring contacts, retention details and mounting holes not modeled; not manufacturing-ready"
+  },
+  "expected_envelope_mm": [
+    60,
+    75,
+    20
+  ],
+  "exact_extrema_envelope_mm": [
+    60.0,
+    75.0,
+    20.0
+  ],
+  "geometry": {
+    "units": "mm",
+    "measurement_source": "SolidWorks API GetPartBox(True) + B-Rep cylindrical faces",
+    "envelope_mm": {
+      "length": 60.0,
+      "width": 75.0,
+      "height": 20.0,
+      "axis_order": "model_xyz"
+    },
+    "holes": [],
+    "compound_holes": [],
+    "slot_arc_candidates": [],
+    "cylindrical_faces": [],
+    "errors": [],
+    "hole_count": 0,
+    "hole_groups": []
+  },
+  "sketches": {
+    "status": "pass",
+    "sketches": [
+      {
+        "status": "pass",
+        "constrained_status": 3,
+        "dimension_count": 4,
+        "relation_count": 11,
+        "fix_count": 0,
+        "dimension_names": [
+          "D1@Sketch1",
+          "D2@Sketch1",
+          "D3@Sketch1",
+          "D4@Sketch1"
+        ],
+        "errors": [],
+        "name": "Sketch1",
+        "consumed_by": [
+          "Boss-Extrude1"
+        ],
+        "dangling": false
+      },
+      {
+        "status": "pass",
+        "constrained_status": 3,
+        "dimension_count": 4,
+        "relation_count": 11,
+        "fix_count": 0,
+        "dimension_names": [
+          "D1@Sketch2",
+          "D2@Sketch2",
+          "D3@Sketch2",
+          "D4@Sketch2"
+        ],
+        "errors": [],
+        "name": "Sketch2",
+        "consumed_by": [
+          "Cut-Extrude1"
+        ],
+        "dangling": false
+      },
+      {
+        "status": "pass",
+        "constrained_status": 3,
+        "dimension_count": 4,
+        "relation_count": 11,
+        "fix_count": 0,
+        "dimension_names": [
+          "D1@Sketch3",
+          "D2@Sketch3",
+          "D3@Sketch3",
+          "D4@Sketch3"
+        ],
+        "errors": [],
+        "name": "Sketch3",
+        "consumed_by": [
+          "Cut-Extrude2"
+        ],
+        "dangling": false
+      },
+      {
+        "status": "pass",
+        "constrained_status": 3,
+        "dimension_count": 4,
+        "relation_count": 11,
+        "fix_count": 0,
+        "dimension_names": [
+          "D1@Sketch4",
+          "D2@Sketch4",
+          "D3@Sketch4",
+          "D4@Sketch4"
+        ],
+        "errors": [],
+        "name": "Sketch4",
+        "consumed_by": [
+          "Cut-Extrude3"
+        ],
+        "dangling": false
+      }
+    ]
+  },
+  "review": {
+    "status": "pass",
+    "score": 100,
+    "issues": [],
+    "recommendations": [],
+    "manual_review_required": true,
+    "manual_review_reason": "规则评分只能发现明显失败，最终几何是否符合用户意图仍需查看预览图或截图。"
+  }
+}

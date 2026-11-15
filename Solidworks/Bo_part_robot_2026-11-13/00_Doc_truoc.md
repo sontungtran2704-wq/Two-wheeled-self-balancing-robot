@@ -15,7 +15,10 @@ Mỗi part có file SolidWorks 2026 `.SLDPRT` và bản trao đổi `.STEP` cùn
 | 07 | Vit_M3x5 | Đầu trụ lục giác chìm; chiều dài dưới đầu 5; ren M3×0,5 |
 | 08 | Vit_M3x10 | Đầu trụ lục giác chìm; chiều dài dưới đầu 10; ren M3×0,5 |
 | 09 | Tru_luc_giac_M3_42 | Dài 42, ngang hai mặt 4; ren cái M3×0,5 thông suốt |
-| 10 | Ga_L_CHUA_DU_LO | Thân 50 rộng × 55 cao, chân sâu ngoài 45, dày 2; lỗ giữa Ø22 tâm cao35; bốn lỗ Ø3,4 bước31×31. Chưa cắt hai lỗ chân vì thiếu vị trí dọc |
+| 10 | Ga_L | Thân 50 rộng × 55 cao, chân sâu ngoài 45, dày 2; lỗ giữa Ø22 tâm cao35; bốn lỗ Ø3,4 bước31×31; hai lỗ chân Ø3,4 cách25, cách mép ngoài chân22 |
+| 11 | Tru_luc_giac_M3_22 | Dài22; cùng tiết diện AF4 và ren cái M3×0,5 thông suốt như trụ42 |
+| 12–14 | Pin_D17_L65_1/2/3 | Ba part pin riêng, mỗi viên Ø17 ×65; chỉ kích thước bao, chưa đầu cực |
+| 15 | Khay_pin_60x75x20 | Kích thước ngoài60×75, cao20, đáy/thành1 theo số đo mới; ba ngăn rộng18,667 dài73, vách ngăn1 là bố trí giản lược |
 
 Part 03–04 chỉ dùng bố trí và minh họa, không dùng chế tạo hoặc tính khối lượng/trọng tâm thực. Không gán mác vật liệu cụ thể khi chưa được cung cấp; khối lượng mặc định trong CAD không đại diện cho xe thật.
 
@@ -39,14 +42,14 @@ Các sketch dùng kích thước/quan hệ hình học, không khóa hàng loạ
 
 | Part/cụm | Dữ liệu cần bổ sung |
 |---|---|
-| Gá động cơ trái/phải | Đã sửa chiều cao thành55, lỗ giữaØ22, tâm motor cao35. Hai tâm lỗ chân cách30, mỗi tâm cách mép bên10. Chỉ còn vị trí dọc hàng lỗ chân tới mép ngoài chân45; bán kính uốn chưa được đo nên mô hình dùng góc sắc giản lược |
-| Các trụ/spacer khác | Trụ 42 đã dựng; các chiều dài khác trên xe chưa có số đo |
+| Gá động cơ chi tiết uốn | Hình học lắp đã dựng thành part10. Bán kính uốn chưa được đo nên mô hình dùng góc sắc giản lược; chưa có bản trải tấm |
+| Các trụ/spacer khác | Trụ42 và22 đã dựng; các chiều dài khác trên xe chưa có số đo |
 | Hub nối trục với bánh | Đường kính ngoài, chiều dài, hai đầu lắp, vít hãm và độ nhô |
 | Bánh xe chi tiết | Biên dạng nan, hoa lốp, vành, hub và phân chia vật liệu |
 | Động cơ chi tiết | Đã nhận mã 42BYGH34-401A; chưa có bản vẽ kích thước đúng phiên bản để chốt gờ định tâm, mặt vát D, độ sâu ren và đầu nối |
 | Các tấm mica trung gian | Dài/rộng/dày, tọa độ lỗ và cao độ từng tầng |
 | PCB điều khiển, driver, nguồn, IMU, bo trung gian | Mã bo thực, kích thước từng cụm, lỗ bắt và vị trí đầu nối |
-| Khay pin, pin, công tắc | Biên dạng và lỗ gá, lỗ panel, cách cố định |
+| Khay pin, pin, công tắc | Pin đã có kích thước bao; khay đã có kích thước ngoài và độ dày, còn tiếp điểm, giữ pin và lỗ gá. Công tắc chưa dựng |
 | Vít, đai ốc, vòng đệm khác | Đã dựng M3×5, M3×10, đai ốc và vòng đệm; còn số lượng, vị trí lắp và các cỡ khác |
 | Dây điện | Đường đi, đường kính bó, đầu nối và chiều dài |
 | Assembly toàn xe | Khoảng cách hai bánh được xác nhận, chiều cao tầng, vị trí các cụm và các part còn thiếu |
@@ -66,3 +69,7 @@ Các part mới đã mở lại và kiểm tra; ren thật dạng xoắn có bư
 Đây là mô hình lắp ráp giản lược: bỏ các vát mép nhỏ và bo chân đầu vít. Ren do SolidWorks tạo có sketch profile chứa quan hệ Fix của thư viện; sketch hình học chính có kích thước điều khiển. Không dùng mô hình này làm dưỡng kiểm ren hay bản vẽ chế tạo vít. Chiều dài vít và kích thước trụ theo người dùng; hình dạng đầu vít chọn loại đầu trụ lục giác chìm.
 
 Kích thước danh nghĩa đối chiếu bảng Bossard: [vít](https://media.distrelec.com/Web/Downloads/_t/ds/1003763_eng_tds.pdf), [đai ốc](https://media.distrelec.com/Web/Downloads/_t/ds/1241613_eng_tds.pdf), [vòng đệm](https://xonstorage.z8.web.core.windows.net/pdf/bossard_1887521_apr22_xonlink.pdf).
+
+## Gá động cơ và lỗ trong tấm đế
+
+Người dùng xác nhận bốn lỗ trong tấm đế là lỗ bắt hai gá. Theo quyết định mới nhất, giữ đế nguyên và sửa khoảng cách hai tâm lỗ chân gá từ30 thành25. Hai tâm trên chân gá vì thế cách mép bên12,5 (thay cho số10 trước đó). Khoảng cách hàng lỗ tới mép ngoài chân là22, ứng với tọa độ Z=-23 trong part gá. Đã kiểm tra đủ7 lỗ của gá, đường kính, tọa độ hai lỗ chân và thể tích độc lập (sai số dưới0,2 mm³). Ảnh xem trước hiện gồm10 part. Chưa có assembly toàn xe; đây là kiểm tra tương thích bước lỗ, chưa phải kiểm tra giao thoa toàn bộ cụm.
