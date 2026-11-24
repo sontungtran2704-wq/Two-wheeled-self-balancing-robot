@@ -1,3 +1,4 @@
+// Điều phối khởi động và nối dữ liệu IMU, bộ đếm STEP, bộ điều khiển và các kênh giao tiếp.
 #include <Arduino.h>
 #include <WiFi.h>
 #include <Preferences.h>
@@ -33,6 +34,7 @@ static_assert(sizeof benchPassword>=9 && sizeof benchPassword<=64,"AP password m
 static bool benchApActive=false;
 static uint8_t transportOwner=0;
 struct StoredTuning { char hash[65]; robot::Tuning tuning; };
+// Lưu PID và điểm zero trong NVS cùng hash cấu hình để nhận diện bộ tham số tương thích.
 static bool saveTuning() {
   Preferences prefs;if(!prefs.begin("balancebot",false))return false;
   StoredTuning value{};std::memcpy(value.hash,cfg::sha256,65);value.tuning=device.tuning();
@@ -57,6 +59,8 @@ static void setStop(bool emergency) {
 static robot::Device copyView() {
   portENTER_CRITICAL(&sharedLock);const auto v=view;portEXIT_CRITICAL(&sharedLock);return v;
 }
+// Tác vụ cân bằng chạy trên lõi 1, chu kỳ danh định 5 ms (200 Hz).
+// Mỗi lượt lấy mẫu IMU mới nhất, cập nhật trạng thái điều khiển rồi gửi hai tốc độ bánh cho HAL.
 static void controlTask(void*) {
   TickType_t wake=xTaskGetTickCount();int64_t previousL=0,previousR=0;
   for(;;) {
@@ -64,15 +68,20 @@ static void controlTask(void*) {
     const uint32_t start=micros();
     int64_t L,R;bool watchdog;stepper::snapshot(L,R,watchdog);
     // Delivered pulses, corrected for body pitch rotation. This cannot detect slip/missed steps.
+    // Tổng gia số xung có dấu cho tốc độ trung bình của bánh tương đối với thân, tính theo dt danh định.
+    // Cộng r*omega (m/s) để bù chuyển động nghiêng theo quy ước của mô hình vận tốc dọc.
     sensors.v=double((L-previousL)+(R-previousR))/(2*cfg::steps_per_m*cfg::dt)+cfg::r*sensors.omega;
     previousL=L;previousR=R;
     portENTER_CRITICAL(&sharedLock);const uint8_t stop=stopRequest;stopRequest=0;portEXIT_CRITICAL(&sharedLock);
+    // Ưu tiên STOP/ESTOP trước lệnh thường và bỏ các lệnh còn chờ để chúng khỏi chạy sau khi dừng.
     if(stop) {
       char ignored[48];device.commandTo(stop==2?"ESTOP":"STOP",start,ignored,sizeof ignored);xQueueReset(requests);
     }
+    // Watchdog STEP báo tác vụ đã ngừng cập nhật đầu ra đủ lâu. Chuyển bộ điều khiển sang lỗi.
     if(watchdog)device.fault("STEP_WATCHDOG");
     device.tick(start,sensors);
     Request request;
+    // Xử lý tối đa một lệnh thường mỗi lượt. Bỏ lệnh đã nằm trong hàng đợi quá 100 ms.
     if(xQueueReceive(requests,&request,0)==pdTRUE) {
       Reply reply{};reply.source=request.source;
       const uint32_t dispatch=micros();
@@ -86,6 +95,7 @@ static void controlTask(void*) {
           std::strcpy(reply.line,phone::auth::commit(request.line)?"ACK:WEBUSER":"ERR:ACCOUNT_STORAGE");wake=xTaskGetTickCount();
         }
       }
+      // Chỉ cho bắt đầu đo bias khi motor tắt, có cấu hình chân và chưa có lượt hiệu chuẩn đang chạy.
       else if(!std::strcmp(request.line,"CALGYRO")) {
         if(device.state()==robot::State::Run||device.state()==robot::State::Arming)
           std::strcpy(reply.line,"ERR:MOTORS_ON");
@@ -110,6 +120,7 @@ static void controlTask(void*) {
       else device.commandTo(request.line,dispatch,reply.line,sizeof reply.line);
       if(xQueueSend(replies,&reply,0)!=pdTRUE)++queueDrops;
     }
+    // Chỉ State::Run cho phép bật driver. HAL nhận tốc độ bánh tương đối với thân theo m/s.
     const auto o=device.output();stepper::apply(o.left,o.right,device.enabled());
     const uint32_t execution=micros()-start;
     portENTER_CRITICAL(&sharedLock);view=device;if(execution>maxTickUs)maxTickUs=execution;portEXIT_CRITICAL(&sharedLock);
@@ -127,6 +138,8 @@ static void emit(uint8_t source,const char* text) {
     if(sent!=len)client.stop();
   }
 }
+// Serial, TCP và web dùng chung bộ nhận lệnh. Web đi vào với mã nguồn 3.
+// STOP/ESTOP bỏ qua hàng đợi thường. START chọn nguồn giữ quyền gửi lệnh thường.
 static void acceptLine(const char* line,uint8_t source) {
   if(!std::strcmp(line,"GET")) {
     char out[120];snprintf(out,sizeof out,"EVT:WIFI,%s,%s",benchApActive?"AP":"STA",
@@ -155,12 +168,15 @@ struct LineReader {
     if(length==160) {overflow=true;return;}if(!overflow)line[length++]=c;
   }
 };
+// Web đọc bản sao trạng thái và cờ IMU để hiển thị mà không sửa trực tiếp Device.
 static void phoneStatus(char* out,size_t capacity) {
   auto v=copyView();v.telemetryTo(micros(),out,capacity);
   const size_t len=std::strlen(out);const auto tuning=v.tuning();
   snprintf(out+len,capacity-len,",imu_calibrated=%u,imu_diag=%u,imu_cal_saved=%u,imu_cal_restored=%u,imu_sample_fresh=%u,hardware_confirmed=%u,cal_accel_mg=%u,phone_vkp=%.9g,phone_vki=%.9g,phone_vkd=%.9g,phone_k0=%.12g,phone_k1=%.12g",
       unsigned(imu::calibrated()),imu::diagnostic(),unsigned(imu::calibrationSaved()),unsigned(imu::calibrationRestored()),unsigned(imu::sampleFresh()),unsigned(hardware::confirmed),imu::calibrationAccelMilliG(),tuning.vkp,tuning.vki,tuning.vkd,v.k0(),v.k1());
 }
+// Tách I/O khỏi vòng cân bằng. Có SSID thì kết nối mạng Wi-Fi, nếu trống thì phát AP.
+// Vòng giao tiếp nhường CPU 2 ms mỗi lượt. Telemetry định kỳ Serial/TCP mỗi 40 ms (25 Hz).
 static void networkTask(void*) {
   LineReader serialReader,tcpReader;uint32_t lastTelemetry=0,lastReconnect=0;bool serving=false,phoneServing=false;
   if(*hardware::ssid) {WiFi.mode(WIFI_STA);WiFi.begin(hardware::ssid,hardware::password);}
@@ -198,6 +214,9 @@ static void networkTask(void*) {
   }
 }
 }
+// Khởi tạo cổng Serial, hàng đợi và driver trước. Nạp tài khoản web và PID/zero đã lưu.
+// IMU và cân bằng chạy trên lõi 1, cân bằng ưu tiên cao hơn. Giao tiếp chạy trên lõi 0.
+// Cấu hình phần cứng đã xác nhận mới mở chế độ tự cân bằng. Lỗi tạo tác vụ yêu cầu dừng khẩn.
 void setupRobot() {
   Serial.begin(115200);
   requests=xQueueCreate(8,sizeof(Request));replies=xQueueCreate(4,sizeof(Reply));

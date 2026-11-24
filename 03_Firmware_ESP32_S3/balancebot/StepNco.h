@@ -1,3 +1,4 @@
+// Bộ tích lũy pha cho một bánh. Nhận tốc độ có dấu theo xung/s và phát sự kiện cạnh STEP hoặc đổi DIR.
 #pragma once
 #include <cstdint>
 #include <cmath>
@@ -10,12 +11,15 @@ namespace robot {
 struct StepEvent {bool rise=false,fall=false,direction_changed=false;};
 class StepNco {
  public:
+  // Giới hạn tần số yêu cầu ở 15000 xung/s. Dấu chọn chiều, trị tuyệt đối quyết định bước tăng pha trên mỗi nhịp 40 kHz.
   void setRate(double rate) {
     if(!std::isfinite(rate))rate=0;
     if(rate>15000)rate=15000;if(rate< -15000)rate=-15000;
     requested_=rate<0?-1:1;
     increment_=uint32_t(std::abs(rate)*(4294967296.0/40000.));
   }
+  // Mỗi lần tràn pha 32 bit tạo một cạnh lên và cộng một bước có dấu. Cạnh xuống đến ở nhịp kế tiếp.
+  // Khi đổi DIR, xóa pha và dành lượt đó cho đổi chiều trước khi tiếp tục phát xung.
   ROBOT_IRAM StepEvent tick() {
     StepEvent e;
     if(high_){high_=false;e.fall=true;}

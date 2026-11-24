@@ -1,3 +1,4 @@
+// Gom từng byte của yêu cầu HTTP thành phương thức, đường dẫn, tiêu đề và thân để PhoneWeb định tuyến.
 #pragma once
 #include <cstddef>
 #include <cstring>
@@ -50,6 +51,7 @@ struct Request {
     if(header&&used==header+bodySize)complete=true;
   }
   const char* body()const{return bytes+header;}
+  // So token phiên và kiểm tra Origin theo Host khi có Origin, trước khi cho truy cập API điều khiển.
   bool authorized(const char* expected)const {
     char allowed[96];std::snprintf(allowed,sizeof allowed,"http://%s",host);
     return !std::strcmp(token,expected)&&(!*origin||!std::strcmp(origin,allowed));

@@ -1,3 +1,4 @@
+// Đọc gia tốc và gyro qua I2C, khôi phục hoặc đo bias, rồi xuất pitch ước lượng và tốc độ góc.
 #include "ImuHal.h"
 #include "ImuCalibration.h"
 #include "HardwareConfig.h"
@@ -31,6 +32,8 @@ static CalibrationContext calibrationContext() {
   if(app&&app->magic_word==ESP_APP_DESC_MAGIC_WORD)std::memcpy(context.firmwareSha256,app->app_elf_sha256,32);
   return context;
 }
+// SavedImuCalibration.h kiểm tra định dạng, CRC, ID cảm biến, địa chỉ, chân I2C, trim và SHA-256 của ELF.
+// Sau khi nạp bias từ NVS, vẫn cần mẫu tĩnh xác nhận trước khi bật cờ hợp lệ.
 static bool loadCalibration() {
   Preferences prefs;if(!prefs.begin("imu-cal-v1",true))return false;
   uint8_t bytes[calibrationBytes]{};SavedGyro value;
@@ -41,6 +44,7 @@ static bool loadCalibration() {
   calibrationAccelMg=unsigned(std::lround(value.norm*1000));
   savedCalibration=true;restoredCalibration=true;return true;
 }
+// Ghi bias và thống kê cửa sổ tĩnh vào NVS rồi đọc lại so từng byte trước khi cho phép dùng.
 static bool saveCalibration(const CalibrationWindow& stats) {
   SavedGyro value;for(int i=0;i<3;++i)value.bias[i]=bias[i];
   value.norm=stats.normMean;value.accelStd=stats.accelStd();value.gyroStd=stats.gyroStd();
@@ -59,6 +63,8 @@ static bool readBytes(uint8_t reg,uint8_t* data,uint8_t n) {
   if(Wire.endTransmission(false)!=0 || Wire.requestFrom(hardware::imuAddress,n,true)!=n)return false;
   for(uint8_t i=0;i<n;++i)data[i]=Wire.read();return true;
 }
+// Đọc liền 14 byte từ thanh ghi gia tốc, bỏ hai byte nhiệt độ và ghép số có dấu 16 bit theo X/Y/Z.
+// Đổi gia tốc sang đơn vị g bằng 8192 LSB/g và gyro sang rad/s từ 65,5 LSB/(độ/s).
 static bool raw(double a[3],double g[3]) {
   uint8_t b[14];if(!readBytes(0x3B,b,14))return false;
   for(int i=0;i<3;++i) {
@@ -67,6 +73,7 @@ static bool raw(double a[3],double g[3]) {
   }
   return true;
 }
+// Mở I2C 400 kHz, đánh thức IMU rồi ghi và đọc lại cấu hình lọc, chia mẫu và thang đo ±4 g, ±500 độ/s.
 static bool setupImu() {
   Wire.begin(hardware::sda,hardware::scl,400000);Wire.setTimeOut(10);
   imuIdentity=256;
@@ -93,6 +100,8 @@ static std::atomic<unsigned> accelStdMg{0},gyroStdMrad{0},sampleTime{0};
 unsigned calibrationAccelStdMg(){return accelStdMg.load();}
 unsigned calibrationGyroStdMrad(){return gyroStdMrad.load();}
 bool sampleFresh(){const auto t=sampleTime.load();return t && uint32_t(micros()-t)<=20000;}
+// Pitch rate lấy từ gyro Y sau trừ bias khi hợp lệ. Yaw rate ước lượng từ gyro Z đã trừ bias,
+// chia cho cos(theta), với mẫu số tối thiểu 0,8 để giới hạn khuếch đại. Runtime sẽ điền v từ STEP.
 static void publish(const double g[3],bool controlValid) {
   const uint32_t now=micros();
   robot::Sensors s{theta,g[1]-(controlValid?bias[1]:0),0,
@@ -100,6 +109,9 @@ static void publish(const double g[3],bool controlValid) {
   portENTER_CRITICAL(&lock);latest=s;portEXIT_CRITICAL(&lock);
   sampleTime=now;
 }
+// Thử tối đa ba cửa sổ, mỗi cửa sổ 500 mẫu cách nhau ít nhất 5 ms theo lịch tác vụ.
+// Khi đạt điều kiện đứng yên, lấy trung bình gyro ba trục làm bias (rad/s).
+// Khởi tạo pitch từ gia tốc trung bình theo atan2(−aX,aZ) rồi trừ trim góc lắp (rad).
 static bool calibrate() {
   for(int window=0;window<3;++window) {
     CalibrationWindow stats;
@@ -130,6 +142,7 @@ static bool calibrate() {
 void requestCalibration(){calibrationBusy=true;portENTER_CRITICAL(&lock);recalibrate=true;ready=false;latest.valid=false;portEXIT_CRITICAL(&lock);}
 bool calibrated(){portENTER_CRITICAL(&lock);const bool value=ready;portEXIT_CRITICAL(&lock);return value;}
 robot::Sensors snapshot(){portENTER_CRITICAL(&lock);const auto s=latest;portEXIT_CRITICAL(&lock);return s;}
+// Tác vụ IMU lấy mẫu định kỳ 5 ms (200 Hz danh định) ngoài giai đoạn hiệu chuẩn.
 void task(void*) {
   if(!hardware::pinsConfigured){vTaskDelete(nullptr);return;}
   bool initialized=setupImu();
@@ -147,6 +160,7 @@ void task(void*) {
       imuDiagnostic=0;
       calibrationAccelMg=0;
       if(!initialized)initialized=setupImu();
+      // Chờ thân xe ổn định 1 s trước khi thu dữ liệu cho lệnh CALGYRO.
       vTaskDelay(pdMS_TO_TICKS(1000));const bool ok=initialized && calibrate();
       if(ok)imuDiagnostic=1;
       portENTER_CRITICAL(&lock);ready=ok;portEXIT_CRITICAL(&lock);calibrationBusy=false;previous=micros();wake=xTaskGetTickCount();
@@ -154,7 +168,10 @@ void task(void*) {
     double a[3],g[3];
     if(initialized && raw(a,g)) {
       const uint32_t now=micros();const double dt=double(uint32_t(now-previous))*1e-6;previous=now;
+      // Tích phân theo thời gian đo thực tế. Bỏ lượt có khoảng cách từ 20 ms trở lên hoặc đọc I2C lỗi.
+      // Nếu không xuất mẫu mới, tuổi mẫu cũ tăng và vòng điều khiển có thể báo IMU.
       if(dt>0 && dt<.02) {
+        // Kiểm tra 100 mẫu liên tiếp với bias đã lưu. Dư lượng gyro thấp và gia tốc tĩnh gần 1 g mới mở điều khiển.
         if(verifyRestored) {
           double residual[3];for(int i=0;i<3;++i)residual[i]=g[i]-bias[i];
           verification.add(a,residual);
@@ -171,6 +188,8 @@ void task(void*) {
             verification=CalibrationWindow{};
           }
         }
+        // Dự đoán pitch bằng tích phân gyro Y đã trừ bias. Khi IMU chưa sẵn sàng, dùng góc từ gia tốc.
+        // Khi độ lớn gia tốc gần 1 g, kéo nhẹ góc dự đoán về atan2(−aX,aZ) trừ trim để chống trôi.
         const double omega=g[1]-bias[1],norm=std::sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);
         const bool controlValid=calibrated();
         if(controlValid)theta+=omega*dt;

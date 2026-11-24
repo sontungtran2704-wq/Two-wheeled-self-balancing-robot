@@ -1,3 +1,4 @@
+// Quản lý tài khoản web trong NVS riêng. Kiểm tra thông tin đăng nhập để PhoneWeb cấp phiên.
 #pragma once
 #include <Preferences.h>
 #include <mbedtls/pkcs5.h>
@@ -56,6 +57,7 @@ inline bool unhex(const char* text,uint8_t* out,size_t n) {
   if(std::strlen(text)!=2*n)return false;
   for(size_t i=0;i<n;++i){unsigned v=0;for(unsigned j=0;j<2;++j){char c=text[2*i+j];if(c>='0'&&c<='9')v=v*16+unsigned(c-'0');else if(c>='a'&&c<='f')v=v*16+unsigned(c-'a'+10);else return false;}out[i]=uint8_t(v);}return true;
 }
+// Tạo lệnh WEBUSER nội bộ từ tên tài khoản, salt và hash mật khẩu để runtime xử lý việc ghi NVS.
 inline bool prepare(const char* body,char (&line)[161]) {
   if(storageError.load(std::memory_order_acquire)||count.load(std::memory_order_acquire)>=maxAccounts)return false;
   char user[33]{},saltHex[33]{},hashHex[65]{};const char* password=nullptr;uint8_t salt[16]{},hash[32]{};
@@ -65,6 +67,7 @@ inline bool prepare(const char* body,char (&line)[161]) {
   hex(salt,16,saltHex);hex(hash,32,hashHex);
   std::snprintf(line,sizeof line,"WEBUSER,%s,%s,%s",user,saltHex,hashHex);return true;
 }
+// Nhận bản ghi từ runtime khi motor tắt, lưu cơ sở tài khoản rồi mới cập nhật danh sách trong RAM.
 inline bool commit(const char* line) {
   const unsigned n=count.load(std::memory_order_acquire);
   if(storageError.load(std::memory_order_acquire)||n>=maxAccounts||std::strlen(line)>160)return false;

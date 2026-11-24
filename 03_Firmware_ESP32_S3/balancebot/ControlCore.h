@@ -1,3 +1,4 @@
+// Khai báo dữ liệu cảm biến, đầu ra hai bánh, vòng LQR/PID và máy trạng thái cho phép chạy motor.
 #pragma once
 #include <cstdint>
 #include <cstddef>
@@ -7,11 +8,16 @@
 namespace robot {
 enum class State : uint8_t { Idle, Arming, Run, Fault };
 struct Tuning { double vkp,vki,vkd,ykp,yki,ykd,zero; };
+// theta là pitch (rad), omega là tốc độ pitch (rad/s), v là vận tốc dọc ước lượng (m/s), yaw là tốc độ quay (rad/s).
+// Mẫu có thời điểm xuất bản tính bằng µs và cờ valid cho biết IMU đã sẵn sàng để điều khiển.
 struct Sensors { double theta=0,omega=0,v=0,yaw=0; uint32_t timestamp_us=0; bool valid=false; };
+// u là gia tốc chung đã áp dụng (m/s²), alpha là gia tốc yaw đã áp dụng (rad/s²).
+// left/right là vận tốc tuyến tính tương đối với thân (m/s), theta_ref là góc đặt (rad).
 struct Output { double u=0,alpha=0,left=0,right=0,theta_ref=0,aref=0,vref=0,wref=0; bool saturated=false,motion_active=false; double ub=0,um=0; };
 struct PID { double kp,ki,kd,i=0,d=0,prev=0; bool ready=false; void reset(); double update(double ref,double y,double dt,double limit,bool saturated); };
 class NumericController {
  public:
+  // PID ngoài lấy hệ số mặc định từ GeneratedConfig.h. Device có thể phục hồi PID đã lưu.
   PID velocity{cfg::velocity_kp,cfg::velocity_ki,cfg::velocity_kd},yaw{cfg::yaw_kp,cfg::yaw_ki,cfg::yaw_kd};
   Output tick(double theta,double omega,double v,double yaw_rate,double vtarget,double wtarget,bool motion,bool fresh);
   void reset();
@@ -19,6 +25,7 @@ class NumericController {
   double k0() const {return k0_;}
   double k1() const {return k1_;}
  private:
+  // Hai hệ số mặc định do tools/design.py sinh theo thứ tự [góc pitch, tốc độ pitch].
   double k0_=cfg::k0,k1_=cfg::k1;
   double q_=0,d_=0,vref_=0,wref_=0,aref_=0,yacc_=0,stable_=0;
   uint32_t n_=0; bool sat_=false,active_=false,stopping_=false;
@@ -36,6 +43,7 @@ class Device {
   bool enabled() const {return state_==State::Run;}
   uint32_t session() const {return session_;}
   const Output& output() const {return output_;}
+  // SPEED, TURN hoặc CMD hợp lệ gia hạn mục tiêu chuyển động trong 400 ms.
   bool commandFresh(uint32_t now) const {return leased_ && uint32_t(now-last_command_)<=cfg::lease_us;}
   const char* faultReason() const {return fault_;}
   uint32_t overruns() const {return overruns_;}

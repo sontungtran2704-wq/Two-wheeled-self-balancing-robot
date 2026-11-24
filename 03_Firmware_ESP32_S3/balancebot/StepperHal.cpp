@@ -1,3 +1,4 @@
+// Đổi lệnh vận tốc thành mức EN/DIR và xung STEP cho hai A4988 bằng ngắt timer.
 #include "StepperHal.h"
 #include "HardwareConfig.h"
 #include "GeneratedConfig.h"
@@ -13,6 +14,7 @@ static hw_timer_t* timer=nullptr;
 static inline void IRAM_ATTR level(int pin,bool high) {
   REG_WRITE(high?GPIO_OUT_W1TS_REG:GPIO_OUT_W1TC_REG,1UL<<pin);
 }
+// Ngắt mỗi 25 µs (40 kHz). Sau 1200 lượt, tức 30 ms thiếu cập nhật khi đang bật, watchdog ngắt EN.
 static void IRAM_ATTR onTimer() {
   portENTER_CRITICAL_ISR(&lock);
   if(active && ++age>=1200) {
@@ -22,11 +24,13 @@ static void IRAM_ATTR onTimer() {
     const auto e=channels[i].tick();
     const int step=i?hardware::stepR:hardware::stepL,dir=i?hardware::dirR:hardware::dirL;
     if(e.fall)level(step,false);
+    // Đổi dấu tốc độ thành mức DIR theo từng bánh. Đảo mức phần cứng không đổi dấu bộ đếm logic.
     if(e.direction_changed)level(dir,(channels[i].direction()>0)!=(i?hardware::invertR:hardware::invertL));
     if(e.rise && active)level(step,true);
   }
   portEXIT_CRITICAL_ISR(&lock);
 }
+// Nếu sơ đồ chân đã nạp, đặt EN ở mức tắt trước. Chỉ cấu hình STEP/DIR và timer khi phần cứng đã xác nhận.
 bool begin() {
   if(!hardware::pinsConfigured)return true;
   // External EN pull-up is required to keep A4988 disabled before setup executes.
@@ -48,11 +52,15 @@ void apply(double left,double right,bool enabled) {
     // Explicit stop/reset is required before the watchdog latch can clear.
     watchdog=false;
   } else if(!watchdog) {
+    // Nhân tốc độ tuyến tính mỗi bánh với steps_per_m để ra xung/s có dấu.
+    // Hệ số thiết kế là số vi bước mỗi vòng chia chu vi bánh. Với 1/16, tương đương 3200 xung/vòng.
+    // Bán kính mô hình 0,033 m cho khoảng 15433 xung/m, hay khoảng 9260 Hz khi lệnh bánh đạt 0,6 m/s.
     channels[0].setRate(left*cfg::steps_per_m);channels[1].setRate(right*cfg::steps_per_m);
     age=0;active=true;level(hardware::enable,false);
   }
   portEXIT_CRITICAL(&lock);
 }
+// Đọc hai bộ đếm xung và cờ lỗi trong cùng vùng khóa để runtime lấy gia số giữa các lượt.
 void snapshot(int64_t& left,int64_t& right,bool& fault) {
   portENTER_CRITICAL(&lock);left=channels[0].steps();right=channels[1].steps();fault=watchdog;portEXIT_CRITICAL(&lock);
 }

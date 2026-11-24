@@ -1,3 +1,4 @@
+// HAL nhận vận tốc hai bánh theo m/s và cờ bật motor, trả bộ đếm xung có dấu cùng cờ watchdog.
 #pragma once
 #include <Arduino.h>
 #include "StepNco.h"

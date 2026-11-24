@@ -1,3 +1,4 @@
+// Tích lũy thống kê mẫu tĩnh để đánh giá bias gyro. Đầu vào là gia tốc theo g và gyro theo rad/s.
 #pragma once
 #include <cmath>
 #include <algorithm>
@@ -9,6 +10,7 @@ struct CalibrationWindow {
   unsigned n=0; bool finite=true;
   double amean[3]{},gmean[3]{},am2[3]{},gm2[3]{};
   double normMean=0,gyroPeak=0;
+  // Cập nhật trung bình và phương sai theo từng mẫu để kiểm tra độ ổn định mà không cần giữ cả cửa sổ.
   void add(const double a[3],const double g[3]) {
     for(int j=0;j<3;++j)if(!std::isfinite(a[j])||!std::isfinite(g[j])){finite=false;return;}
     ++n;
@@ -23,6 +25,7 @@ struct CalibrationWindow {
   }
   double accelStd() const {return n>1?std::sqrt(std::max({0.,am2[0],am2[1],am2[2]})/(n-1)):0;}
   double gyroStd() const {return n>1?std::sqrt(std::max({0.,gm2[0],gm2[1],gm2[2]})/(n-1)):0;}
+  // Đủ mẫu và gần 1 g mới xét độ lệch chuẩn và đỉnh gyro để loại các cửa sổ có chuyển động.
   unsigned result() const {
     if(!finite || n<500 || normMean<.90 || normMean>1.10)return 5;
     if(accelStd()>.02 || gyroStd()>.02 || gyroPeak>.15)return 6;

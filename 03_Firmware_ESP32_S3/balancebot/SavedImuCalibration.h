@@ -1,3 +1,4 @@
+// Định dạng bản ghi bias gyro (rad/s) và thống kê mẫu tĩnh để ImuHal lưu hoặc khôi phục từ NVS.
 #pragma once
 #include <cstdint>
 #include <cstddef>
@@ -38,6 +39,7 @@ inline bool encodeCalibration(uint8_t (&bytes)[calibrationBytes],const Calibrati
   for(int i=0;i<4;++i)bytes[100+i]=uint8_t(crc>>(8*i));
   return true;
 }
+// Chỉ trả về bias khi bản ghi nguyên vẹn và khớp đúng IMU, đường I2C, trim và định danh firmware.
 inline bool decodeCalibration(const uint8_t* bytes,size_t size,const CalibrationContext& context,SavedGyro& value) {
   if(size!=calibrationBytes||!bytes||bytes[0]!='G'||bytes[1]!='Y'||bytes[2]!='R'||bytes[3]!=2||
     bytes[4]!=context.who||bytes[5]!=context.address||bytes[6]!=context.sda||bytes[7]!=context.scl)return false;

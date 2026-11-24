@@ -1,3 +1,4 @@
+// Phục vụ giao diện và API điện thoại trên ESP32. Chuyển lệnh hợp lệ sang runtime, lấy trạng thái để trả trình duyệt.
 #pragma once
 #include "PhoneHttp.h"
 #include "PhonePage.h"
@@ -15,6 +16,7 @@ class Web {
   const char* body=nullptr;size_t headSize=0,bodySize=0,offset=0;
   void (*command)(const char*,uint8_t)=nullptr;
   void (*snapshot)(char*,size_t)=nullptr;
+  // Thu hồi phiên và quyền lái. Nếu đã cấp quyền hoặc đang đợi START, gửi mục tiêu tốc độ/quay bằng 0.
   void revoke(){const bool moving=controlGranted||startPending;sessionActive=false;controlGranted=false;startPending=false;secret[0]=0;if(moving&&command){command("SPEED,0",3);command("TURN,0",3);}}
   void close(){peer.stop();active=false;responding=false;registrationWaiting=false;}
   void response(int code,const char* text,const char* type="text/plain; charset=utf-8",size_t size=0,bool gzip=false,const char* extra="") {
@@ -63,9 +65,13 @@ class Web {
     if(port){if(std::strcmp(port,":80"))return false;*port=0;}
     return (!std::strcmp(host,ap)||!std::strcmp(host,sta))&&std::strcmp(host,"0.0.0.0");
   }
+  // Kiểm tra địa chỉ đích, phục vụ tài nguyên giao diện và yêu cầu đăng nhập trước khi vào API điều khiển.
   void dispatch() {
     if(!localHost()){response(403,"ERR:HOST");return;}
     const bool get=!std::strcmp(request.method,"GET"),post=!std::strcmp(request.method,"POST");
+    // PhonePage.h chứa tài nguyên giao diện, gồm HTML nén được gửi nguyên dạng từ các mảng byte.
+    // Trình duyệt đọc trạng thái qua GET /status và gửi CMD kèm phiên qua POST /command khi lái.
+    // Nếu cần mở lại chuyển động, giao diện gửi MOTION,1 trước. Firmware đưa mục tiêu về 0 khi hết hạn lệnh.
     if(get&&(!std::strcmp(request.path,"/")||!std::strcmp(request.path,"/welcome"))){const bool logged=authenticated()&&std::strcmp(request.path,"/welcome");response(200,reinterpret_cast<const char*>(logged?page:welcome),"text/html; charset=utf-8",logged?pageSize:welcomeSize,true);return;}
     if(get&&!std::strcmp(request.path,"/icons/icon.svg")){response(200,reinterpret_cast<const char*>(icon),"image/svg+xml",iconSize);return;}
     if(get&&!std::strcmp(request.path,"/manifest.json")){response(200,reinterpret_cast<const char*>(manifest),"application/json",manifestSize);return;}
@@ -80,10 +86,13 @@ class Web {
       const size_t n=std::strlen(data);std::snprintf(data+n,sizeof data-n,"\nreply_id=%lu\n%.1199s",static_cast<unsigned long>(replySequence),lastReply);
       response(200,data);return;
     }
+    // POST /command nhận một dòng lệnh. Chỉ chuyển lệnh lái khi quyền START của web đã được cấp.
     if(post&&!std::strcmp(request.path,"/command")) {
       if(!request.bodySize){response(400,"ERR:EMPTY");return;}
       if(request.bodySize>160){response(413,"ERR:LINE_TOO_LONG");return;}
       for(const char* p=request.body();*p;++p)if(static_cast<unsigned char>(*p)<32||static_cast<unsigned char>(*p)>126){response(400,"ERR:FORMAT");return;}
+      // Dừng lái trên web bằng cách khóa quyền và yêu cầu mục tiêu về 0, vẫn giữ vòng cân bằng.
+      // STOP và ESTOP đi tiếp qua runtime để tắt motor.
       if(!std::strcmp(request.body(),"CONTROL_STOP")){
         controlGranted=false;startPending=false;
         command("SPEED,0",3);command("TURN,0",3);
@@ -95,6 +104,7 @@ class Web {
         if(!controlGranted){response(403,"ERR:PRESS_START");return;}
       }
       if(!std::strncmp(request.body(),"WEBUSER,",8)){response(403,"ERR:PRIVATE_COMMAND");return;}
+      // Nếu xe đã tự cân bằng và IMU sẵn sàng thì mở quyền lái ngay. Nếu chưa, chuyển START cho runtime.
       if(start){snapshot(data,sizeof data);if(std::strstr(data,",st=2,")&&std::strstr(data,",imu_calibrated=1,")&&std::strstr(data,",imu_sample_fresh=1,")){controlGranted=true;response(200,"ACK:CONTROL_GRANTED");return;}startPending=true;}
       std::strcpy(lastReply,"QUEUED");command(request.body(),3);
       // Immediate transport errors/STOP acknowledgement are available here.
@@ -108,11 +118,13 @@ public:
     command=accept;snapshot=status;
     listener.begin();
   }
+  // Phản hồi từ tác vụ điều khiển hoàn tất yêu cầu START đang chờ. ACK:START có thể đến khi xe còn Arming.
   void reply(const char* text){
     std::snprintf(lastReply,sizeof lastReply,"%s",text);++replySequence;
     if(startPending&&(!std::strcmp(text,"ACK:START")||!std::strncmp(text,"ERR:",4))){controlGranted=!std::strcmp(text,"ACK:START");startPending=false;}
     if(registrationWaiting&&(!std::strcmp(text,"ACK:WEBUSER")||!std::strncmp(text,"ERR:",4))){registrationWaiting=false;if(!std::strcmp(text,"ACK:WEBUSER")){revoke();response(201,"{\"registered\":true}","application/json",0,false,"Set-Cookie: bb_phone=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0\r\n");}else error(409,"Chưa lưu tài khoản: motor phải tắt và bộ nhớ phải ghi thành công.");}
   }
+  // Đọc yêu cầu HTTP và gửi phản hồi theo từng phần để tác vụ giao tiếp tiếp tục phục vụ các kênh khác.
   void poll() {
     if(!active&&listener.hasClient()){peer=listener.accept();peer.setNoDelay(true);request=Request{};active=true;responding=false;since=millis();}
     if(!active)return;
