@@ -1,0 +1,6 @@
+/.history/
+/.kicad-mcp/
+/*.kicad_prl
+/*.lck
+/*.kicad-save-*
+/schematic.txt

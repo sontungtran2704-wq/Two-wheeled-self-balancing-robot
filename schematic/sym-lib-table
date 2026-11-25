@@ -1,0 +1,4 @@
+(sym_lib_table
+ (version 7)
+ (lib (name "XeCanBang")(type "KiCad")(uri "${KIPRJMOD}/XeCanBang.kicad_sym")(options "")(descr "Module xe hai banh tu can bang"))
+)
